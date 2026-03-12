@@ -1,0 +1,8 @@
+/* pages/health/add/index.wxss */
+.page-add { padding-bottom: 160rpx; }
+.temp-display { font-size: 80rpx; font-weight: 300; color: #7C6FE0; margin-bottom: 24rpx; }
+.type-selector { justify-content: space-around; margin-top: 16rpx; }
+.type-option { padding: 16rpx 40rpx; border-radius: 999rpx; border: 2rpx solid #E5E7EB; }
+.type-active { border-color: #7C6FE0; background: #7C6FE0; color: #FFF; }
+.type-label { font-size: 26rpx; }
+.save-btn-container { position: fixed; bottom: 0; left: 0; right: 0; padding: 24rpx; background: #FFF; box-shadow: 0 -4rpx 20rpx rgba(0,0,0,0.05); }

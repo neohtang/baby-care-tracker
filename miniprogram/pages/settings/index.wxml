@@ -1,0 +1,31 @@
+<!--pages/settings/index.wxml-->
+<view class="page-settings">
+  <!-- 宝宝信息 -->
+  <view class="card flex-row animate-scale" bindtap="editBabyInfo">
+    <t-avatar wx:if="{{babyInfo}}" image="{{babyInfo.avatarUrl}}" size="large" shape="circle" />
+    <t-avatar wx:else icon="user" size="large" shape="circle" />
+    <view class="flex-1 ml-sm">
+      <text style="font-size:32rpx;font-weight:600;">{{babyInfo.name || '添加宝宝信息'}}</text>
+      <text class="text-secondary">{{babyInfo ? '点击编辑' : '点击设置宝宝基本信息'}}</text>
+    </view>
+    <t-icon name="chevron-right" size="48rpx" color="#9CA3AF" />
+  </view>
+
+  <!-- 数据管理 -->
+  <view class="section-subtitle px-md mt-lg">数据管理</view>
+  <t-cell-group>
+    <t-cell title="导出数据" note="备份为 JSON 文件" arrow bindtap="exportData" />
+    <t-cell title="恢复数据" note="从备份文件恢复" arrow bindtap="importData" />
+  </t-cell-group>
+
+  <!-- 关于 -->
+  <view class="section-subtitle px-md mt-lg">关于</view>
+  <t-cell-group>
+    <t-cell title="版本号" note="v{{version}}" />
+    <t-cell title="免责声明" arrow bindtap="showDisclaimer" />
+  </t-cell-group>
+
+  <view class="disclaimer-text px-md mt-lg">
+    <text class="text-hint">本小程序仅供日常养护记录参考，不构成任何医疗建议。</text>
+  </view>
+</view>

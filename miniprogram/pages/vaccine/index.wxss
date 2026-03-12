@@ -1,0 +1,8 @@
+/* pages/vaccine/index.wxss */
+.page-vaccine { padding-bottom: 40rpx; }
+.vaccine-month-label, .milestone-month-label {
+  font-size: 30rpx; font-weight: 600; color: #7C6FE0; margin: 24rpx 0 12rpx; padding-left: 8rpx;
+}
+.vaccine-item, .milestone-item { display: flex; flex-direction: row; align-items: center; }
+.vaccine-status-dot { width: 20rpx; height: 20rpx; border-radius: 50%; flex-shrink: 0; }
+.milestone-star { font-size: 40rpx; flex-shrink: 0; }

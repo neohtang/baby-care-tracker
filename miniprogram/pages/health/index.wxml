@@ -1,0 +1,24 @@
+<!--pages/health/index.wxml-->
+<view class="page-health">
+  <view class="card flex-center flex-col">
+    <text class="temp-value {{tempStatus === 'fever' ? 'temp-fever' : tempStatus === 'high' ? 'temp-high' : ''}}">{{latestTemp}}°C</text>
+    <text class="text-secondary mt-sm">最近体温</text>
+  </view>
+  <view class="section-title px-md mt-lg">健康记录</view>
+  <view wx:if="{{records.length > 0}}" class="record-list">
+    <view class="card-sm flex-row" wx:for="{{records}}" wx:key="id">
+      <view class="record-type-icon" style="background: {{item.isAbnormal ? '#FEE2E2' : '#D1FAE5'}};">
+        <text>🌡️</text>
+      </view>
+      <view class="flex-1 ml-sm">
+        <view class="flex-between">
+          <text style="font-weight:500;">{{item.temperature}}°C ({{item.methodName}})</text>
+          <text class="text-hint">{{item.timeText}}</text>
+        </view>
+        <text wx:if="{{item.note}}" class="text-secondary">{{item.note}}</text>
+      </view>
+    </view>
+  </view>
+  <view wx:else class="empty-state"><text class="empty-state-text">暂无健康记录</text></view>
+  <view class="fab-container"><t-fab icon="add" bind:click="goToAdd" /></view>
+</view>

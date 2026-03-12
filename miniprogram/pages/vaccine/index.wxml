@@ -1,0 +1,45 @@
+<!--pages/vaccine/index.wxml-->
+<view class="page-vaccine">
+  <t-tabs value="{{activeTab}}" bind:change="onTabChange" space-evenly>
+    <t-tab-panel label="疫苗接种" value="0" />
+    <t-tab-panel label="发育里程碑" value="1" />
+  </t-tabs>
+
+  <!-- 疫苗接种时间线 -->
+  <block wx:if="{{activeTab === 0}}">
+    <view wx:if="{{vaccineList.length > 0}}" class="vaccine-timeline px-md mt-md">
+      <view class="vaccine-group" wx:for="{{vaccineList}}" wx:key="month">
+        <view class="vaccine-month-label">{{item.monthLabel}}</view>
+        <view class="vaccine-item card-sm animate-scale" wx:for="{{item.vaccines}}" wx:for-item="vaccine" wx:key="id" bindtap="onVaccineRecord" data-id="{{vaccine.id}}">
+          <view class="vaccine-status-dot" style="background: {{vaccine.status === 'done' ? '#34D399' : vaccine.status === 'due' ? '#FBBF24' : '#E5E7EB'}};"></view>
+          <view class="flex-1 ml-sm">
+            <text style="font-weight:500;">{{vaccine.name}}</text>
+            <text class="text-secondary">{{vaccine.dose}}</text>
+          </view>
+          <view wx:if="{{vaccine.status === 'done'}}"><text class="tag tag-success">已接种</text></view>
+          <view wx:elif="{{vaccine.status === 'due'}}"><text class="tag tag-warning">待接种</text></view>
+          <view wx:else><text class="tag" style="background:#F3F4F6;color:#9CA3AF;">未到期</text></view>
+        </view>
+      </view>
+    </view>
+    <view wx:else class="empty-state"><text class="empty-state-text">加载疫苗清单中...</text></view>
+  </block>
+
+  <!-- 发育里程碑 -->
+  <block wx:if="{{activeTab === 1}}">
+    <view wx:if="{{milestoneList.length > 0}}" class="milestone-list px-md mt-md">
+      <view class="milestone-group" wx:for="{{milestoneList}}" wx:key="month">
+        <view class="milestone-month-label">{{item.monthLabel}}</view>
+        <view class="milestone-item card-sm animate-scale" wx:for="{{item.milestones}}" wx:for-item="ms" wx:key="id" bindtap="onMilestoneRecord" data-id="{{ms.id}}">
+          <view class="milestone-star">{{ms.achieved ? '⭐' : '☆'}}</view>
+          <view class="flex-1 ml-sm">
+            <text style="font-weight:500;">{{ms.name}}</text>
+            <text wx:if="{{ms.achievedDate}}" class="text-secondary">达成于 {{ms.achievedDate}}</text>
+            <text wx:else class="text-hint">{{ms.category}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view wx:else class="empty-state"><text class="empty-state-text">加载里程碑数据中...</text></view>
+  </block>
+</view>

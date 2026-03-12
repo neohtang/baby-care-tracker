@@ -1,0 +1,58 @@
+<!--pages/growth/index.wxml-->
+<view class="page-growth">
+  <view class="card flex-row flex-between">
+    <view class="growth-stat flex-col flex-center">
+      <text class="growth-value">{{latest.weight}}</text>
+      <text class="text-hint">体重(kg)</text>
+    </view>
+    <view class="growth-stat flex-col flex-center">
+      <text class="growth-value">{{latest.height}}</text>
+      <text class="text-hint">身高(cm)</text>
+    </view>
+    <view class="growth-stat flex-col flex-center">
+      <text class="growth-value">{{latest.headCircumference}}</text>
+      <text class="text-hint">头围(cm)</text>
+    </view>
+  </view>
+
+  <!-- 曲线图区域（预留 echarts 容器） -->
+  <view class="card">
+    <view class="chart-tabs flex-row mb-md">
+      <view class="chart-tab {{chartType === 'weight' ? 'tab-active' : ''}}" bindtap="onChartTypeChange" data-value="weight">体重</view>
+      <view class="chart-tab {{chartType === 'height' ? 'tab-active' : ''}}" bindtap="onChartTypeChange" data-value="height">身高</view>
+      <view class="chart-tab {{chartType === 'head' ? 'tab-active' : ''}}" bindtap="onChartTypeChange" data-value="head">头围</view>
+    </view>
+    <view class="chart-container">
+      <!-- TODO: echarts 生长曲线图 -->
+      <view class="empty-state"><text class="empty-state-text">生长曲线图将在此展示</text></view>
+    </view>
+  </view>
+
+  <view class="section-title px-md mt-lg">测量记录</view>
+  <view wx:if="{{records.length > 0}}" class="record-list">
+    <view class="card-sm flex-row" wx:for="{{records}}" wx:key="id">
+      <view class="flex-1">
+        <text style="font-weight:500;">{{item.dateText}}</text>
+        <view class="flex-row mt-sm">
+          <text class="tag tag-primary mr-sm">{{item.weight}}kg</text>
+          <text class="tag tag-info mr-sm">{{item.height}}cm</text>
+          <text class="tag tag-success">{{item.headCircumference}}cm</text>
+        </view>
+      </view>
+    </view>
+  </view>
+  <view wx:else class="empty-state"><text class="empty-state-text">暂无测量记录</text></view>
+
+  <!-- 添加记录弹窗 -->
+  <t-popup visible="{{showAddPanel}}" placement="bottom" bind:visible-change="toggleAddPanel">
+    <view class="add-panel">
+      <view class="section-subtitle">添加测量记录</view>
+      <t-input label="体重(kg)" type="digit" value="{{newRecord.weight}}" placeholder="如 5.2" bind:change="onWeightChange" />
+      <t-input label="身高(cm)" type="digit" value="{{newRecord.height}}" placeholder="如 58.5" bind:change="onHeightChange" />
+      <t-input label="头围(cm)" type="digit" value="{{newRecord.headCircumference}}" placeholder="如 38.0" bind:change="onHeadChange" />
+      <t-button theme="primary" block size="large" bindtap="onSave" class="mt-lg">保存</t-button>
+    </view>
+  </t-popup>
+
+  <view class="fab-container"><t-fab icon="add" bind:click="toggleAddPanel" /></view>
+</view>

@@ -1,0 +1,60 @@
+<!--pages/feeding/index.wxml-->
+<!--喂养记录页-->
+
+<view class="page-feeding">
+  <!-- 今日统计 -->
+  <view class="card flex-row flex-between">
+    <view class="stat-item flex-col flex-center">
+      <text class="stat-value">{{todayStats.totalCount}}</text>
+      <text class="text-hint">今日次数</text>
+    </view>
+    <view class="stat-item flex-col flex-center">
+      <text class="stat-value">{{todayStats.totalAmount}}</text>
+      <text class="text-hint">总奶量(ml)</text>
+    </view>
+    <view class="stat-item flex-col flex-center">
+      <text class="stat-value">{{todayStats.totalDuration}}</text>
+      <text class="text-hint">总时长(分)</text>
+    </view>
+  </view>
+
+  <!-- 类型切换 -->
+  <t-tabs value="{{activeTab}}" bind:change="onTabChange" space-evenly>
+    <t-tab-panel label="全部" value="0" />
+    <t-tab-panel label="母乳" value="1" />
+    <t-tab-panel label="配方奶" value="2" />
+    <t-tab-panel label="辅食" value="3" />
+  </t-tabs>
+
+  <!-- 记录列表 -->
+  <view wx:if="{{records.length > 0}}" class="record-list">
+    <t-swipe-cell
+      wx:for="{{records}}"
+      wx:key="id"
+      right="{{[{text: '删除', className: 'swipe-delete-btn'}]}}"
+      bind:click="onDelete"
+      data-id="{{item.id}}"
+    >
+      <view class="card-sm flex-row animate-scale">
+        <view class="record-type-icon" style="background: {{item.iconBg}};">
+          <text>{{item.icon}}</text>
+        </view>
+        <view class="flex-1 ml-sm">
+          <view class="flex-between">
+            <text class="record-title">{{item.typeName}}</text>
+            <text class="text-hint">{{item.timeText}}</text>
+          </view>
+          <text class="text-secondary">{{item.detail}}</text>
+        </view>
+      </view>
+    </t-swipe-cell>
+  </view>
+  <view wx:else class="empty-state">
+    <text class="empty-state-text">暂无喂养记录</text>
+  </view>
+
+  <!-- 添加按钮 -->
+  <view class="fab-container">
+    <t-fab icon="add" bind:click="goToAdd" />
+  </view>
+</view>

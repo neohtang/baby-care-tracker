@@ -1,0 +1,55 @@
+<!--pages/sleep/index.wxml-->
+<view class="page-sleep">
+  <!-- 今日统计 -->
+  <view class="card">
+    <view class="section-subtitle">今日睡眠</view>
+    <view class="flex-row flex-between mt-sm">
+      <view class="stat-item flex-col flex-center">
+        <text class="stat-value primary-text">{{todayStats.totalDuration}}</text>
+        <text class="text-hint">总时长(小时)</text>
+      </view>
+      <view class="stat-item flex-col flex-center">
+        <text class="stat-value">{{todayStats.napCount}}</text>
+        <text class="text-hint">小睡次数</text>
+      </view>
+      <view class="stat-item flex-col flex-center">
+        <text class="stat-value">{{todayStats.nightDuration}}</text>
+        <text class="text-hint">夜间(小时)</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 一键睡眠 -->
+  <view class="card flex-center">
+    <view class="sleep-toggle animate-scale" bindtap="toggleSleep">
+      <view class="sleep-toggle-circle {{isSleeping ? 'sleeping' : ''}}">
+        <text class="sleep-toggle-icon">{{isSleeping ? '🌙' : '☀️'}}</text>
+      </view>
+      <text class="sleep-toggle-text mt-sm">{{isSleeping ? '点击结束睡眠' : '点击开始睡眠'}}</text>
+    </view>
+  </view>
+
+  <!-- 记录列表 -->
+  <view class="section-title px-md mt-lg">睡眠记录</view>
+  <view wx:if="{{records.length > 0}}" class="record-list">
+    <view class="card-sm flex-row" wx:for="{{records}}" wx:key="id">
+      <view class="record-type-icon" style="background: #DBEAFE;">
+        <text>{{item.type === 'nap' ? '☀️' : '🌙'}}</text>
+      </view>
+      <view class="flex-1 ml-sm">
+        <view class="flex-between">
+          <text class="record-title">{{item.type === 'nap' ? '日间小睡' : '夜间睡眠'}}</text>
+          <text class="text-hint">{{item.durationText}}</text>
+        </view>
+        <text class="text-secondary">{{item.startTimeText}} - {{item.endTimeText}}</text>
+      </view>
+    </view>
+  </view>
+  <view wx:else class="empty-state">
+    <text class="empty-state-text">暂无睡眠记录</text>
+  </view>
+
+  <view class="fab-container">
+    <t-fab icon="add" bind:click="goToAdd" />
+  </view>
+</view>

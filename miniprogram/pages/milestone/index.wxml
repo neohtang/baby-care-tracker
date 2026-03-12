@@ -1,0 +1,18 @@
+<!--pages/milestone/index.wxml-->
+<view class="page-milestone">
+  <view class="section-title px-md">发育里程碑</view>
+  <view wx:if="{{milestones.length > 0}}" class="px-md">
+    <view class="card-sm animate-scale" wx:for="{{milestones}}" wx:key="id" bindtap="onRecord" data-id="{{item.id}}">
+      <view class="flex-row">
+        <text class="milestone-star">{{item.achieved ? '⭐' : '☆'}}</text>
+        <view class="flex-1 ml-sm">
+          <text style="font-weight:500;">{{item.name}}</text>
+          <text class="text-secondary">预期月龄: {{item.expectedMonth}}个月</text>
+        </view>
+        <text wx:if="{{item.achieved}}" class="tag tag-success">已达成</text>
+        <text wx:else class="tag tag-primary">待达成</text>
+      </view>
+    </view>
+  </view>
+  <view wx:else class="empty-state"><text class="empty-state-text">暂无里程碑数据</text></view>
+</view>

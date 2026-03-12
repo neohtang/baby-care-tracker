@@ -1,0 +1,40 @@
+/* pages/feeding/index.wxss */
+
+.page-feeding {
+  padding-bottom: 160rpx;
+}
+
+.stat-item {
+  flex: 1;
+  text-align: center;
+}
+
+.stat-value {
+  font-size: 44rpx;
+  font-weight: 600;
+  color: #7C6FE0;
+}
+
+.record-list {
+  margin-top: 16rpx;
+}
+
+.record-type-icon {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 36rpx;
+}
+
+.record-title {
+  font-size: 28rpx;
+  font-weight: 500;
+  color: #1A1A2E;
+}
+
+.swipe-delete-btn {
+  background: #F87171 !important;
+}

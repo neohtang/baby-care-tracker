@@ -1,0 +1,26 @@
+<!--pages/health/add/index.wxml-->
+<view class="page-add">
+  <view class="card flex-col flex-center">
+    <text class="temp-display">{{temperature}}°C</text>
+    <t-slider value="{{temperature}}" min="35" max="42" step="0.1" bind:change="onTempChange" style="width:100%;" />
+  </view>
+  <view class="card">
+    <view class="section-subtitle">测量方式</view>
+    <view class="type-selector flex-row">
+      <view wx:for="{{methodOptions}}" wx:key="value" class="type-option {{method === item.value ? 'type-active' : ''}} animate-scale" bindtap="onMethodChange" data-value="{{item.value}}">
+        <text class="type-label">{{item.label}}</text>
+      </view>
+    </view>
+  </view>
+  <view class="card">
+    <t-input label="症状" value="{{symptoms}}" placeholder="如：流鼻涕、咳嗽（可选）" bind:change="onSymptomsChange" />
+    <t-input label="用药" value="{{medication}}" placeholder="如：布洛芬 2ml（可选）" bind:change="onMedicationChange" />
+  </view>
+  <view class="card">
+    <view class="section-subtitle">备注</view>
+    <t-textarea value="{{note}}" placeholder="添加备注（可选）" maxlength="200" bind:change="onNoteChange" autosize />
+  </view>
+  <view class="save-btn-container px-md safe-bottom">
+    <t-button theme="primary" block size="large" bindtap="onSave">保存记录</t-button>
+  </view>
+</view>

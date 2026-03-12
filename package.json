@@ -1,0 +1,22 @@
+{
+  "name": "baby-care-tracker",
+  "version": "1.0.0",
+  "description": "0-12个月新生儿日常养护追踪微信小程序",
+  "keywords": [
+    "miniprogram",
+    "baby",
+    "care",
+    "tracker",
+    "newborn"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "tdesign-miniprogram": "^1.7.0",
+    "dayjs": "^1.11.13"
+  },
+  "devDependencies": {
+    "typescript": "^5.4.0",
+    "miniprogram-api-typings": "^3.12.0"
+  }
+}

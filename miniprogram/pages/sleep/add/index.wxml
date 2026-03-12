@@ -1,0 +1,25 @@
+<!--pages/sleep/add/index.wxml-->
+<view class="page-add">
+  <view class="card">
+    <view class="section-subtitle">睡眠类型</view>
+    <view class="type-selector flex-row">
+      <view class="type-option {{type === 'nap' ? 'type-active' : ''}} animate-scale" bindtap="onTypeChange" data-value="nap">
+        <text class="type-icon">☀️</text><text class="type-label">日间小睡</text>
+      </view>
+      <view class="type-option {{type === 'night' ? 'type-active' : ''}} animate-scale" bindtap="onTypeChange" data-value="night">
+        <text class="type-icon">🌙</text><text class="type-label">夜间睡眠</text>
+      </view>
+    </view>
+  </view>
+  <view class="card">
+    <t-cell title="入睡时间" note="{{startTime || '请选择'}}" arrow bindtap="onStartTimeChange" />
+    <t-cell title="醒来时间" note="{{endTime || '请选择'}}" arrow bindtap="onEndTimeChange" />
+  </view>
+  <view class="card">
+    <view class="section-subtitle">备注</view>
+    <t-textarea value="{{note}}" placeholder="添加备注（可选）" maxlength="200" bind:change="onNoteChange" autosize />
+  </view>
+  <view class="save-btn-container px-md safe-bottom">
+    <t-button theme="primary" block size="large" bindtap="onSave">保存记录</t-button>
+  </view>
+</view>

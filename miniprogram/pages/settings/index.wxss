@@ -1,0 +1,3 @@
+/* pages/settings/index.wxss */
+.page-settings { padding-bottom: 80rpx; }
+.disclaimer-text { text-align: center; padding: 40rpx; }

@@ -1,0 +1,6 @@
+/* pages/health/index.wxss */
+.page-health { padding-bottom: 160rpx; }
+.temp-value { font-size: 72rpx; font-weight: 600; color: #34D399; }
+.temp-fever { color: #F87171; }
+.temp-high { color: #FBBF24; }
+.record-type-icon { width: 80rpx; height: 80rpx; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 36rpx; }

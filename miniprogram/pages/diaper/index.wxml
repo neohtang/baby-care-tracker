@@ -1,0 +1,34 @@
+<!--pages/diaper/index.wxml-->
+<view class="page-diaper">
+  <view class="card flex-row flex-between">
+    <view class="stat-item flex-col flex-center">
+      <text class="stat-value" style="color:#7C6FE0;">{{todayStats.totalCount}}</text>
+      <text class="text-hint">今日总次数</text>
+    </view>
+    <view class="stat-item flex-col flex-center">
+      <text class="stat-value" style="color:#FBBF24;">{{todayStats.peeCount}}</text>
+      <text class="text-hint">小便</text>
+    </view>
+    <view class="stat-item flex-col flex-center">
+      <text class="stat-value" style="color:#34D399;">{{todayStats.poopCount}}</text>
+      <text class="text-hint">大便</text>
+    </view>
+  </view>
+  <view class="section-title px-md mt-lg">排便记录</view>
+  <view wx:if="{{records.length > 0}}" class="record-list">
+    <view class="card-sm flex-row" wx:for="{{records}}" wx:key="id">
+      <view class="record-type-icon" style="background: {{item.type === 'pee' ? '#FEF3C7' : '#D1FAE5'}};">
+        <text>{{item.type === 'pee' ? '💧' : '💩'}}</text>
+      </view>
+      <view class="flex-1 ml-sm">
+        <view class="flex-between">
+          <text style="font-weight:500;">{{item.typeName}}</text>
+          <text class="text-hint">{{item.timeText}}</text>
+        </view>
+        <text wx:if="{{item.detail}}" class="text-secondary">{{item.detail}}</text>
+      </view>
+    </view>
+  </view>
+  <view wx:else class="empty-state"><text class="empty-state-text">暂无排便记录</text></view>
+  <view class="fab-container"><t-fab icon="add" bind:click="goToAdd" /></view>
+</view>

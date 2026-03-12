@@ -1,0 +1,135 @@
+<!--pages/feeding/add/index.wxml-->
+<!--添加/编辑喂养记录-->
+
+<view class="page-add">
+  <!-- 喂养类型选择 -->
+  <view class="card">
+    <view class="section-subtitle">喂养类型</view>
+    <view class="type-selector flex-row">
+      <view
+        class="type-option {{feedingType === 'breast' ? 'type-active' : ''}} animate-scale"
+        bindtap="onTypeChange"
+        data-value="breast"
+      >
+        <text class="type-icon">🤱</text>
+        <text class="type-label">母乳</text>
+      </view>
+      <view
+        class="type-option {{feedingType === 'formula' ? 'type-active' : ''}} animate-scale"
+        bindtap="onTypeChange"
+        data-value="formula"
+      >
+        <text class="type-icon">🍼</text>
+        <text class="type-label">配方奶</text>
+      </view>
+      <view
+        class="type-option {{feedingType === 'solid' ? 'type-active' : ''}} animate-scale"
+        bindtap="onTypeChange"
+        data-value="solid"
+      >
+        <text class="type-icon">🥣</text>
+        <text class="type-label">辅食</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 母乳喂养：侧选择 + 计时器 -->
+  <block wx:if="{{feedingType === 'breast'}}">
+    <view class="card">
+      <view class="section-subtitle">哺乳侧</view>
+      <view class="side-selector flex-row">
+        <view
+          class="side-option {{side === 'left' ? 'side-active' : ''}} animate-scale"
+          bindtap="onSideChange"
+          data-value="left"
+        >左侧</view>
+        <view
+          class="side-option {{side === 'right' ? 'side-active' : ''}} animate-scale"
+          bindtap="onSideChange"
+          data-value="right"
+        >右侧</view>
+        <view
+          class="side-option {{side === 'both' ? 'side-active' : ''}} animate-scale"
+          bindtap="onSideChange"
+          data-value="both"
+        >双侧</view>
+      </view>
+    </view>
+
+    <!-- 计时器 -->
+    <view class="card flex-col flex-center">
+      <view class="timer-display">
+        <text class="timer-text">{{timerSeconds < 600 ? '0' : ''}}{{Math.floor(timerSeconds / 60)}}:{{timerSeconds % 60 < 10 ? '0' : ''}}{{timerSeconds % 60}}</text>
+      </view>
+      <view class="timer-controls flex-row mt-md">
+        <t-button theme="primary" size="large" shape="circle" bindtap="toggleTimer">
+          {{isTimerRunning ? '暂停' : '开始'}}
+        </t-button>
+        <t-button theme="default" size="large" shape="circle" bindtap="resetTimer" class="ml-sm">
+          重置
+        </t-button>
+      </view>
+    </view>
+  </block>
+
+  <!-- 配方奶：奶量 -->
+  <block wx:if="{{feedingType === 'formula'}}">
+    <view class="card">
+      <view class="section-subtitle">奶量 (ml)</view>
+      <view class="amount-display flex-center">
+        <text class="amount-value">{{amount}}</text>
+        <text class="amount-unit">ml</text>
+      </view>
+      <t-slider
+        value="{{amount}}"
+        min="0"
+        max="300"
+        step="10"
+        bind:change="onAmountChange"
+      />
+      <view class="amount-presets flex-row mt-md">
+        <t-button size="small" variant="outline" data-value="60" bindtap="onAmountChange">60ml</t-button>
+        <t-button size="small" variant="outline" data-value="90" bindtap="onAmountChange">90ml</t-button>
+        <t-button size="small" variant="outline" data-value="120" bindtap="onAmountChange">120ml</t-button>
+        <t-button size="small" variant="outline" data-value="150" bindtap="onAmountChange">150ml</t-button>
+      </view>
+    </view>
+  </block>
+
+  <!-- 辅食：食材和重量 -->
+  <block wx:if="{{feedingType === 'solid'}}">
+    <view class="card">
+      <view class="section-subtitle">辅食量 (g)</view>
+      <view class="amount-display flex-center">
+        <text class="amount-value">{{amount}}</text>
+        <text class="amount-unit">g</text>
+      </view>
+      <t-slider
+        value="{{amount}}"
+        min="0"
+        max="200"
+        step="5"
+        bind:change="onAmountChange"
+      />
+    </view>
+  </block>
+
+  <!-- 备注 -->
+  <view class="card">
+    <view class="section-subtitle">备注</view>
+    <t-textarea
+      value="{{note}}"
+      placeholder="添加备注（可选）"
+      maxlength="200"
+      bind:change="onNoteChange"
+      autosize
+    />
+  </view>
+
+  <!-- 保存按钮 -->
+  <view class="save-btn-container px-md safe-bottom">
+    <t-button theme="primary" block size="large" bindtap="onSave">
+      {{editMode ? '更新记录' : '保存记录'}}
+    </t-button>
+  </view>
+</view>

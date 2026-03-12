@@ -1,0 +1,42 @@
+<!--pages/diaper/add/index.wxml-->
+<view class="page-add">
+  <view class="card">
+    <view class="section-subtitle">类型</view>
+    <view class="type-selector flex-row">
+      <view class="type-option {{type === 'pee' ? 'type-active' : ''}} animate-scale" bindtap="onTypeChange" data-value="pee">
+        <text class="type-icon">💧</text><text class="type-label">小便</text>
+      </view>
+      <view class="type-option {{type === 'poop' ? 'type-active' : ''}} animate-scale" bindtap="onTypeChange" data-value="poop">
+        <text class="type-icon">💩</text><text class="type-label">大便</text>
+      </view>
+      <view class="type-option {{type === 'both' ? 'type-active' : ''}} animate-scale" bindtap="onTypeChange" data-value="both">
+        <text class="type-icon">👶</text><text class="type-label">大小便</text>
+      </view>
+    </view>
+  </view>
+  <block wx:if="{{type !== 'pee'}}">
+    <view class="card">
+      <view class="section-subtitle">颜色</view>
+      <view class="option-grid">
+        <view wx:for="{{colorOptions}}" wx:key="*this" class="option-chip {{color === item ? 'chip-active' : ''}} animate-scale" bindtap="onColorChange" data-value="{{item}}">{{item}}</view>
+      </view>
+    </view>
+    <view class="card">
+      <view class="section-subtitle">质地</view>
+      <view class="option-grid">
+        <view wx:for="{{textureOptions}}" wx:key="*this" class="option-chip {{texture === item ? 'chip-active' : ''}} animate-scale" bindtap="onTextureChange" data-value="{{item}}">{{item}}</view>
+      </view>
+    </view>
+    <view class="card flex-between">
+      <text>标记为异常</text>
+      <t-switch value="{{isAbnormal}}" bind:change="onAbnormalChange" />
+    </view>
+  </block>
+  <view class="card">
+    <view class="section-subtitle">备注</view>
+    <t-textarea value="{{note}}" placeholder="添加备注（可选）" maxlength="200" bind:change="onNoteChange" autosize />
+  </view>
+  <view class="save-btn-container px-md safe-bottom">
+    <t-button theme="primary" block size="large" bindtap="onSave">保存记录</t-button>
+  </view>
+</view>

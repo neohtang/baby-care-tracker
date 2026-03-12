@@ -1,0 +1,9 @@
+/* pages/growth/index.wxss */
+.page-growth { padding-bottom: 160rpx; }
+.growth-stat { flex: 1; text-align: center; }
+.growth-value { font-size: 44rpx; font-weight: 600; color: #7C6FE0; }
+.chart-tabs { gap: 16rpx; }
+.chart-tab { padding: 8rpx 24rpx; border-radius: 999rpx; font-size: 26rpx; color: #6B7280; background: #F5F0FF; }
+.tab-active { background: #7C6FE0; color: #FFF; }
+.chart-container { height: 400rpx; display: flex; align-items: center; justify-content: center; }
+.add-panel { padding: 40rpx 32rpx; padding-bottom: env(safe-area-inset-bottom); }

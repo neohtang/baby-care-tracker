@@ -1,0 +1,85 @@
+{
+  "pages": [
+    "pages/home/index",
+    "pages/feeding/index",
+    "pages/feeding/add/index",
+    "pages/sleep/index",
+    "pages/sleep/add/index",
+    "pages/diaper/index",
+    "pages/diaper/add/index",
+    "pages/health/index",
+    "pages/health/add/index",
+    "pages/growth/index",
+    "pages/vaccine/index",
+    "pages/milestone/index",
+    "pages/settings/index"
+  ],
+  "tabBar": {
+    "color": "#9CA3AF",
+    "selectedColor": "#7C6FE0",
+    "backgroundColor": "#FFFFFF",
+    "borderStyle": "white",
+    "list": [
+      {
+        "pagePath": "pages/home/index",
+        "text": "首页",
+        "iconPath": "assets/icons/home.png",
+        "selectedIconPath": "assets/icons/home-active.png"
+      },
+      {
+        "pagePath": "pages/feeding/index",
+        "text": "记录",
+        "iconPath": "assets/icons/record.png",
+        "selectedIconPath": "assets/icons/record-active.png"
+      },
+      {
+        "pagePath": "pages/vaccine/index",
+        "text": "疫苗",
+        "iconPath": "assets/icons/vaccine.png",
+        "selectedIconPath": "assets/icons/vaccine-active.png"
+      },
+      {
+        "pagePath": "pages/settings/index",
+        "text": "设置",
+        "iconPath": "assets/icons/settings.png",
+        "selectedIconPath": "assets/icons/settings-active.png"
+      }
+    ]
+  },
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#7C6FE0",
+    "navigationBarTitleText": "宝宝养护追踪",
+    "navigationBarTextStyle": "white",
+    "backgroundColor": "#FBF8FF"
+  },
+  "usingComponents": {
+    "t-button": "tdesign-miniprogram/button/button",
+    "t-icon": "tdesign-miniprogram/icon/icon",
+    "t-cell": "tdesign-miniprogram/cell/cell",
+    "t-cell-group": "tdesign-miniprogram/cell-group/cell-group",
+    "t-input": "tdesign-miniprogram/input/input",
+    "t-textarea": "tdesign-miniprogram/textarea/textarea",
+    "t-picker": "tdesign-miniprogram/picker/picker",
+    "t-date-time-picker": "tdesign-miniprogram/date-time-picker/date-time-picker",
+    "t-slider": "tdesign-miniprogram/slider/slider",
+    "t-switch": "tdesign-miniprogram/switch/switch",
+    "t-tag": "tdesign-miniprogram/tag/tag",
+    "t-tabs": "tdesign-miniprogram/tabs/tabs",
+    "t-tab-panel": "tdesign-miniprogram/tab-panel/tab-panel",
+    "t-toast": "tdesign-miniprogram/toast/toast",
+    "t-dialog": "tdesign-miniprogram/dialog/dialog",
+    "t-message": "tdesign-miniprogram/message/message",
+    "t-swipe-cell": "tdesign-miniprogram/swipe-cell/swipe-cell",
+    "t-fab": "tdesign-miniprogram/fab/fab",
+    "t-popup": "tdesign-miniprogram/popup/popup",
+    "t-avatar": "tdesign-miniprogram/avatar/avatar",
+    "t-badge": "tdesign-miniprogram/badge/badge",
+    "t-grid": "tdesign-miniprogram/grid/grid",
+    "t-grid-item": "tdesign-miniprogram/grid-item/grid-item",
+    "t-empty": "tdesign-miniprogram/empty/empty",
+    "t-loading": "tdesign-miniprogram/loading/loading"
+  },
+  "sitemapLocation": "sitemap.json",
+  "style": "v2"
+}

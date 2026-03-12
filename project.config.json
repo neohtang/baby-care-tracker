@@ -1,0 +1,58 @@
+{
+  "description": "Baby Care Tracker - 新生儿养护追踪小程序",
+  "packOptions": {
+    "ignore": [
+      { "type": "file", "value": ".gitignore" },
+      { "type": "file", "value": "tsconfig.json" },
+      { "type": "file", "value": "package-lock.json" },
+      { "type": "folder", "value": "node_modules" }
+    ],
+    "include": []
+  },
+  "setting": {
+    "urlCheck": true,
+    "es6": true,
+    "enhance": true,
+    "postcss": true,
+    "preloadBackgroundData": false,
+    "minified": true,
+    "newFeature": true,
+    "coverView": true,
+    "nodeModules": true,
+    "autoAudits": false,
+    "showShadowRootInWxmlPanel": true,
+    "scopeDataCheck": false,
+    "uglifyFileName": false,
+    "checkInvalidKey": true,
+    "checkSiteMap": true,
+    "uploadWithSourceMap": true,
+    "compileHotReLoad": true,
+    "lazyloadPlaceholderEnable": false,
+    "useMultiFrameRuntime": true,
+    "useApiHook": true,
+    "useApiHostProcess": true,
+    "babelSetting": {
+      "ignore": [],
+      "disablePlugins": [],
+      "outputPath": ""
+    },
+    "useIsolateContext": true,
+    "userConfirmedBundleSwitch": false,
+    "packNpmManually": false,
+    "packNpmRelationList": [],
+    "minifyWXSS": true,
+    "disableUseStrict": false,
+    "minifyWXML": true,
+    "showES6CompileOption": false,
+    "useCompilerPlugins": [
+      "typescript"
+    ]
+  },
+  "compileType": "miniprogram",
+  "libVersion": "3.4.0",
+  "appid": "wxTODO_REPLACE_WITH_YOUR_APPID",
+  "projectname": "baby-care-tracker",
+  "condition": {},
+  "srcMiniprogramRoot": "miniprogram/",
+  "miniprogramRoot": "miniprogram/"
+}

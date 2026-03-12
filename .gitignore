@@ -1,0 +1,25 @@
+# Dependencies
+node_modules/
+miniprogram_npm/
+
+# Build output
+*.js.map
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# WeChat DevTools
+project.private.config.json
+
+# Logs
+*.log
+npm-debug.log*
+
+# Environment
+.env
+.env.local
