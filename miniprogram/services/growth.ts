@@ -22,9 +22,9 @@ type GrowthMetric = 'weight' | 'height' | 'headCircumference';
 
 /** 指标配置 */
 const METRIC_CONFIG: Record<GrowthMetric, { label: string; unit: string; icon: string; color: string }> = {
-  weight: { label: '体重', unit: 'kg', icon: '/assets/icons/scale.svg', color: '#7C6FE0' },
-  height: { label: '身长', unit: 'cm', icon: '/assets/icons/ruler.svg', color: '#A78BFA' },
-  headCircumference: { label: '头围', unit: 'cm', icon: '/assets/icons/brain.svg', color: '#F0ABFC' },
+  weight: { label: '体重', unit: 'kg', icon: '/assets/icons/scale.svg', color: '#C8956C' },
+  height: { label: '身长', unit: 'cm', icon: '/assets/icons/ruler.svg', color: '#D4A97A' },
+  headCircumference: { label: '头围', unit: 'cm', icon: '/assets/icons/brain.svg', color: '#F5A5B8' },
 };
 
 class GrowthService {

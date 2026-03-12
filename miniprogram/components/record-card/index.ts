@@ -19,7 +19,7 @@ Component({
     /** 图标背景色 */
     iconBg: {
       type: String,
-      value: '#EDE9FE',
+      value: '#F5EDE4',
     },
     /** 标题 */
     title: {

@@ -1,5 +1,5 @@
 // pages/home/index.ts
-// 首页仪表盘 - 宝宝养护追踪
+// 首页仪表盘 - 宝宝养护追踪 (Tender Bloom 重构版)
 
 import babyService from '../../services/baby';
 import statisticsService from '../../services/statistics';
@@ -9,21 +9,16 @@ import type { TimelineEvent } from '../../types/index';
 
 /** 首页页面数据 */
 interface HomePageData {
-  /** 是否已加载 */
   loaded: boolean;
-  /** 是否有宝宝信息 */
   hasBaby: boolean;
-  /** 宝宝展示信息 */
   babyName: string;
   babyAgeText: string;
   babyGender: string;
   babyAvatarUrl: string;
   babyGenderText: string;
-  /** 今日摘要统计 */
+  todayText: string;
   summaryItems: any[];
-  /** 今日时间线事件 */
   timelineEvents: any[];
-  /** 是否有异常 */
   hasAlert: boolean;
 }
 
@@ -32,20 +27,19 @@ Page({
     loaded: false,
     hasBaby: false,
     babyName: '',
-    babyAgeText: '请前往设置页添加宝宝信息',
+    babyAgeText: '请前往「我的」添加宝宝信息',
     babyGender: '',
     babyAvatarUrl: '',
     babyGenderText: '',
+    todayText: '',
     summaryItems: [] as any[],
     timelineEvents: [] as any[],
     hasAlert: false,
   } as HomePageData,
 
-  /** 事件总线解绑函数 */
   _unsubscribers: [] as (() => void)[],
 
   onLoad() {
-    // 订阅数据变更事件
     this._unsubscribers.push(
       eventBus.on(Events.BABY_CHANGED, () => this.refreshAll()),
       eventBus.on(Events.BABY_SWITCHED, () => this.refreshAll()),
@@ -66,9 +60,6 @@ Page({
     this._unsubscribers = [];
   },
 
-  /**
-   * 刷新所有数据
-   */
   refreshAll() {
     this.loadBabyInfo();
     this.loadSummary();
@@ -76,24 +67,18 @@ Page({
     this.setData({ loaded: true });
   },
 
-  /**
-   * 仅刷新摘要和时间线
-   */
   refreshSummaryAndTimeline() {
     this.loadSummary();
     this.loadTimeline();
   },
 
-  /**
-   * 加载宝宝基本信息
-   */
   loadBabyInfo() {
     const baby = babyService.getCurrentBaby();
     if (!baby) {
       this.setData({
         hasBaby: false,
         babyName: '',
-        babyAgeText: '请前往设置页添加宝宝信息',
+        babyAgeText: '请前往「我的」添加宝宝信息',
         babyGender: '',
         babyAvatarUrl: '',
         babyGenderText: '',
@@ -112,9 +97,6 @@ Page({
     });
   },
 
-  /**
-   * 加载今日统计摘要
-   */
   loadSummary() {
     const baby = babyService.getCurrentBaby();
     if (!baby) {
@@ -130,31 +112,37 @@ Page({
     const summaryItems = [
       {
         icon: '/assets/icons/bottle.svg',
-        iconBg: '#EDE9FE',
+        iconBg: 'var(--module-feeding-bg)',
         value: summary.feedingCount,
         unit: '次',
         label: '喂养',
         detail: summary.feedingDetail,
+        detailBg: 'var(--module-feeding-bg)',
+        detailColor: 'var(--module-feeding)',
       },
       {
         icon: '/assets/icons/sleep.svg',
-        iconBg: '#DBEAFE',
+        iconBg: 'var(--module-sleep-bg)',
         value: summary.sleepHours,
         unit: 'h',
         label: '睡眠',
         detail: summary.sleepDuration,
+        detailBg: 'var(--module-sleep-bg)',
+        detailColor: 'var(--module-sleep)',
       },
       {
         icon: '/assets/icons/baby.svg',
-        iconBg: '#D1FAE5',
+        iconBg: 'var(--module-diaper-bg)',
         value: summary.diaperCount,
         unit: '次',
         label: '排便',
         detail: summary.diaperDetail,
+        detailBg: 'var(--module-diaper-bg)',
+        detailColor: 'var(--module-diaper)',
       },
       {
         icon: '/assets/icons/thermometer.svg',
-        iconBg: summary.temperatureLevel === 'normal' ? '#FEF3C7' : '#FEE2E2',
+        iconBg: summary.temperatureLevel === 'normal' ? 'var(--module-health-bg)' : 'var(--color-coral-bg)',
         value: summary.temperature,
         unit: '℃',
         label: '体温',
@@ -164,6 +152,8 @@ Page({
                 summary.temperatureLevel === 'high_fever' ? '高烧' :
                 summary.temperatureLevel === 'low' ? '偏低' : '--',
         alert: summary.temperatureLevel === 'moderate_fever' || summary.temperatureLevel === 'high_fever',
+        detailBg: summary.temperatureLevel === 'normal' ? 'var(--module-health-bg)' : 'var(--color-coral-light)',
+        detailColor: summary.temperatureLevel === 'normal' ? 'var(--module-health)' : 'var(--color-coral)',
       },
     ];
 
@@ -173,21 +163,15 @@ Page({
     });
   },
 
-  /**
-   * 获取空状态的摘要项
-   */
   getEmptySummaryItems(): any[] {
     return [
-      { icon: '/assets/icons/bottle.svg', iconBg: '#EDE9FE', value: 0, unit: '次', label: '喂养', detail: '暂无记录' },
-      { icon: '/assets/icons/sleep.svg', iconBg: '#DBEAFE', value: 0, unit: 'h', label: '睡眠', detail: '暂无记录' },
-      { icon: '/assets/icons/baby.svg', iconBg: '#D1FAE5', value: 0, unit: '次', label: '排便', detail: '暂无记录' },
-      { icon: '/assets/icons/thermometer.svg', iconBg: '#FEF3C7', value: '--', unit: '℃', label: '体温', detail: '--' },
+      { icon: '/assets/icons/bottle.svg', iconBg: 'var(--module-feeding-bg)', value: 0, unit: '次', label: '喂养', detail: '暂无记录', detailBg: 'var(--module-feeding-bg)', detailColor: 'var(--module-feeding)' },
+      { icon: '/assets/icons/sleep.svg', iconBg: 'var(--module-sleep-bg)', value: 0, unit: 'h', label: '睡眠', detail: '暂无记录', detailBg: 'var(--module-sleep-bg)', detailColor: 'var(--module-sleep)' },
+      { icon: '/assets/icons/baby.svg', iconBg: 'var(--module-diaper-bg)', value: 0, unit: '次', label: '排便', detail: '暂无记录', detailBg: 'var(--module-diaper-bg)', detailColor: 'var(--module-diaper)' },
+      { icon: '/assets/icons/thermometer.svg', iconBg: 'var(--module-health-bg)', value: '--', unit: '℃', label: '体温', detail: '--', detailBg: 'var(--module-health-bg)', detailColor: 'var(--module-health)' },
     ];
   },
 
-  /**
-   * 加载今日时间线
-   */
   loadTimeline() {
     const baby = babyService.getCurrentBaby();
     if (!baby) {
@@ -196,8 +180,6 @@ Page({
     }
 
     const events = statisticsService.getTodayTimeline(baby.id);
-
-    // 为 daily-timeline 组件格式化数据
     const timelineEvents = events.map(evt => ({
       ...evt,
       type: evt.type,
@@ -209,7 +191,7 @@ Page({
     this.setData({ timelineEvents });
   },
 
-  // ============ 快捷操作 ============
+  // ============ 快捷操作（6个入口） ============
 
   goToFeeding() {
     wx.navigateTo({ url: '/pages/feeding/add/index' });
@@ -227,8 +209,38 @@ Page({
     wx.navigateTo({ url: '/pages/health/add/index' });
   },
 
+  goToGrowth() {
+    // 设置导航意图：打开生长数据Tab的添加测量弹窗
+    const app = getApp<IAppOption>();
+    app.globalData.navIntent = { target: 'growth-center', action: 'addGrowth' };
+    wx.switchTab({ url: '/pages/growth-center/index' });
+  },
+
+  goToMilestone() {
+    // 设置导航意图：切换到发育里程碑Tab
+    const app = getApp<IAppOption>();
+    app.globalData.navIntent = { target: 'growth-center', action: 'milestone' };
+    wx.switchTab({ url: '/pages/growth-center/index' });
+  },
+
   goToBabyProfile() {
-    wx.switchTab({ url: '/pages/settings/index' });
+    wx.switchTab({ url: '/pages/profile/index' });
+  },
+
+  // ============ 摘要卡片点击 ============
+
+  onSummaryTap(e: WechatMiniprogram.TouchEvent) {
+    const index = e.currentTarget.dataset.index;
+    const tabMap: Record<number, string> = {
+      0: '/pages/daily/index',      // 喂养 → 日常记录
+      1: '/pages/daily/index',      // 睡眠 → 日常记录
+      2: '/pages/daily/index',      // 排便 → 日常记录
+      3: '/pages/health-center/index', // 体温 → 健康监测
+    };
+    const url = tabMap[index];
+    if (url) {
+      wx.switchTab({ url });
+    }
   },
 
   // ============ 时间线事件点击 ============
@@ -237,16 +249,17 @@ Page({
     const { event } = e.detail;
     if (!event) return;
 
+    // 时间线点击跳转到对应的 Tab 页
     const routeMap: Record<string, string> = {
-      feeding: '/pages/feeding/index',
-      sleep: '/pages/sleep/index',
-      diaper: '/pages/diaper/index',
-      health: '/pages/health/index',
+      feeding: '/pages/daily/index',
+      sleep: '/pages/daily/index',
+      diaper: '/pages/daily/index',
+      health: '/pages/health-center/index',
     };
 
     const url = routeMap[event.type];
     if (url) {
-      wx.navigateTo({ url });
+      wx.switchTab({ url });
     }
   },
 

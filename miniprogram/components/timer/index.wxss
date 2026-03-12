@@ -121,12 +121,12 @@
 
 .ctrl-btn-primary {
   min-width: 200rpx;
-  box-shadow: 0 6rpx 20rpx rgba(124, 111, 224, 0.3);
+  box-shadow: 0 6rpx 20rpx rgba(200, 149, 108, 0.3);
 }
 
 .ctrl-btn-pause {
-  box-shadow: 0 4rpx 12rpx rgba(124, 111, 224, 0.15);
-  border: 2rpx solid rgba(124, 111, 224, 0.3);
+  box-shadow: 0 4rpx 12rpx rgba(200, 149, 108, 0.15);
+  border: 2rpx solid rgba(200, 149, 108, 0.3);
 }
 
 .ctrl-btn-stop {

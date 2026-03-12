@@ -1,30 +1,30 @@
 /* pages/sleep/add/index.wxss */
-.page-add { padding: 24rpx; padding-bottom: 200rpx; min-height: 100vh; background: #FBF8FF; }
+.page-add { padding: 24rpx; padding-bottom: 200rpx; min-height: 100vh; background: #FDF8F3; }
 .card { background: #FFFFFF; border-radius: 24rpx; padding: 32rpx; margin-bottom: 20rpx; box-shadow: 0 2rpx 16rpx rgba(0,0,0,0.04); }
-.section-title { font-size: 28rpx; font-weight: 600; color: #1A1A2E; margin-bottom: 20rpx; }
+.section-title { font-size: 28rpx; font-weight: 600; color: #3D2E22; margin-bottom: 20rpx; }
 
 /* 类型选择器 */
 .type-selector { display: flex; justify-content: space-around; }
 .type-option { display: flex; flex-direction: column; align-items: center; padding: 20rpx 40rpx; border-radius: 24rpx; border: 3rpx solid transparent; transition: all 0.3s ease; }
-.type-active { border-color: #7C6FE0; background: #F5F0FF; }
+.type-active { border-color: #C8956C; background: #FFF8F0; }
 .type-icon-circle { width: 100rpx; height: 100rpx; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 12rpx; }
 .type-emoji { font-size: 48rpx; }
 .type-icon-img { width: 48rpx; height: 48rpx; }
 .type-label { font-size: 26rpx; color: #6B7280; font-weight: 500; }
-.type-active .type-label { color: #7C6FE0; }
+.type-active .type-label { color: #C8956C; }
 
 /* 时间选择行 */
 .time-row { display: flex; align-items: center; justify-content: space-between; padding: 16rpx 0; }
 .time-info { display: flex; align-items: center; gap: 12rpx; }
 .time-icon { font-size: 36rpx; }
 .time-icon-img { width: 36rpx; height: 36rpx; flex-shrink: 0; }
-.time-label { font-size: 28rpx; color: #1A1A2E; }
-.time-value { font-size: 28rpx; color: #7C6FE0; font-weight: 500; }
+.time-label { font-size: 28rpx; color: #3D2E22; }
+.time-value { font-size: 28rpx; color: #C8956C; font-weight: 500; }
 .time-divider { height: 1rpx; background: #F3F4F6; margin: 8rpx 0; }
 
 /* 时长标记 */
-.duration-badge { margin-top: 20rpx; text-align: center; padding: 16rpx; background: linear-gradient(135deg, #F5F0FF, #EDE9FE); border-radius: 16rpx; }
-.duration-text { font-size: 30rpx; color: #7C6FE0; font-weight: 600; }
+.duration-badge { margin-top: 20rpx; text-align: center; padding: 16rpx; background: linear-gradient(135deg, #FFF8F0, #FAEEE0); border-radius: 16rpx; }
+.duration-text { font-size: 30rpx; color: #C8956C; font-weight: 600; }
 
 /* 质量评分 */
 .quality-row { display: flex; justify-content: center; gap: 32rpx; }
@@ -35,7 +35,7 @@
 
 /* 保存 */
 .save-bar { position: fixed; bottom: 0; left: 0; right: 0; padding: 24rpx 32rpx; padding-bottom: calc(24rpx + env(safe-area-inset-bottom)); background: #FFFFFF; box-shadow: 0 -4rpx 24rpx rgba(0,0,0,0.06); }
-.save-btn { background: linear-gradient(135deg, #7C6FE0, #A78BFA); color: #FFFFFF; text-align: center; padding: 28rpx 0; border-radius: 16rpx; font-size: 32rpx; font-weight: 600; box-shadow: 0 8rpx 24rpx rgba(124,111,224,0.3); }
+.save-btn { background: linear-gradient(135deg, #C8956C, #D4A97A); color: #FFFFFF; text-align: center; padding: 28rpx 0; border-radius: 16rpx; font-size: 32rpx; font-weight: 600; box-shadow: 0 8rpx 24rpx rgba(200,149,108,0.3); }
 .save-btn:active { transform: scale(0.98); }
 .animate-scale { transition: transform 0.15s ease; }
 .animate-scale:active { transform: scale(0.95); }

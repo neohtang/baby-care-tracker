@@ -32,16 +32,16 @@
 }
 
 .legend-dot-data {
-  background: #7C6FE0;
-  box-shadow: 0 0 0 3rpx rgba(124, 111, 224, 0.2);
+  background: #C8956C;
+  box-shadow: 0 0 0 3rpx rgba(200, 149, 108, 0.2);
 }
 
 .legend-band {
   width: 24rpx;
   height: 10rpx;
   border-radius: 3rpx;
-  background: linear-gradient(90deg, rgba(124, 111, 224, 0.1), rgba(124, 111, 224, 0.2));
-  border: 1rpx solid rgba(124, 111, 224, 0.25);
+  background: linear-gradient(90deg, rgba(200, 149, 108, 0.1), rgba(200, 149, 108, 0.2));
+  border: 1rpx solid rgba(200, 149, 108, 0.25);
 }
 
 .legend-text {

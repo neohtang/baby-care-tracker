@@ -1,0 +1,283 @@
+<!--pages/growth-center/index.wxml-->
+<!--成长发育合并页 — 生长数据 + 发育里程碑 (Tender Bloom 主题)-->
+
+<view class="page-growth">
+  <t-tabs value="{{activeMainTab}}" bind:change="onMainTabChange" t-class="growth-tabs">
+    <!-- ===== 生长数据 Tab ===== -->
+    <t-tab-panel label="生长数据" value="{{0}}">
+      <view class="tab-content animate-fade-in">
+        <!-- 最新测量三指标卡片 -->
+        <view class="metrics-card">
+          <view class="metrics-grid">
+            <view class="metric-item">
+              <view class="metric-icon" style="background: var(--module-growth-bg);">
+                <image src="/assets/icons/scale.svg" mode="aspectFit" class="metric-icon-img" />
+              </view>
+              <text class="metric-value">{{latest.weight}}</text>
+              <text class="metric-unit">kg</text>
+              <text wx:if="{{latest.weightPercentile}}" class="metric-percentile">{{latest.weightPercentile}}</text>
+            </view>
+            <view class="metric-item">
+              <view class="metric-icon" style="background: var(--color-sky-bg);">
+                <image src="/assets/icons/ruler.svg" mode="aspectFit" class="metric-icon-img" />
+              </view>
+              <text class="metric-value">{{latest.height}}</text>
+              <text class="metric-unit">cm</text>
+              <text wx:if="{{latest.heightPercentile}}" class="metric-percentile">{{latest.heightPercentile}}</text>
+            </view>
+            <view class="metric-item">
+              <view class="metric-icon" style="background: var(--color-mint-bg);">
+                <image src="/assets/icons/brain.svg" mode="aspectFit" class="metric-icon-img" />
+              </view>
+              <text class="metric-value">{{latest.headCircumference}}</text>
+              <text class="metric-unit">cm</text>
+              <text wx:if="{{latest.headPercentile}}" class="metric-percentile">{{latest.headPercentile}}</text>
+            </view>
+          </view>
+          <text class="metrics-date">{{latest.dateText}}</text>
+        </view>
+
+        <!-- 曲线图类型切换 -->
+        <view class="chart-section">
+          <view class="chart-tabs">
+            <view
+              wx:for="{{chartTabs}}"
+              wx:key="value"
+              class="chart-tab {{chartType === item.value ? 'active' : ''}}"
+              data-value="{{item.value}}"
+              bindtap="onChartTypeChange"
+            >
+              <text>{{item.label}}</text>
+            </view>
+          </view>
+          <view class="chart-container" wx:if="{{hasChartData}}">
+            <growth-chart type="{{chartType}}" gender="{{gender}}" whoData="{{whoData}}" babyData="{{babyChartData}}" />
+          </view>
+          <view wx:else class="chart-empty">
+            <text class="chart-empty-text">添加测量数据后可查看生长曲线</text>
+          </view>
+        </view>
+
+        <!-- 测量记录列表 -->
+        <view class="section-divider">
+          <text class="section-divider-title">测量记录</text>
+        </view>
+        <view class="growth-record-list" wx:if="{{growthRecords.length > 0}}">
+          <view
+            class="growth-record-item"
+            wx:for="{{growthRecords}}"
+            wx:key="id"
+          >
+            <view class="growth-record-left">
+              <text class="growth-record-date">{{item.dateText}}</text>
+              <text class="growth-record-age">{{item.ageText}}</text>
+            </view>
+            <view class="growth-record-data">
+              <view wx:if="{{item.weight}}" class="growth-data-tag">
+                <text class="growth-data-label">体重</text>
+                <text class="growth-data-value">{{item.weight}}kg</text>
+              </view>
+              <view wx:if="{{item.height}}" class="growth-data-tag growth-data-tag-sky">
+                <text class="growth-data-label">身长</text>
+                <text class="growth-data-value">{{item.height}}cm</text>
+              </view>
+              <view wx:if="{{item.headCircumference}}" class="growth-data-tag growth-data-tag-mint">
+                <text class="growth-data-label">头围</text>
+                <text class="growth-data-value">{{item.headCircumference}}cm</text>
+              </view>
+            </view>
+            <view class="growth-record-actions">
+              <view class="growth-action-btn" data-id="{{item.id}}" bindtap="onEditGrowthRecord">
+                <t-icon name="edit" size="32rpx" color="#8B7B6B" />
+              </view>
+              <view class="growth-action-btn" data-id="{{item.id}}" bindtap="onDeleteGrowthRecord">
+                <t-icon name="delete" size="32rpx" color="#E8736C" />
+              </view>
+            </view>
+          </view>
+        </view>
+        <view wx:else class="empty-state">
+          <image class="empty-icon-img" src="/assets/icons/ruler.svg" mode="aspectFit" />
+          <text class="empty-text">暂无测量记录</text>
+        </view>
+
+        <!-- FAB 添加按钮 -->
+        <view class="fab-container" bindtap="toggleAddPanel">
+          <view class="fab-btn fab-btn-peach">
+            <t-icon name="add" size="48rpx" color="#FFFFFF" />
+          </view>
+        </view>
+      </view>
+    </t-tab-panel>
+
+    <!-- ===== 发育里程碑 Tab ===== -->
+    <t-tab-panel label="发育里程碑" value="{{1}}">
+      <view class="tab-content animate-fade-in">
+        <!-- 里程碑进度卡片 -->
+        <view class="milestone-progress-card">
+          <view class="milestone-progress-header">
+            <text class="milestone-progress-title">发育进度</text>
+            <text class="milestone-progress-percent">{{milestoneSummary.progress}}%</text>
+          </view>
+          <view class="milestone-progress-bar">
+            <view class="milestone-progress-fill" style="width: {{milestoneSummary.progress}}%;"></view>
+          </view>
+          <view class="milestone-progress-stats">
+            <view class="milestone-stat">
+              <text class="milestone-stat-num" style="color: var(--color-mint);">{{milestoneSummary.achieved}}</text>
+              <text class="milestone-stat-label">已达成</text>
+            </view>
+            <view class="milestone-stat">
+              <text class="milestone-stat-num" style="color: var(--color-amber);">{{milestoneSummary.pending}}</text>
+              <text class="milestone-stat-label">待达成</text>
+            </view>
+            <view class="milestone-stat">
+              <text class="milestone-stat-num" style="color: var(--color-coral);">{{milestoneSummary.concern}}</text>
+              <text class="milestone-stat-label">需关注</text>
+            </view>
+          </view>
+        </view>
+
+        <!-- 分类筛选 -->
+        <scroll-view scroll-x class="category-scroll">
+          <view class="category-tabs">
+            <view
+              wx:for="{{milestoneCategories}}"
+              wx:key="key"
+              class="category-tab {{activeCategory === item.key ? 'active' : ''}}"
+              data-value="{{item.key}}"
+              bindtap="onCategoryChange"
+            >
+              <text>{{item.label}}</text>
+            </view>
+          </view>
+        </scroll-view>
+
+        <!-- 里程碑分组列表 -->
+        <view class="milestone-list" wx:if="{{milestoneGroups.length > 0}}">
+          <view class="milestone-group" wx:for="{{milestoneGroups}}" wx:key="month" wx:for-index="groupIndex">
+            <view class="milestone-month-header">
+              <text class="milestone-month-text">{{item.label}}</text>
+            </view>
+            <view
+              class="milestone-item {{milestone.status}} {{milestone.isCurrentFocus ? 'current-focus' : ''}}"
+              wx:for="{{item.items}}"
+              wx:key="id"
+              wx:for-item="milestone"
+              wx:for-index="itemIndex"
+              data-group-index="{{groupIndex}}"
+              data-item-index="{{itemIndex}}"
+              bindtap="onMilestoneRecord"
+              hover-class="card-hover"
+            >
+              <view class="milestone-status-icon {{milestone.status}}">
+                <t-icon
+                  name="{{milestone.status === 'achieved' ? 'check-circle-filled' : milestone.status === 'concern' ? 'error-circle-filled' : 'time-filled'}}"
+                  size="36rpx"
+                  color="{{milestone.status === 'achieved' ? '#7EBEA5' : milestone.status === 'concern' ? '#E8736C' : '#F0B44A'}}"
+                />
+              </view>
+              <view class="milestone-item-content">
+                <view class="milestone-name-row">
+                  <text class="milestone-item-name">{{milestone.name}}</text>
+                  <view wx:if="{{milestone.isCurrentFocus && milestone.status !== 'achieved'}}" class="milestone-focus-tag">
+                    <text>当前关注</text>
+                  </view>
+                </view>
+                <view class="milestone-item-meta">
+                  <view class="milestone-category-tag" style="background: {{milestone.categoryColor}}20; color: {{milestone.categoryColor}};">
+                    <text>{{milestone.categoryLabel}}</text>
+                  </view>
+                  <text wx:if="{{milestone.dateText}}" class="milestone-date-text">{{milestone.dateText}}</text>
+                </view>
+                <text wx:if="{{milestone.description}}" class="milestone-desc">{{milestone.description}}</text>
+                <text wx:if="{{milestone.concernTip && milestone.status === 'concern'}}" class="milestone-concern-tip">{{milestone.concernTip}}</text>
+              </view>
+              <view class="milestone-action-hint">
+                <t-icon name="chevron-right" size="32rpx" color="#B5A89C" />
+              </view>
+            </view>
+          </view>
+        </view>
+        <view wx:else class="empty-state">
+          <text class="empty-text">暂无里程碑数据</text>
+        </view>
+      </view>
+    </t-tab-panel>
+  </t-tabs>
+
+  <!-- 生长数据添加/编辑弹窗 -->
+  <t-popup visible="{{showAddPanel}}" placement="bottom" bind:visible-change="toggleAddPanel">
+    <view class="popup-content">
+      <view class="popup-header">
+        <text class="popup-title">{{isEdit ? '编辑测量数据' : '添加测量数据'}}</text>
+        <view class="popup-close" bindtap="toggleAddPanel">
+          <t-icon name="close" size="40rpx" />
+        </view>
+      </view>
+      <scroll-view scroll-y class="popup-form-scroll">
+        <view class="form-group">
+          <text class="form-label">测量日期</text>
+          <view class="form-date-input" bindtap="openGrowthDatePicker">
+            <text class="form-date-text">{{newRecord.date}}</text>
+            <t-icon name="calendar" size="36rpx" color="#B5A89C" />
+          </view>
+        </view>
+        <view class="form-group">
+          <text class="form-label">体重 (kg)</text>
+          <t-input type="digit" placeholder="如 3.5" value="{{newRecord.weight}}" bind:change="onWeightChange" />
+        </view>
+        <view class="form-group">
+          <text class="form-label">身长 (cm)</text>
+          <t-input type="digit" placeholder="如 50.0" value="{{newRecord.height}}" bind:change="onHeightChange" />
+        </view>
+        <view class="form-group">
+          <text class="form-label">头围 (cm)</text>
+          <t-input type="digit" placeholder="如 34.5" value="{{newRecord.headCircumference}}" bind:change="onHeadChange" />
+        </view>
+        <view class="form-group">
+          <text class="form-label">备注</text>
+          <t-input placeholder="备注(可选)" value="{{newRecord.note}}" bind:change="onGrowthNoteChange" />
+        </view>
+      </scroll-view>
+      <view class="popup-actions">
+        <view class="btn-primary" bindtap="onSaveGrowth">保存</view>
+      </view>
+    </view>
+  </t-popup>
+
+  <!-- 里程碑记录弹窗 -->
+  <t-popup visible="{{showMilestonePopup}}" placement="bottom" bind:visible-change="closeMilestonePopup">
+    <view class="popup-content">
+      <view class="popup-header">
+        <text class="popup-title">{{selectedMilestone.record ? '编辑里程碑' : '记录里程碑'}}</text>
+        <view class="popup-close" bindtap="closeMilestonePopup">
+          <t-icon name="close" size="40rpx" />
+        </view>
+      </view>
+      <view wx:if="{{selectedMilestone}}" class="popup-milestone-info">
+        <text class="popup-milestone-name">{{selectedMilestone.name}}</text>
+        <text wx:if="{{selectedMilestone.description}}" class="popup-milestone-desc">{{selectedMilestone.description}}</text>
+      </view>
+      <view class="form-group">
+        <text class="form-label">达成日期</text>
+        <view class="form-date-input" bindtap="onMilestoneDateTap">
+          <text class="form-date-text">{{milestoneForm.achievedDate}}</text>
+          <t-icon name="calendar" size="36rpx" color="#B5A89C" />
+        </view>
+      </view>
+      <view class="form-group">
+        <text class="form-label">备注</text>
+        <t-input placeholder="备注(可选)" value="{{milestoneForm.note}}" bind:change="onMilestoneNoteChange" />
+      </view>
+      <view class="popup-actions">
+        <view class="btn-primary" bindtap="saveMilestoneRecord">保存</view>
+        <view wx:if="{{selectedMilestone.record}}" class="btn-delete" bindtap="deleteMilestoneRecord">删除记录</view>
+      </view>
+    </view>
+  </t-popup>
+
+  <!-- 日期选择器 -->
+  <t-date-time-picker visible="{{showDatePicker}}" mode="date" value="{{newRecord.date}}" title="选择测量日期" bind:confirm="onGrowthDateConfirm" bind:cancel="onGrowthDateCancel" />
+  <t-date-time-picker visible="{{showMilestoneDatePicker}}" mode="date" value="{{milestoneForm.achievedDate}}" title="选择达成日期" bind:confirm="onMilestoneDateConfirm" bind:cancel="onMilestoneDateCancel" />
+</view>

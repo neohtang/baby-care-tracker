@@ -14,7 +14,7 @@ Page({
     milestoneGroups: [] as WechatMiniprogram.IAnyObject[],
     summary: { total: 0, achieved: 0, pending: 0, concern: 0, progress: 0, currentFocus: 0 },
     categories: [
-      { key: 'all', label: '全部', color: '#7C6FE0' },
+      { key: 'all', label: '全部', color: '#C8956C' },
       ...MILESTONE_CATEGORIES,
     ],
     activeCategory: 'all' as CategoryFilter,

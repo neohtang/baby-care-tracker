@@ -57,10 +57,10 @@ Component({
     },
     'gender': function(gender: string) {
       const colorMap: Record<string, string[]> = {
-        male: ['#60A5FA', '#93C5FD'],
-        female: ['#F0ABFC', '#F5D0FE'],
+        male: ['#7CAFD4', '#A8CBE4'],
+        female: ['#F5A5B8', '#F8C4D0'],
       };
-      const colors = colorMap[gender] || ['#A78BFA', '#C4B5FD'];
+      const colors = colorMap[gender] || ['#C8956C', '#D4A97A'];
       this.setData({
         ringGradient: `linear-gradient(135deg, ${colors[0]}, ${colors[1]})`,
         placeholderBg: colors[0],
@@ -72,8 +72,8 @@ Component({
     initial: '',
     avatarSize: '120rpx',
     fontSize: '48rpx',
-    ringGradient: 'linear-gradient(135deg, #A78BFA, #C4B5FD)',
-    placeholderBg: '#A78BFA',
+    ringGradient: 'linear-gradient(135deg, #C8956C, #D4A97A)',
+    placeholderBg: '#C8956C',
   },
 
   lifetimes: {

@@ -1,0 +1,253 @@
+/* pages/growth-center/index.wxss */
+/* 成长发育合并页 — Tender Bloom 主题 */
+
+.page-growth { min-height: 100vh; background: var(--td-bg-color-page, #FDF8F3); padding-bottom: env(safe-area-inset-bottom); }
+
+.growth-tabs {
+  --td-tab-item-color: var(--td-text-color-secondary, #8B7B6B);
+  --td-tab-item-active-color: var(--td-brand-color, #C8956C);
+  --td-tab-track-color: var(--td-brand-color, #C8956C);
+  --td-tab-track-thickness: 6rpx;
+  --td-tab-item-font-size: 30rpx;
+}
+
+.tab-content { padding: 24rpx 0; min-height: calc(100vh - 100rpx); }
+
+/* ======= 最新测量三指标 ======= */
+.metrics-card {
+  background: #FFFFFF; border-radius: 24rpx; padding: 28rpx 32rpx;
+  margin: 0 24rpx 20rpx; box-shadow: var(--shadow-card);
+}
+
+.metrics-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16rpx; }
+
+.metric-item { display: flex; flex-direction: column; align-items: center; gap: 6rpx; }
+
+.metric-icon {
+  width: 64rpx; height: 64rpx; border-radius: 16rpx;
+  display: flex; align-items: center; justify-content: center;
+}
+
+.metric-icon-img { width: 32rpx; height: 32rpx; }
+
+.metric-value { font-size: 36rpx; font-weight: 700; color: var(--td-text-color-primary, #3D2E22); line-height: 1.2; }
+
+.metric-unit { font-size: 22rpx; color: var(--td-text-color-secondary, #8B7B6B); }
+
+.metric-percentile {
+  font-size: 20rpx; font-weight: 500; color: var(--color-mint, #7EBEA5);
+  background: var(--color-mint-light, #E8F5EE); padding: 2rpx 12rpx; border-radius: 999rpx;
+}
+
+.metrics-date {
+  font-size: 22rpx; color: var(--td-text-color-placeholder, #B5A89C);
+  text-align: center; margin-top: 12rpx;
+}
+
+/* ======= 曲线图 ======= */
+.chart-section { margin: 0 24rpx 20rpx; }
+
+.chart-tabs { display: flex; gap: 12rpx; margin-bottom: 16rpx; }
+
+.chart-tab {
+  padding: 8rpx 24rpx; border-radius: 999rpx; font-size: 26rpx; font-weight: 500;
+  color: var(--td-text-color-secondary, #8B7B6B); background: #FFFFFF;
+  border: 2rpx solid #F0E8DF; transition: all 0.2s ease;
+}
+
+.chart-tab.active {
+  background: var(--color-peach, #F5A5B8); color: #FFFFFF; border-color: var(--color-peach);
+}
+
+.chart-container {
+  background: #FFFFFF; border-radius: 20rpx; padding: 16rpx;
+  box-shadow: var(--shadow-card-sm); min-height: 400rpx;
+}
+
+.chart-empty {
+  height: 300rpx; display: flex; align-items: center; justify-content: center;
+  background: #FFFFFF; border-radius: 20rpx;
+}
+
+.chart-empty-text { font-size: 26rpx; color: var(--td-text-color-placeholder, #B5A89C); }
+
+/* ======= 测量记录列表 ======= */
+.section-divider { padding: 20rpx 32rpx 12rpx; }
+.section-divider-title { font-size: 28rpx; font-weight: 600; color: var(--td-text-color-primary); }
+
+.growth-record-list { padding: 0 24rpx; }
+
+.growth-record-item {
+  display: flex; align-items: center; padding: 20rpx 24rpx;
+  background: #FFFFFF; border-radius: 16rpx; margin-bottom: 12rpx;
+  box-shadow: var(--shadow-card-sm);
+}
+
+.growth-record-left { min-width: 120rpx; margin-right: 16rpx; }
+
+.growth-record-date {
+  font-size: 26rpx; font-weight: 600; color: var(--td-text-color-primary); display: block;
+}
+
+.growth-record-age {
+  font-size: 22rpx; color: var(--td-text-color-placeholder); margin-top: 4rpx; display: block;
+}
+
+.growth-record-data { flex: 1; display: flex; flex-wrap: wrap; gap: 8rpx; }
+
+.growth-data-tag {
+  padding: 4rpx 14rpx; border-radius: 8rpx;
+  background: var(--module-growth-bg, #FFF0F4); display: flex; align-items: center; gap: 4rpx;
+}
+
+.growth-data-tag-sky { background: var(--color-sky-bg, #F0F7FC); }
+.growth-data-tag-mint { background: var(--color-mint-bg, #F0F9F5); }
+
+.growth-data-label { font-size: 20rpx; color: var(--td-text-color-secondary); }
+.growth-data-value { font-size: 24rpx; font-weight: 600; color: var(--td-text-color-primary); }
+
+.growth-record-actions { display: flex; gap: 16rpx; margin-left: 12rpx; flex-shrink: 0; }
+
+.growth-action-btn {
+  width: 56rpx; height: 56rpx; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--td-bg-color-secondarycontainer, #F5EDE4);
+}
+
+/* ======= 里程碑进度 ======= */
+.milestone-progress-card {
+  background: #FFFFFF; border-radius: 24rpx; padding: 28rpx 32rpx;
+  margin: 0 24rpx 20rpx; box-shadow: var(--shadow-card);
+}
+
+.milestone-progress-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16rpx; }
+.milestone-progress-title { font-size: 30rpx; font-weight: 600; color: var(--td-text-color-primary); }
+.milestone-progress-percent { font-size: 30rpx; font-weight: 700; color: var(--td-brand-color); }
+
+.milestone-progress-bar {
+  height: 12rpx; background: var(--td-bg-color-secondarycontainer); border-radius: 6rpx;
+  overflow: hidden; margin-bottom: 20rpx;
+}
+
+.milestone-progress-fill {
+  height: 100%; background: var(--gradient-peach); border-radius: 6rpx; transition: width 0.4s ease;
+}
+
+.milestone-progress-stats { display: flex; justify-content: space-around; }
+
+.milestone-stat { display: flex; flex-direction: column; align-items: center; gap: 4rpx; }
+.milestone-stat-num { font-size: 36rpx; font-weight: 700; }
+.milestone-stat-label { font-size: 22rpx; color: var(--td-text-color-secondary); }
+
+/* ======= 分类筛选 ======= */
+.category-scroll { white-space: nowrap; padding: 0 24rpx; margin-bottom: 16rpx; }
+
+.category-tabs { display: inline-flex; gap: 12rpx; }
+
+.category-tab {
+  display: inline-flex; padding: 8rpx 24rpx; border-radius: 999rpx; font-size: 26rpx; font-weight: 500;
+  color: var(--td-text-color-secondary); background: #FFFFFF; border: 2rpx solid #F0E8DF;
+}
+
+.category-tab.active {
+  background: var(--td-brand-color, #C8956C); color: #FFFFFF; border-color: var(--td-brand-color);
+}
+
+/* ======= 里程碑列表 ======= */
+.milestone-list { padding: 0 24rpx; }
+
+.milestone-group { margin-bottom: 24rpx; }
+
+.milestone-month-header { padding: 12rpx 0; }
+.milestone-month-text { font-size: 28rpx; font-weight: 600; color: var(--td-text-color-primary); }
+
+.milestone-item {
+  display: flex; padding: 20rpx 24rpx; background: #FFFFFF; border-radius: 16rpx;
+  margin-bottom: 12rpx; box-shadow: var(--shadow-card-sm); gap: 16rpx;
+  align-items: flex-start; transition: background 0.15s ease;
+}
+
+.milestone-item.current-focus {
+  border-left: 6rpx solid var(--td-brand-color, #C8956C);
+}
+
+.card-hover { background: #FDF8F3; }
+
+.milestone-status-icon { flex-shrink: 0; padding-top: 4rpx; }
+
+.milestone-item-content { flex: 1; min-width: 0; }
+
+.milestone-item-name {
+  font-size: 28rpx; font-weight: 600; color: var(--td-text-color-primary); display: block;
+}
+
+.milestone-item.achieved .milestone-item-name { color: var(--color-mint); }
+
+.milestone-item-meta { display: flex; align-items: center; gap: 12rpx; margin-top: 6rpx; }
+
+.milestone-category-tag {
+  padding: 2rpx 12rpx; border-radius: 999rpx; font-size: 20rpx; font-weight: 500;
+}
+
+.milestone-date-text { font-size: 22rpx; color: var(--td-text-color-placeholder); }
+
+.milestone-desc {
+  font-size: 24rpx; color: var(--td-text-color-secondary); margin-top: 6rpx;
+  display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden;
+}
+
+.milestone-name-row {
+  display: flex; align-items: center; gap: 8rpx;
+}
+
+.milestone-focus-tag {
+  display: inline-flex; align-items: center;
+  padding: 2rpx 12rpx; border-radius: 999rpx;
+  background: rgba(200, 149, 108, 0.12); font-size: 18rpx;
+  color: var(--td-brand-color, #C8956C); font-weight: 500;
+  flex-shrink: 0; white-space: nowrap;
+}
+
+.milestone-concern-tip {
+  display: block; font-size: 22rpx; color: var(--color-coral, #E8736C);
+  margin-top: 6rpx; line-height: 1.4;
+  padding: 6rpx 12rpx; background: rgba(232, 115, 108, 0.06);
+  border-radius: 8rpx;
+}
+
+.milestone-action-hint {
+  flex-shrink: 0; display: flex; align-items: center; padding-top: 4rpx;
+}
+
+/* ======= FAB / 弹窗 / 空状态 ======= */
+.fab-container { position: fixed; right: 32rpx; bottom: 180rpx; z-index: 100; }
+.fab-btn { width: 112rpx; height: 112rpx; border-radius: 50%; background: var(--gradient-primary); display: flex; align-items: center; justify-content: center; box-shadow: var(--shadow-float); transition: transform 0.15s ease; }
+.fab-btn:active { transform: scale(0.92); }
+.fab-btn-peach { background: var(--gradient-peach); box-shadow: 0 8rpx 32rpx rgba(245, 165, 184, 0.25); }
+
+.popup-content { padding: 40rpx 32rpx; padding-bottom: calc(40rpx + env(safe-area-inset-bottom)); background: #FFFFFF; border-radius: 32rpx 32rpx 0 0; }
+.popup-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 24rpx; }
+.popup-title { font-size: 36rpx; font-weight: 700; color: var(--td-text-color-primary); }
+.popup-close { width: 56rpx; height: 56rpx; display: flex; align-items: center; justify-content: center; color: #B5A89C; }
+
+.popup-milestone-info { margin-bottom: 24rpx; }
+.popup-milestone-name { font-size: 30rpx; font-weight: 600; color: var(--td-brand-color); display: block; }
+.popup-milestone-desc { font-size: 24rpx; color: var(--td-text-color-secondary); margin-top: 8rpx; display: block; }
+
+.popup-form-scroll { max-height: 50vh; }
+.form-group { margin-bottom: 24rpx; }
+.form-label { font-size: 26rpx; font-weight: 500; color: var(--td-text-color-secondary); margin-bottom: 8rpx; display: block; }
+.form-date-input { display: flex; align-items: center; justify-content: space-between; height: 88rpx; background: #FAF5F0; border-radius: 16rpx; padding: 0 24rpx; }
+.form-date-text { font-size: 30rpx; color: var(--td-text-color-primary); }
+
+.popup-actions { margin-top: 32rpx; display: flex; flex-direction: column; gap: 16rpx; }
+.btn-primary { width: 100%; height: 96rpx; border-radius: 20rpx; background: var(--gradient-primary); color: #FFFFFF; font-size: 32rpx; font-weight: 600; display: flex; align-items: center; justify-content: center; box-shadow: 0 4rpx 16rpx rgba(200, 149, 108, 0.25); }
+.btn-primary:active { transform: scale(0.98); }
+.btn-delete { width: 100%; height: 88rpx; border-radius: 20rpx; background: var(--color-coral-light); color: var(--color-coral); font-size: 30rpx; font-weight: 500; display: flex; align-items: center; justify-content: center; }
+
+.empty-state { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 80rpx 40rpx; }
+.empty-icon-img { width: 80rpx; height: 80rpx; margin-bottom: 24rpx; opacity: 0.4; }
+.empty-text { font-size: 30rpx; color: var(--td-text-color-secondary); font-weight: 500; }
+
+.animate-fade-in { animation: fadeIn 0.3s ease-in-out; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10rpx); } to { opacity: 1; transform: translateY(0); } }

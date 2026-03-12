@@ -19,7 +19,7 @@
         <text class="type-label">大便</text>
       </view>
       <view class="type-option {{type === 'both' ? 'type-active' : ''}} animate-scale" bindtap="onTypeChange" data-value="both">
-        <view class="type-icon-circle" style="background: linear-gradient(135deg, #EDE9FE, #F5F0FF);">
+        <view class="type-icon-circle" style="background: linear-gradient(135deg, #FAEEE0, #FFF8F0);">
           <image class="type-icon-img" src="/assets/icons/baby.svg" mode="aspectFit" />
         </view>
         <text class="type-label">大小便</text>

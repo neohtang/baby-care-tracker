@@ -5,6 +5,11 @@ interface IAppOption {
   globalData: {
     currentBabyId: string | null;
     storageVersion: number;
+    /** 跨 Tab 页导航意图：从首页快捷入口跳转时携带的目标动作 */
+    navIntent?: {
+      target: string;      // 目标页面标识，如 'growth-center'
+      action?: string;     // 具体动作，如 'addGrowth' | 'milestone'
+    } | null;
   };
 }
 

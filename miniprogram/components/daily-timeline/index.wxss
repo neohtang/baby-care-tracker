@@ -14,7 +14,7 @@
 }
 
 .tl-clickable:active {
-  background: rgba(124, 111, 224, 0.04);
+  background: rgba(200, 149, 108, 0.06);
   border-radius: 16rpx;
 }
 
@@ -79,7 +79,7 @@
 .tl-type {
   font-size: 28rpx;
   font-weight: 600;
-  color: #1A1A2E;
+  color: #3D2E22;
 }
 
 .tl-time {
@@ -106,7 +106,7 @@
 
 .tl-more-text {
   font-size: 24rpx;
-  color: #7C6FE0;
+  color: #C8956C;
   font-weight: 500;
 }
 

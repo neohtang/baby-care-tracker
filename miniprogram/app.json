@@ -1,22 +1,19 @@
 {
   "pages": [
     "pages/home/index",
-    "pages/feeding/index",
+    "pages/daily/index",
+    "pages/health-center/index",
+    "pages/growth-center/index",
+    "pages/profile/index",
     "pages/feeding/add/index",
-    "pages/sleep/index",
     "pages/sleep/add/index",
-    "pages/diaper/index",
     "pages/diaper/add/index",
-    "pages/health/index",
     "pages/health/add/index",
-    "pages/growth/index",
-    "pages/vaccine/index",
-    "pages/milestone/index",
-    "pages/settings/index"
+    "pages/milestone/index"
   ],
   "tabBar": {
-    "color": "#9CA3AF",
-    "selectedColor": "#7C6FE0",
+    "color": "#B5A89C",
+    "selectedColor": "#C8956C",
     "backgroundColor": "#FFFFFF",
     "borderStyle": "white",
     "list": [
@@ -27,31 +24,37 @@
         "selectedIconPath": "assets/icons/home-active.png"
       },
       {
-        "pagePath": "pages/feeding/index",
-        "text": "记录",
-        "iconPath": "assets/icons/record.png",
-        "selectedIconPath": "assets/icons/record-active.png"
+        "pagePath": "pages/daily/index",
+        "text": "日常记录",
+        "iconPath": "assets/icons/daily.png",
+        "selectedIconPath": "assets/icons/daily-active.png"
       },
       {
-        "pagePath": "pages/vaccine/index",
-        "text": "疫苗",
-        "iconPath": "assets/icons/vaccine.png",
-        "selectedIconPath": "assets/icons/vaccine-active.png"
+        "pagePath": "pages/health-center/index",
+        "text": "健康监测",
+        "iconPath": "assets/icons/health-center.png",
+        "selectedIconPath": "assets/icons/health-center-active.png"
       },
       {
-        "pagePath": "pages/settings/index",
-        "text": "设置",
-        "iconPath": "assets/icons/settings.png",
-        "selectedIconPath": "assets/icons/settings-active.png"
+        "pagePath": "pages/growth-center/index",
+        "text": "成长发育",
+        "iconPath": "assets/icons/growth-center.png",
+        "selectedIconPath": "assets/icons/growth-center-active.png"
+      },
+      {
+        "pagePath": "pages/profile/index",
+        "text": "我的",
+        "iconPath": "assets/icons/profile.png",
+        "selectedIconPath": "assets/icons/profile-active.png"
       }
     ]
   },
   "window": {
     "backgroundTextStyle": "light",
-    "navigationBarBackgroundColor": "#7C6FE0",
+    "navigationBarBackgroundColor": "#C8956C",
     "navigationBarTitleText": "宝宝养护追踪",
     "navigationBarTextStyle": "white",
-    "backgroundColor": "#FBF8FF"
+    "backgroundColor": "#FDF8F3"
   },
   "lazyCodeLoading": "requiredComponents",
   "usingComponents": {
@@ -59,7 +62,9 @@
     "t-input": "tdesign-miniprogram/input/input",
     "t-textarea": "tdesign-miniprogram/textarea/textarea",
     "t-date-time-picker": "tdesign-miniprogram/date-time-picker/date-time-picker",
-    "t-popup": "tdesign-miniprogram/popup/popup"
+    "t-popup": "tdesign-miniprogram/popup/popup",
+    "t-tabs": "tdesign-miniprogram/tabs/tabs",
+    "t-tab-panel": "tdesign-miniprogram/tab-panel/tab-panel"
   },
   "sitemapLocation": "sitemap.json",
   "style": "v2"

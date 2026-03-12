@@ -9,21 +9,21 @@ const CHART_CONFIG = {
   padding: { top: 40, right: 30, bottom: 50, left: 55 },
   colors: {
     /** WHO 百分位区间填充色 */
-    whoP3_P97: 'rgba(124, 111, 224, 0.06)',
-    whoP15_P85: 'rgba(124, 111, 224, 0.10)',
-    whoP50: 'rgba(124, 111, 224, 0.35)',
+    whoP3_P97: 'rgba(200, 149, 108, 0.06)',
+    whoP15_P85: 'rgba(200, 149, 108, 0.10)',
+    whoP50: 'rgba(200, 149, 108, 0.35)',
     /** WHO 百分位线颜色 */
-    whoLine: 'rgba(124, 111, 224, 0.2)',
-    whoMedian: 'rgba(124, 111, 224, 0.45)',
+    whoLine: 'rgba(200, 149, 108, 0.2)',
+    whoMedian: 'rgba(200, 149, 108, 0.45)',
     /** 宝宝数据线 */
-    dataLine: '#7C6FE0',
-    dataPoint: '#7C6FE0',
+    dataLine: '#C8956C',
+    dataPoint: '#C8956C',
     dataPointStroke: '#FFFFFF',
     /** 网格和坐标轴 */
     grid: '#F3F4F6',
     axis: '#E5E7EB',
-    axisLabel: '#9CA3AF',
-    axisTitle: '#6B7280',
+    axisLabel: '#8B7B6B',
+    axisTitle: '#6B5E52',
   },
   /** 百分位标签 */
   percentileLabels: ['P3', 'P15', 'P50', 'P85', 'P97'],
@@ -348,7 +348,7 @@ Component({
         const x = toX(last.month);
         const y = toY(last.value);
 
-        ctx.fillStyle = 'rgba(124, 111, 224, 0.15)';
+        ctx.fillStyle = 'rgba(200, 149, 108, 0.15)';
         ctx.beginPath();
         ctx.arc(x, y, 10, 0, Math.PI * 2);
         ctx.fill();

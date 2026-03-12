@@ -1,0 +1,254 @@
+<!--pages/daily/index.wxml-->
+<!--日常记录合并页 — 喂养/睡眠/排便 (Tender Bloom 主题)-->
+
+<view class="page-daily">
+  <!-- 顶部 Tab 导航 -->
+  <t-tabs defaultValue="{{0}}" bind:change="onMainTabChange" t-class="daily-tabs">
+    <t-tab-panel label="喂养" value="{{0}}">
+      <!-- ===== 喂养模块 ===== -->
+      <view class="tab-content animate-fade-in">
+        <!-- 今日统计卡片 -->
+        <view class="stats-card">
+          <view class="stats-header">
+            <text class="stats-title">今日喂养</text>
+            <view class="stats-badge">
+              <text class="stats-badge-text">{{feedingStats.totalCount}}次</text>
+            </view>
+          </view>
+          <view class="stats-grid stats-grid-3">
+            <view class="stats-item">
+              <view class="stats-icon-wrap" style="background: var(--module-feeding-bg);">
+                <image class="stats-icon-img" src="/assets/icons/breastfeed.svg" mode="aspectFit" />
+              </view>
+              <text class="stats-item-value">{{feedingStats.breastCount}}</text>
+              <text class="stats-item-label">母乳</text>
+            </view>
+            <view class="stats-item">
+              <view class="stats-icon-wrap" style="background: var(--color-sky-bg);">
+                <image class="stats-icon-img" src="/assets/icons/bottle.svg" mode="aspectFit" />
+              </view>
+              <text class="stats-item-value">{{feedingStats.formulaCount}}</text>
+              <text class="stats-item-label">配方奶</text>
+            </view>
+            <view class="stats-item">
+              <view class="stats-icon-wrap" style="background: var(--color-mint-bg);">
+                <image class="stats-icon-img" src="/assets/icons/solid-food.svg" mode="aspectFit" />
+              </view>
+              <text class="stats-item-value">{{feedingStats.solidCount}}</text>
+              <text class="stats-item-label">辅食</text>
+            </view>
+          </view>
+        </view>
+
+        <!-- 类型筛选 -->
+        <view class="filter-tabs">
+          <view
+            wx:for="{{feedingTabs}}"
+            wx:key="value"
+            class="filter-tab {{feedingActiveTab === item.value ? 'active' : ''}}"
+            data-value="{{item.value}}"
+            bindtap="onFeedingTabChange"
+          >
+            <text>{{item.label}}</text>
+          </view>
+        </view>
+
+        <!-- 记录列表 -->
+        <view class="record-list" wx:if="{{!feedingEmpty}}">
+          <record-card
+            wx:for="{{feedingRecords}}"
+            wx:key="id"
+            recordId="{{item.id}}"
+            icon="{{item.icon}}"
+            iconBg="{{item.iconBg}}"
+            title="{{item.typeName}}"
+            timeText="{{item.timeText}}"
+            detail="{{item.detail}}"
+            tags="{{item.tags}}"
+            showEdit="{{true}}"
+            bind:edit="onEditFeedingRecord"
+            bind:delete="onDeleteFeedingRecord"
+          />
+        </view>
+
+        <!-- 空状态 -->
+        <view wx:if="{{feedingEmpty && hasBaby}}" class="empty-state">
+          <image class="empty-icon-img" src="/assets/icons/bottle.svg" mode="aspectFit" />
+          <text class="empty-text">今日暂无喂养记录</text>
+          <text class="empty-hint">点击右下角按钮添加记录</text>
+        </view>
+        <view wx:if="{{!hasBaby}}" class="empty-state">
+          <text class="empty-text">请先添加宝宝信息</text>
+        </view>
+
+        <!-- FAB 按钮 -->
+        <view class="fab-container" bindtap="goToAddFeeding">
+          <view class="fab-btn">
+            <t-icon name="add" size="48rpx" color="#FFFFFF" />
+          </view>
+        </view>
+      </view>
+    </t-tab-panel>
+
+    <t-tab-panel label="睡眠" value="{{1}}">
+      <!-- ===== 睡眠模块 ===== -->
+      <view class="tab-content animate-fade-in">
+        <!-- 今日统计卡片 -->
+        <view class="stats-card">
+          <view class="stats-header">
+            <text class="stats-title">今日睡眠</text>
+            <view class="stats-badge stats-badge-sky">
+              <text class="stats-badge-text">{{sleepStats.totalDurationText}}h</text>
+            </view>
+          </view>
+          <view class="stats-grid stats-grid-3">
+            <view class="stats-item">
+              <text class="stats-item-value stats-value-sky">{{sleepStats.totalDurationText}}</text>
+              <text class="stats-item-label">总时长(h)</text>
+            </view>
+            <view class="stats-item">
+              <text class="stats-item-value stats-value-sky">{{sleepStats.napCount}}</text>
+              <text class="stats-item-label">小睡次数</text>
+            </view>
+            <view class="stats-item">
+              <text class="stats-item-value stats-value-sky">{{sleepStats.nightDurationText}}</text>
+              <text class="stats-item-label">夜间(h)</text>
+            </view>
+          </view>
+        </view>
+
+        <!-- 睡眠控制器 -->
+        <view class="sleep-controller">
+          <view class="sleep-toggle-area" bindtap="toggleSleep">
+            <view class="sleep-circle {{isSleeping ? 'sleeping' : ''}}">
+              <view wx:if="{{isSleeping}}" class="sleep-ring"></view>
+              <image
+                class="sleep-emoji-img"
+                src="{{isSleeping ? '/assets/icons/moon.svg' : '/assets/icons/sun.svg'}}"
+                mode="aspectFit"
+              />
+            </view>
+          </view>
+          <text class="sleep-action-text">{{isSleeping ? '点击结束睡眠' : '点击开始睡眠'}}</text>
+          <text wx:if="{{isSleeping && sleepDurationText}}" class="sleep-duration-text">已睡 {{sleepDurationText}}</text>
+        </view>
+
+        <!-- 记录列表 -->
+        <view class="section-divider">
+          <text class="section-divider-title">睡眠记录</text>
+        </view>
+        <view class="record-list" wx:if="{{!sleepEmpty}}">
+          <record-card
+            wx:for="{{sleepRecords}}"
+            wx:key="id"
+            recordId="{{item.id}}"
+            icon="{{item.icon}}"
+            iconBg="{{item.iconBg}}"
+            title="{{item.typeName}}"
+            timeText="{{item.durationText || item.timeText}}"
+            detail="{{item.detail}}"
+            bind:delete="onDeleteSleepRecord"
+          />
+        </view>
+
+        <!-- 空状态 -->
+        <view wx:if="{{sleepEmpty && hasBaby}}" class="empty-state">
+          <image class="empty-icon-img" src="/assets/icons/sleep.svg" mode="aspectFit" />
+          <text class="empty-text">今日暂无睡眠记录</text>
+          <text class="empty-hint">点击上方按钮开始记录睡眠</text>
+        </view>
+
+        <!-- FAB 按钮（手动添加） -->
+        <view class="fab-container" bindtap="goToAddSleep">
+          <view class="fab-btn fab-btn-sky">
+            <t-icon name="add" size="48rpx" color="#FFFFFF" />
+          </view>
+        </view>
+      </view>
+    </t-tab-panel>
+
+    <t-tab-panel label="排便" value="{{2}}">
+      <!-- ===== 排便模块 ===== -->
+      <view class="tab-content animate-fade-in">
+        <!-- 今日统计卡片 -->
+        <view class="stats-card">
+          <view class="stats-header">
+            <text class="stats-title">今日换尿布</text>
+            <view class="stats-badge stats-badge-mint {{diaperStats.hasAlert ? 'stats-badge-alert' : ''}}">
+              <text class="stats-badge-text">{{diaperStats.totalCount}}次</text>
+            </view>
+          </view>
+          <view class="stats-grid stats-grid-3">
+            <view class="stats-item">
+              <view class="stats-circle">
+                <text class="stats-circle-num">{{diaperStats.totalCount}}</text>
+              </view>
+              <text class="stats-item-label">总次数</text>
+            </view>
+            <view class="stats-item">
+              <view class="stats-circle stats-circle-sky">
+                <text class="stats-circle-num">{{diaperStats.peeCount}}</text>
+              </view>
+              <text class="stats-item-label">小便</text>
+            </view>
+            <view class="stats-item">
+              <view class="stats-circle stats-circle-amber">
+                <text class="stats-circle-num">{{diaperStats.poopCount}}</text>
+              </view>
+              <text class="stats-item-label">大便</text>
+            </view>
+          </view>
+        </view>
+
+        <!-- 快捷操作 -->
+        <view class="diaper-quick-actions">
+          <view class="diaper-quick-btn" bindtap="quickPee" hover-class="animate-scale">
+            <image class="diaper-quick-icon" src="/assets/icons/waterdrop.svg" mode="aspectFit" />
+            <text class="diaper-quick-text">快速记小便</text>
+          </view>
+          <view class="diaper-quick-btn diaper-quick-btn-alt" bindtap="quickPoop" hover-class="animate-scale">
+            <image class="diaper-quick-icon" src="/assets/icons/poop.svg" mode="aspectFit" />
+            <text class="diaper-quick-text">记录大便</text>
+          </view>
+        </view>
+
+        <!-- 记录列表 -->
+        <view class="section-divider">
+          <text class="section-divider-title">排便记录</text>
+        </view>
+        <view class="record-list" wx:if="{{!diaperEmpty}}">
+          <record-card
+            wx:for="{{diaperRecords}}"
+            wx:key="id"
+            recordId="{{item.id}}"
+            icon="{{item.icon}}"
+            iconBg="{{item.iconBg}}"
+            title="{{item.typeName}}"
+            timeText="{{item.timeText}}"
+            detail="{{item.detail}}"
+            tags="{{item.tags}}"
+            showEdit="{{true}}"
+            alert="{{item.isAbnormal}}"
+            alertText="{{item.alertText}}"
+            bind:edit="onEditDiaperRecord"
+            bind:delete="onDeleteDiaperRecord"
+          />
+        </view>
+
+        <!-- 空状态 -->
+        <view wx:if="{{diaperEmpty && hasBaby}}" class="empty-state">
+          <image class="empty-icon-img" src="/assets/icons/diaper-pin.svg" mode="aspectFit" />
+          <text class="empty-text">今日暂无排便记录</text>
+          <text class="empty-hint">点击上方按钮快速记录</text>
+        </view>
+
+        <!-- FAB 按钮 -->
+        <view class="fab-container" bindtap="goToAddDiaper">
+          <view class="fab-btn fab-btn-mint">
+            <t-icon name="add" size="48rpx" color="#FFFFFF" />
+          </view>
+        </view>
+      </view>
+    </t-tab-panel>
+  </t-tabs>
+</view>

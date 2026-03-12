@@ -35,7 +35,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #A78BFA;
+  background: #C8956C;
 }
 
 .avatar-initial {
@@ -52,9 +52,9 @@
 .age-badge {
   margin-top: 8rpx;
   padding: 4rpx 16rpx;
-  background: linear-gradient(135deg, #7C6FE0, #A78BFA);
+  background: linear-gradient(135deg, #C8956C, #D4A97A);
   border-radius: 20rpx;
-  box-shadow: 0 2rpx 8rpx rgba(124, 111, 224, 0.25);
+  box-shadow: 0 2rpx 8rpx rgba(200, 149, 108, 0.25);
 }
 
 .age-text {

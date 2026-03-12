@@ -23,7 +23,7 @@
         <text class="summary-stat-label">需关注</text>
       </view>
       <view class="summary-stat-row">
-        <text class="summary-stat-num" style="color:#A78BFA;">{{summary.currentFocus}}</text>
+        <text class="summary-stat-num" style="color:#D4A97A;">{{summary.currentFocus}}</text>
         <text class="summary-stat-label">当前关注</text>
       </view>
     </view>

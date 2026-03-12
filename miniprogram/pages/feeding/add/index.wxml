@@ -11,7 +11,7 @@
         bindtap="onTypeChange"
         data-value="breast"
       >
-        <view class="type-icon-circle" style="background: linear-gradient(135deg, #FCE7F3, #F5F0FF);">
+        <view class="type-icon-circle" style="background: linear-gradient(135deg, #FCE7F3, #FFF8F0);">
           <image class="type-icon-img" src="/assets/icons/breastfeed.svg" mode="aspectFit" />
         </view>
         <text class="type-label">母乳</text>
@@ -21,7 +21,7 @@
         bindtap="onTypeChange"
         data-value="formula"
       >
-        <view class="type-icon-circle" style="background: linear-gradient(135deg, #DBEAFE, #EDE9FE);">
+        <view class="type-icon-circle" style="background: linear-gradient(135deg, #DBEAFE, #FAEEE0);">
           <image class="type-icon-img" src="/assets/icons/bottle.svg" mode="aspectFit" />
         </view>
         <text class="type-label">配方奶</text>
@@ -71,7 +71,7 @@
       <block wx:if="{{isTimerMode}}">
         <timer-widget
           title=""
-          color="#7C6FE0"
+          color="#C8956C"
           bind:stop="onTimerStop"
         />
       </block>

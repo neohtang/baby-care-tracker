@@ -14,7 +14,7 @@ Component({
     /** 主题色 */
     color: {
       type: String,
-      value: '#7C6FE0',
+      value: '#C8956C',
     },
     /** 是否自动开始 */
     autoStart: {

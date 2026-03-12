@@ -5,7 +5,7 @@
   padding: 24rpx;
   padding-bottom: 200rpx;
   min-height: 100vh;
-  background: #FBF8FF;
+  background: #FDF8F3;
 }
 
 .card {
@@ -19,7 +19,7 @@
 .section-title {
   font-size: 28rpx;
   font-weight: 600;
-  color: #1A1A2E;
+  color: #3D2E22;
   margin-bottom: 20rpx;
 }
 
@@ -32,9 +32,9 @@
 
 .mode-toggle {
   font-size: 24rpx;
-  color: #7C6FE0;
+  color: #C8956C;
   padding: 8rpx 20rpx;
-  background: #F5F0FF;
+  background: #FFF8F0;
   border-radius: 999rpx;
 }
 
@@ -55,8 +55,8 @@
 }
 
 .type-active {
-  border-color: #7C6FE0;
-  background: #F5F0FF;
+  border-color: #C8956C;
+  background: #FFF8F0;
 }
 
 .type-icon-circle {
@@ -85,7 +85,7 @@
 }
 
 .type-active .type-label {
-  color: #7C6FE0;
+  color: #C8956C;
 }
 
 /* 侧选择 */
@@ -105,10 +105,10 @@
 }
 
 .side-active {
-  border-color: #7C6FE0;
-  background: linear-gradient(135deg, #7C6FE0, #A78BFA);
+  border-color: #C8956C;
+  background: linear-gradient(135deg, #C8956C, #D4A97A);
   color: #FFFFFF;
-  box-shadow: 0 4rpx 16rpx rgba(124, 111, 224, 0.3);
+  box-shadow: 0 4rpx 16rpx rgba(200, 149, 108, 0.3);
 }
 
 /* 时长输入 */
@@ -126,7 +126,7 @@
 .duration-value {
   font-size: 72rpx;
   font-weight: 300;
-  color: #7C6FE0;
+  color: #C8956C;
   font-variant-numeric: tabular-nums;
 }
 
@@ -147,7 +147,7 @@
 .amount-value {
   font-size: 72rpx;
   font-weight: 300;
-  color: #7C6FE0;
+  color: #C8956C;
   font-variant-numeric: tabular-nums;
 }
 
@@ -176,9 +176,9 @@
 }
 
 .preset-active {
-  border-color: #7C6FE0;
-  background: #F5F0FF;
-  color: #7C6FE0;
+  border-color: #C8956C;
+  background: #FFF8F0;
+  color: #C8956C;
   font-weight: 500;
 }
 
@@ -191,12 +191,12 @@
 
 .time-label {
   font-size: 28rpx;
-  color: #1A1A2E;
+  color: #3D2E22;
 }
 
 .time-value {
   font-size: 28rpx;
-  color: #7C6FE0;
+  color: #C8956C;
 }
 
 /* 保存按钮 */
@@ -212,14 +212,14 @@
 }
 
 .save-btn {
-  background: linear-gradient(135deg, #7C6FE0, #A78BFA);
+  background: linear-gradient(135deg, #C8956C, #D4A97A);
   color: #FFFFFF;
   text-align: center;
   padding: 28rpx 0;
   border-radius: 16rpx;
   font-size: 32rpx;
   font-weight: 600;
-  box-shadow: 0 8rpx 24rpx rgba(124, 111, 224, 0.3);
+  box-shadow: 0 8rpx 24rpx rgba(200, 149, 108, 0.3);
 }
 
 .save-btn:active {

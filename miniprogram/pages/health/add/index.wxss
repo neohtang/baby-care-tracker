@@ -1,17 +1,17 @@
 /* pages/health/add/index.wxss */
-.page-add { padding: 24rpx; padding-bottom: 200rpx; min-height: 100vh; background: #FBF8FF; }
+.page-add { padding: 24rpx; padding-bottom: 200rpx; min-height: 100vh; background: #FDF8F3; }
 .card { background: #FFFFFF; border-radius: 24rpx; padding: 32rpx; margin-bottom: 20rpx; box-shadow: 0 2rpx 16rpx rgba(0,0,0,0.04); }
-.section-title { font-size: 28rpx; font-weight: 600; color: #1A1A2E; margin-bottom: 20rpx; }
+.section-title { font-size: 28rpx; font-weight: 600; color: #3D2E22; margin-bottom: 20rpx; }
 
 /* 类型选择器 */
 .type-selector { display: flex; justify-content: space-around; }
 .type-option { display: flex; flex-direction: column; align-items: center; padding: 20rpx 24rpx; border-radius: 24rpx; border: 3rpx solid transparent; transition: all 0.3s ease; }
-.type-active { border-color: #7C6FE0; background: #F5F0FF; }
+.type-active { border-color: #C8956C; background: #FFF8F0; }
 .type-icon-circle { width: 100rpx; height: 100rpx; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 12rpx; }
 .type-emoji { font-size: 48rpx; }
 .type-icon-img { width: 48rpx; height: 48rpx; }
 .type-label { font-size: 26rpx; color: #6B7280; font-weight: 500; }
-.type-active .type-label { color: #7C6FE0; }
+.type-active .type-label { color: #C8956C; }
 
 /* 体温输入 */
 .temp-card-input { display: flex; flex-direction: column; align-items: center; }
@@ -27,7 +27,7 @@
   padding: 14rpx 32rpx; border-radius: 999rpx; border: 2rpx solid #E5E7EB;
   font-size: 26rpx; color: #6B7280; transition: all 0.2s ease;
 }
-.chip-active { border-color: #7C6FE0; background: #F5F0FF; color: #7C6FE0; font-weight: 500; }
+.chip-active { border-color: #C8956C; background: #FFF8F0; color: #C8956C; font-weight: 500; }
 
 /* 症状选择 */
 .symptom-grid { display: flex; flex-wrap: wrap; gap: 16rpx; }
@@ -38,12 +38,12 @@
 
 /* 时间 */
 .time-row { display: flex; align-items: center; justify-content: space-between; }
-.time-label { font-size: 28rpx; color: #1A1A2E; }
-.time-value { font-size: 28rpx; color: #7C6FE0; }
+.time-label { font-size: 28rpx; color: #3D2E22; }
+.time-value { font-size: 28rpx; color: #C8956C; }
 
 /* 保存 */
 .save-bar { position: fixed; bottom: 0; left: 0; right: 0; padding: 24rpx 32rpx; padding-bottom: calc(24rpx + env(safe-area-inset-bottom)); background: #FFFFFF; box-shadow: 0 -4rpx 24rpx rgba(0,0,0,0.06); }
-.save-btn { background: linear-gradient(135deg, #7C6FE0, #A78BFA); color: #FFFFFF; text-align: center; padding: 28rpx 0; border-radius: 16rpx; font-size: 32rpx; font-weight: 600; box-shadow: 0 8rpx 24rpx rgba(124,111,224,0.3); }
+.save-btn { background: linear-gradient(135deg, #C8956C, #D4A97A); color: #FFFFFF; text-align: center; padding: 28rpx 0; border-radius: 16rpx; font-size: 32rpx; font-weight: 600; box-shadow: 0 8rpx 24rpx rgba(200,149,108,0.3); }
 .save-btn:active { transform: scale(0.98); }
 .animate-scale { transition: transform 0.15s ease; }
 .animate-scale:active { transform: scale(0.95); }

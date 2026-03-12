@@ -1,10 +1,14 @@
 <!--pages/home/index.wxml-->
-<!--首页仪表盘-->
+<!--首页仪表盘 — Tender Bloom 主题-->
 
 <view class="page-home">
   <!-- 宝宝信息卡片 -->
-  <view class="baby-card" bindtap="goToBabyProfile">
-    <view class="baby-card-bg"></view>
+  <view class="baby-card animate-fade-in" bindtap="goToBabyProfile">
+    <view class="baby-card-bg">
+      <view class="baby-card-orb baby-card-orb-1"></view>
+      <view class="baby-card-orb baby-card-orb-2"></view>
+      <view class="baby-card-orb baby-card-orb-3"></view>
+    </view>
     <view class="baby-card-content">
       <baby-avatar
         avatarUrl="{{babyAvatarUrl}}"
@@ -53,46 +57,62 @@
         </view>
         <text class="summary-label">{{item.label}}</text>
       </view>
-      <text class="summary-detail">{{item.detail}}</text>
+      <view class="summary-detail-wrapper" style="background: {{item.detailBg || 'var(--td-bg-color-secondarycontainer)'}};">
+        <text class="summary-detail" style="color: {{item.detailColor || 'var(--td-brand-color)'}};">{{item.detail}}</text>
+      </view>
     </view>
   </view>
 
-  <!-- 快捷操作入口 -->
+  <!-- 快捷操作入口（6个） -->
   <view class="section-header">
     <text class="section-title">快捷记录</text>
   </view>
 
   <view class="quick-actions">
     <view class="quick-btn" bindtap="goToFeeding" hover-class="quick-btn-hover">
-      <view class="quick-btn-icon" style="background: linear-gradient(135deg, #EDE9FE, #DDD6FE);">
+      <view class="quick-btn-icon" style="background: var(--module-feeding-bg);">
         <image class="quick-btn-svg" src="/assets/icons/bottle.svg" mode="aspectFit" />
       </view>
       <text class="quick-btn-text">喂奶</text>
     </view>
     <view class="quick-btn" bindtap="goToSleep" hover-class="quick-btn-hover">
-      <view class="quick-btn-icon" style="background: linear-gradient(135deg, #DBEAFE, #BFDBFE);">
+      <view class="quick-btn-icon" style="background: var(--module-sleep-bg);">
         <image class="quick-btn-svg" src="/assets/icons/sleep.svg" mode="aspectFit" />
       </view>
       <text class="quick-btn-text">睡眠</text>
     </view>
     <view class="quick-btn" bindtap="goToDiaper" hover-class="quick-btn-hover">
-      <view class="quick-btn-icon" style="background: linear-gradient(135deg, #D1FAE5, #A7F3D0);">
+      <view class="quick-btn-icon" style="background: var(--module-diaper-bg);">
         <image class="quick-btn-svg" src="/assets/icons/diaper-pin.svg" mode="aspectFit" />
       </view>
       <text class="quick-btn-text">换尿布</text>
     </view>
     <view class="quick-btn" bindtap="goToHealth" hover-class="quick-btn-hover">
-      <view class="quick-btn-icon" style="background: linear-gradient(135deg, #FEF3C7, #FDE68A);">
+      <view class="quick-btn-icon" style="background: var(--module-health-bg);">
         <image class="quick-btn-svg" src="/assets/icons/thermometer.svg" mode="aspectFit" />
       </view>
       <text class="quick-btn-text">量体温</text>
+    </view>
+    <view class="quick-btn" bindtap="goToGrowth" hover-class="quick-btn-hover">
+      <view class="quick-btn-icon" style="background: var(--module-growth-bg);">
+        <image class="quick-btn-svg" src="/assets/icons/ruler.svg" mode="aspectFit" />
+      </view>
+      <text class="quick-btn-text">记生长</text>
+    </view>
+    <view class="quick-btn" bindtap="goToMilestone" hover-class="quick-btn-hover">
+      <view class="quick-btn-icon" style="background: var(--module-milestone-bg);">
+        <image class="quick-btn-svg" src="/assets/icons/star.svg" mode="aspectFit" />
+      </view>
+      <text class="quick-btn-text">里程碑</text>
     </view>
   </view>
 
   <!-- 今日时间线 -->
   <view class="section-header">
     <text class="section-title">今日记录</text>
-    <text wx:if="{{timelineEvents.length > 0}}" class="section-count">{{timelineEvents.length}}条</text>
+    <view wx:if="{{timelineEvents.length > 0}}" class="section-count-badge">
+      <text class="section-count">{{timelineEvents.length}}条</text>
+    </view>
   </view>
 
   <view class="timeline-section">

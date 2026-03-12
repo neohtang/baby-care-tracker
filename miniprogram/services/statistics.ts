@@ -237,9 +237,9 @@ class StatisticsService {
     );
     feedingRecords.forEach((r: FeedingRecord) => {
       const typeMap: Record<string, { icon: string; label: string; color: string }> = {
-        breast: { icon: '/assets/icons/breastfeed.svg', label: '母乳喂养', color: '#A78BFA' },
-        formula: { icon: '/assets/icons/bottle.svg', label: '配方奶', color: '#7C6FE0' },
-        solid: { icon: '/assets/icons/solid-food.svg', label: '辅食', color: '#F0ABFC' },
+        breast: { icon: '/assets/icons/breastfeed.svg', label: '母乳喂养', color: '#D4A97A' },
+        formula: { icon: '/assets/icons/bottle.svg', label: '配方奶', color: '#C8956C' },
+        solid: { icon: '/assets/icons/solid-food.svg', label: '辅食', color: '#E8C4A0' },
       };
       const config = typeMap[r.type] || typeMap.breast;
 

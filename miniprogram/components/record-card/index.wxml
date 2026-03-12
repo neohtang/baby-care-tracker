@@ -29,7 +29,7 @@
               wx:for="{{tags}}"
               wx:key="text"
               class="record-tag"
-              style="color: {{item.color || '#7C6FE0'}}; background: {{item.bgColor || '#F5F0FF'}};"
+              style="color: {{item.color || '#C8956C'}}; background: {{item.bgColor || '#FFF8F0'}};"
             >
               <text>{{item.text}}</text>
             </view>
@@ -72,7 +72,7 @@
             wx:for="{{tags}}"
             wx:key="text"
             class="record-tag"
-            style="color: {{item.color || '#7C6FE0'}}; background: {{item.bgColor || '#F5F0FF'}};"
+            style="color: {{item.color || '#C8956C'}}; background: {{item.bgColor || '#FFF8F0'}};"
           >
             <text>{{item.text}}</text>
           </view>

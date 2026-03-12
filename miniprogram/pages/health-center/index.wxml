@@ -1,0 +1,253 @@
+<!--pages/health-center/index.wxml-->
+<!--健康监测合并页 — 健康记录 + 疫苗接种 (Tender Bloom 主题)-->
+
+<view class="page-health">
+  <t-tabs defaultValue="{{0}}" bind:change="onMainTabChange" t-class="health-tabs">
+    <!-- ===== 健康记录 Tab ===== -->
+    <t-tab-panel label="健康记录" value="{{0}}">
+      <view class="tab-content animate-fade-in">
+        <!-- 体温大卡片 -->
+        <view class="temp-card">
+          <view class="temp-card-main">
+            <view class="temp-value-area">
+              <text class="temp-value" style="color: {{latestTempColor}};">{{latestTemp}}</text>
+              <text class="temp-unit">℃</text>
+            </view>
+            <view wx:if="{{latestTempLevelText}}" class="temp-level-badge" style="background: {{latestTempColor}}20; color: {{latestTempColor}};">
+              <text>{{latestTempLevelText}}</text>
+            </view>
+            <text wx:if="{{latestTempTime}}" class="temp-time">{{latestTempTime}}</text>
+          </view>
+          <!-- 趋势点 -->
+          <view wx:if="{{tempHistory.length > 1}}" class="temp-trend">
+            <view
+              wx:for="{{tempHistory}}"
+              wx:key="index"
+              class="temp-dot"
+              style="background: {{item.color || latestTempColor}}; height: {{item.heightPercent || 50}}%;"
+            ></view>
+          </view>
+        </view>
+
+        <!-- 三个快捷操作按钮 -->
+        <view class="health-quick-actions">
+          <view class="health-quick-btn" data-type="temperature" bindtap="goToAddHealth" hover-class="animate-scale">
+            <view class="health-quick-icon" style="background: var(--color-amber-bg);">
+              <image src="/assets/icons/thermometer.svg" mode="aspectFit" class="health-quick-img" />
+            </view>
+            <text class="health-quick-text">量体温</text>
+          </view>
+          <view class="health-quick-btn" data-type="medication" bindtap="goToAddHealth" hover-class="animate-scale">
+            <view class="health-quick-icon" style="background: var(--color-sky-bg);">
+              <image src="/assets/icons/medicine.svg" mode="aspectFit" class="health-quick-img" />
+            </view>
+            <text class="health-quick-text">记用药</text>
+          </view>
+          <view class="health-quick-btn" data-type="symptom" bindtap="goToAddHealth" hover-class="animate-scale">
+            <view class="health-quick-icon" style="background: var(--color-peach-bg);">
+              <image src="/assets/icons/stethoscope.svg" mode="aspectFit" class="health-quick-img" />
+            </view>
+            <text class="health-quick-text">记症状</text>
+          </view>
+        </view>
+
+        <!-- 类型筛选 -->
+        <view class="filter-tabs">
+          <view
+            wx:for="{{healthTabs}}"
+            wx:key="value"
+            class="filter-tab {{healthActiveTab === item.value ? 'active' : ''}}"
+            data-value="{{item.value}}"
+            bindtap="onHealthTabChange"
+          >
+            <text>{{item.label}}</text>
+          </view>
+        </view>
+
+        <!-- 记录列表 -->
+        <view class="record-list" wx:if="{{!healthEmpty}}">
+          <record-card
+            wx:for="{{healthRecords}}"
+            wx:key="id"
+            recordId="{{item.id}}"
+            icon="{{item.icon}}"
+            iconBg="{{item.iconBg}}"
+            title="{{item.typeName || item.title}}"
+            timeText="{{item.timeText}}"
+            detail="{{item.detail}}"
+            tags="{{item.tags}}"
+            alert="{{item.isAbnormal}}"
+            showEdit="{{true}}"
+            bind:edit="onEditHealthRecord"
+            bind:delete="onDeleteHealthRecord"
+          />
+        </view>
+
+        <view wx:if="{{healthEmpty && hasBaby}}" class="empty-state">
+          <image class="empty-icon-img" src="/assets/icons/stethoscope.svg" mode="aspectFit" />
+          <text class="empty-text">今日暂无健康记录</text>
+          <text class="empty-hint">点击上方按钮开始记录</text>
+        </view>
+
+        <view class="fab-container" data-type="" bindtap="goToAddHealth">
+          <view class="fab-btn fab-btn-amber">
+            <t-icon name="add" size="48rpx" color="#FFFFFF" />
+          </view>
+        </view>
+      </view>
+    </t-tab-panel>
+
+    <!-- ===== 疫苗接种 Tab ===== -->
+    <t-tab-panel label="疫苗接种" value="{{1}}">
+      <view class="tab-content animate-fade-in">
+        <!-- 接种进度卡片 -->
+        <view class="vaccine-progress-card">
+          <view class="vaccine-progress-header">
+            <text class="vaccine-progress-title">接种进度</text>
+            <text class="vaccine-progress-percent">{{vaccineSummary.progress}}%</text>
+          </view>
+          <view class="vaccine-progress-bar">
+            <view class="vaccine-progress-fill" style="width: {{vaccineSummary.progress}}%;"></view>
+          </view>
+          <view class="vaccine-progress-stats">
+            <view class="vaccine-stat">
+              <text class="vaccine-stat-num vaccine-stat-completed">{{vaccineSummary.completed}}</text>
+              <text class="vaccine-stat-label">已接种</text>
+            </view>
+            <view class="vaccine-stat">
+              <text class="vaccine-stat-num vaccine-stat-pending">{{vaccineSummary.pending}}</text>
+              <text class="vaccine-stat-label">待接种</text>
+            </view>
+            <view class="vaccine-stat">
+              <text class="vaccine-stat-num vaccine-stat-overdue">{{vaccineSummary.overdue}}</text>
+              <text class="vaccine-stat-label">已逾期</text>
+            </view>
+          </view>
+        </view>
+
+        <!-- 疫苗时间线 -->
+        <view class="vaccine-timeline" wx:if="{{vaccineGroups.length > 0}}">
+          <view class="vaccine-group" wx:for="{{vaccineGroups}}" wx:key="month" wx:for-index="groupIndex">
+            <view class="vaccine-month-label">
+              <view class="vaccine-month-dot"></view>
+              <text class="vaccine-month-text">{{item.label}}</text>
+              <text class="vaccine-month-count">{{item.items.length}}种疫苗</text>
+            </view>
+            <view class="vaccine-items">
+              <view
+                class="vaccine-item {{vaccine.status}}"
+                wx:for="{{item.items}}"
+                wx:key="vaccineId"
+                wx:for-item="vaccine"
+                wx:for-index="itemIndex"
+                data-group-index="{{groupIndex}}"
+                data-item-index="{{itemIndex}}"
+                bindtap="onVaccineRecord"
+                hover-class="vaccine-item-hover"
+              >
+                <view class="vaccine-status-dot" style="background: {{vaccine.dotColor || '#FBBF24'}};"></view>
+                <view class="vaccine-item-body">
+                  <view class="vaccine-name-row">
+                    <text class="vaccine-name">{{vaccine.name}}</text>
+                    <text class="vaccine-dose">第{{vaccine.doseNumber}}/{{vaccine.totalDoses || '?'}}剂</text>
+                  </view>
+                  <text wx:if="{{vaccine.diseases}}" class="vaccine-diseases">预防：{{vaccine.diseases}}</text>
+                  <text wx:if="{{vaccine.dateText}}" class="vaccine-date-text">{{vaccine.dateText}}</text>
+                </view>
+                <view class="vaccine-status-badge" style="background: {{vaccine.statusBgColor || '#FEF3C7'}}; color: {{vaccine.statusColor || '#D97706'}};">
+                  <text>{{vaccine.statusText}}</text>
+                </view>
+              </view>
+            </view>
+          </view>
+        </view>
+
+        <!-- 空状态：无疫苗计划 -->
+        <view wx:if="{{vaccineGroups.length === 0 && hasBaby}}" class="empty-state">
+          <image class="empty-icon-img" src="/assets/icons/vaccine.svg" mode="aspectFit" />
+          <text class="empty-text">暂无疫苗接种计划</text>
+          <text class="empty-hint">点击下方按钮手动添加接种记录</text>
+        </view>
+
+        <view wx:if="{{!hasBaby}}" class="empty-state">
+          <text class="empty-text">请先添加宝宝信息</text>
+        </view>
+
+        <!-- FAB 添加接种记录 -->
+        <view class="fab-container" bindtap="openAddVaccinePopup">
+          <view class="fab-btn fab-btn-vaccine">
+            <t-icon name="add" size="48rpx" color="#FFFFFF" />
+          </view>
+        </view>
+      </view>
+    </t-tab-panel>
+  </t-tabs>
+
+  <!-- 疫苗记录弹窗 -->
+  <t-popup visible="{{showVaccinePopup}}" placement="bottom" bind:visible-change="closeVaccinePopup">
+    <view class="popup-content">
+      <view class="popup-header">
+        <text class="popup-title">{{selectedVaccine ? (selectedVaccine.record ? '编辑接种记录' : '记录接种信息') : '添加接种记录'}}</text>
+        <view class="popup-close" bindtap="closeVaccinePopup">
+          <t-icon name="close" size="40rpx" />
+        </view>
+      </view>
+
+      <view wx:if="{{selectedVaccine}}" class="popup-vaccine-info">
+        <text class="popup-vaccine-name">{{selectedVaccine.name}} · 第{{selectedVaccine.doseNumber}}剂</text>
+      </view>
+
+      <scroll-view scroll-y class="popup-form-scroll">
+        <!-- 手动添加时显示疫苗名称和剂次输入 -->
+        <block wx:if="{{!selectedVaccine}}">
+          <view class="form-group">
+            <text class="form-label">疫苗名称 <text style="color: var(--td-error-color, #E8736C);">*</text></text>
+            <t-input placeholder="如：乙肝疫苗、百白破疫苗" value="{{vaccineForm.vaccineName}}" bind:change="onVaccineNameInput" />
+          </view>
+          <view class="form-group">
+            <text class="form-label">剂次</text>
+            <t-input type="number" placeholder="如：1（默认第1剂）" value="{{vaccineForm.doseNumber}}" bind:change="onVaccineDoseInput" />
+          </view>
+        </block>
+        <view class="form-group">
+          <text class="form-label">接种日期</text>
+          <view class="form-date-input" bindtap="onVaccineDateTap">
+            <text class="{{vaccineForm.date ? 'form-date-text' : 'form-date-placeholder'}}">{{vaccineForm.date || '请选择日期'}}</text>
+            <t-icon name="calendar" size="36rpx" color="#B5A89C" />
+          </view>
+        </view>
+        <view class="form-group">
+          <text class="form-label">接种机构</text>
+          <t-input placeholder="请输入接种机构" value="{{vaccineForm.location}}" bind:change="onVaccineLocationChange" />
+        </view>
+        <view class="form-group">
+          <text class="form-label">疫苗批号</text>
+          <t-input placeholder="请输入批号(可选)" value="{{vaccineForm.batchNumber}}" bind:change="onVaccineBatchChange" />
+        </view>
+        <view class="form-group">
+          <text class="form-label">接种反应</text>
+          <t-input placeholder="如有不良反应请记录(可选)" value="{{vaccineForm.reaction}}" bind:change="onVaccineReactionChange" />
+        </view>
+        <view class="form-group">
+          <text class="form-label">备注</text>
+          <t-input placeholder="备注(可选)" value="{{vaccineForm.note}}" bind:change="onVaccineNoteChange" />
+        </view>
+      </scroll-view>
+
+      <view class="popup-actions">
+        <view class="btn-primary" bindtap="saveVaccineRecord">保存</view>
+        <view wx:if="{{selectedVaccine && selectedVaccine.record}}" class="btn-delete" bindtap="deleteVaccineRecord">删除记录</view>
+      </view>
+    </view>
+  </t-popup>
+
+  <!-- 日期选择器 -->
+  <t-date-time-picker
+    visible="{{showVaccineDatePicker}}"
+    mode="date"
+    value="{{vaccineForm.date}}"
+    title="选择接种日期"
+    bind:confirm="onVaccineDateConfirm"
+    bind:cancel="onVaccineDateCancel"
+  />
+</view>

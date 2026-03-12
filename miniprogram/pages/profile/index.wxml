@@ -1,0 +1,276 @@
+<!--pages/profile/index.wxml-->
+<!--我的页面 — 宝宝信息管理、数据概览、数据导出与恢复 (Tender Bloom 主题)-->
+
+<view class="page-profile">
+
+  <!-- ======= 宝宝信息大卡片 ======= -->
+  <view class="baby-profile-card" bindtap="editBabyInfo" hover-class="card-hover">
+    <!-- 渐变背景 + 装饰光斑 -->
+    <view class="profile-card-bg">
+      <view class="profile-orb profile-orb-1"></view>
+      <view class="profile-orb profile-orb-2"></view>
+      <view class="profile-orb profile-orb-3"></view>
+    </view>
+
+    <view class="profile-card-content">
+      <view class="profile-avatar-area">
+        <baby-avatar
+          avatarUrl="{{babyAvatarUrl}}"
+          name="{{babyName}}"
+          ageText="{{babyAgeText}}"
+          size="large"
+          showAge="{{hasBaby}}"
+          gender="{{babyGender}}"
+        />
+      </view>
+
+      <view class="profile-info-area">
+        <text class="profile-name">{{babyName || '添加宝宝信息'}}</text>
+        <text class="profile-age">{{babyAgeText}}</text>
+        <view wx:if="{{hasBaby}}" class="profile-detail-row">
+          <view class="profile-tag">
+            <text>{{babyGenderText}}</text>
+          </view>
+          <view wx:if="{{babyBirthDateText}}" class="profile-tag">
+            <text>{{babyBirthDateText}}</text>
+          </view>
+        </view>
+      </view>
+
+      <view class="profile-edit-icon">
+        <t-icon name="edit-1" size="40rpx" color="rgba(255,255,255,0.8)" />
+      </view>
+    </view>
+  </view>
+
+  <!-- ======= 数据概览 ======= -->
+  <view wx:if="{{totalRecords > 0}}" class="stats-card animate-fadein" style="animation-delay: 0.1s;">
+    <view class="stats-header">
+      <text class="stats-title">数据概览</text>
+      <view class="stats-total-badge">
+        <text class="stats-total">共 {{totalRecords}} 条记录</text>
+      </view>
+    </view>
+
+    <!-- 模块统计网格 — 两行布局 -->
+    <view class="stats-grid">
+      <view class="stats-item" wx:for="{{moduleStatsRow1}}" wx:key="module">
+        <view class="stats-icon-wrap" style="background: {{item.bg || 'var(--module-feeding-bg)'}};">
+          <image wx:if="{{item.icon}}" class="stats-icon-img" src="{{item.icon}}" mode="aspectFit" />
+        </view>
+        <view class="stats-info">
+          <text class="stats-count">{{item.count}}</text>
+          <text class="stats-label">{{item.label}}</text>
+        </view>
+      </view>
+    </view>
+    <view class="stats-grid stats-grid-row2">
+      <view class="stats-item" wx:for="{{moduleStatsRow2}}" wx:key="module">
+        <view class="stats-icon-wrap" style="background: {{item.bg || 'var(--module-feeding-bg)'}};">
+          <image wx:if="{{item.icon}}" class="stats-icon-img" src="{{item.icon}}" mode="aspectFit" />
+        </view>
+        <view class="stats-info">
+          <text class="stats-count">{{item.count}}</text>
+          <text class="stats-label">{{item.label}}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 存储使用情况 -->
+    <view class="storage-bar-section">
+      <view class="storage-bar-header">
+        <text class="storage-bar-label">存储空间</text>
+        <text class="storage-bar-value">{{storageUsage}}</text>
+      </view>
+      <view class="storage-bar-track">
+        <view class="storage-bar-fill" style="width: {{storagePercentage}}%;"></view>
+      </view>
+    </view>
+  </view>
+
+  <!-- ======= 数据管理菜单 ======= -->
+  <view class="section-label animate-fadein" style="animation-delay: 0.15s;">数据管理</view>
+  <view class="menu-card animate-fadein" style="animation-delay: 0.2s;">
+    <!-- 导出数据 -->
+    <view class="menu-item" bindtap="exportData" hover-class="menu-item-hover">
+      <view class="menu-item-icon" style="background: linear-gradient(135deg, #F5EDE4 0%, #E8DACE 100%);">
+        <image class="menu-icon-img" src="/assets/icons/export.svg" mode="aspectFit" />
+      </view>
+      <view class="menu-item-content">
+        <text class="menu-item-title">导出数据</text>
+        <text class="menu-item-desc">备份所有记录为 JSON 文件</text>
+      </view>
+      <t-icon name="chevron-right" size="40rpx" color="#B5A89C" />
+    </view>
+
+    <view class="menu-divider"></view>
+
+    <!-- 恢复数据 -->
+    <view class="menu-item" bindtap="importData" hover-class="menu-item-hover">
+      <view class="menu-item-icon" style="background: linear-gradient(135deg, #E8F4EE 0%, #D1EBDE 100%);">
+        <image class="menu-icon-img" src="/assets/icons/import.svg" mode="aspectFit" />
+      </view>
+      <view class="menu-item-content">
+        <text class="menu-item-title">恢复数据</text>
+        <text class="menu-item-desc">从备份文件恢复所有记录</text>
+      </view>
+      <t-icon name="chevron-right" size="40rpx" color="#B5A89C" />
+    </view>
+
+    <view class="menu-divider"></view>
+
+    <!-- 清除数据 -->
+    <view class="menu-item" bindtap="clearAllData" hover-class="menu-item-hover">
+      <view class="menu-item-icon" style="background: linear-gradient(135deg, #FCEAE8 0%, #F9D4D0 100%);">
+        <image class="menu-icon-img" src="/assets/icons/trash.svg" mode="aspectFit" />
+      </view>
+      <view class="menu-item-content">
+        <text class="menu-item-title danger">清除所有数据</text>
+        <text class="menu-item-desc">不可恢复，建议先备份</text>
+      </view>
+      <t-icon name="chevron-right" size="40rpx" color="#B5A89C" />
+    </view>
+  </view>
+
+  <!-- ======= 关于 ======= -->
+  <view class="section-label animate-fadein" style="animation-delay: 0.25s;">关于</view>
+  <view class="menu-card animate-fadein" style="animation-delay: 0.3s;">
+    <view class="menu-item">
+      <view class="menu-item-icon" style="background: linear-gradient(135deg, #F5EDE4 0%, #EDE1D4 100%);">
+        <image class="menu-icon-img" src="/assets/icons/phone.svg" mode="aspectFit" />
+      </view>
+      <view class="menu-item-content">
+        <text class="menu-item-title">版本号</text>
+      </view>
+      <text class="menu-item-note">v{{version}}</text>
+    </view>
+
+    <view class="menu-divider"></view>
+
+    <view class="menu-item" bindtap="showDisclaimer" hover-class="menu-item-hover">
+      <view class="menu-item-icon" style="background: linear-gradient(135deg, #FEF3E0 0%, #FCE7C3 100%);">
+        <image class="menu-icon-img" src="/assets/icons/warning.svg" mode="aspectFit" />
+      </view>
+      <view class="menu-item-content">
+        <text class="menu-item-title">免责声明</text>
+      </view>
+      <t-icon name="chevron-right" size="40rpx" color="#B5A89C" />
+    </view>
+  </view>
+
+  <!-- ======= 底部声明 ======= -->
+  <view class="footer-text animate-fadein" style="animation-delay: 0.35s;">
+    <text>本小程序仅供日常养护记录参考\n所有数据存储在您的设备本地</text>
+  </view>
+
+  <!-- 底部安全区 -->
+  <view class="safe-bottom"></view>
+</view>
+
+<!-- ======= 宝宝信息编辑弹窗 ======= -->
+<t-popup visible="{{showEditPopup}}" placement="bottom" bind:visible-change="closeEditPopup">
+  <view class="edit-popup">
+    <!-- 弹窗头部 -->
+    <view class="edit-popup-header">
+      <text class="edit-popup-title">{{editMode === 'create' ? '添加宝宝' : '编辑信息'}}</text>
+      <view class="edit-popup-close" bindtap="closeEditPopup">
+        <t-icon name="close" size="44rpx" color="#8B7B6B" />
+      </view>
+    </view>
+
+    <scroll-view scroll-y class="edit-popup-body">
+      <!-- 头像选择 -->
+      <view class="form-avatar-section" bindtap="chooseAvatar">
+        <view class="form-avatar-ring">
+          <baby-avatar
+            avatarUrl="{{formAvatarUrl}}"
+            name="{{formName}}"
+            size="large"
+            showAge="{{false}}"
+            gender="{{formGender}}"
+          />
+        </view>
+        <text class="form-avatar-hint">点击更换头像</text>
+      </view>
+
+      <!-- 姓名 -->
+      <view class="form-group">
+        <text class="form-label">宝宝姓名 <text class="required">*</text></text>
+        <input
+          class="form-input"
+          placeholder="请输入宝宝姓名"
+          value="{{formName}}"
+          bindinput="onNameChange"
+          maxlength="20"
+        />
+      </view>
+
+      <!-- 性别 -->
+      <view class="form-group">
+        <text class="form-label">性别 <text class="required">*</text></text>
+        <picker mode="selector" range="{{genderOptions}}" range-key="label" value="{{genderIndex}}" bindchange="onGenderChange">
+          <view class="form-picker">
+            <text>{{genderOptions[genderIndex].label}}</text>
+            <t-icon name="chevron-down" size="36rpx" color="#B5A89C" />
+          </view>
+        </picker>
+      </view>
+
+      <!-- 出生日期 -->
+      <view class="form-group">
+        <text class="form-label">出生日期 <text class="required">*</text></text>
+        <picker mode="date" value="{{formBirthDate}}" bindchange="onBirthDateChange">
+          <view class="form-picker">
+            <text class="{{formBirthDate ? '' : 'placeholder'}}">{{formBirthDate || '请选择出生日期'}}</text>
+            <t-icon name="calendar" size="36rpx" color="#B5A89C" />
+          </view>
+        </picker>
+      </view>
+
+      <!-- 出生体重 -->
+      <view class="form-group">
+        <text class="form-label">出生体重 (kg)</text>
+        <input
+          class="form-input"
+          type="digit"
+          placeholder="例如 3.25"
+          value="{{formBirthWeight}}"
+          bindinput="onBirthWeightChange"
+        />
+      </view>
+
+      <!-- 出生身长 -->
+      <view class="form-group">
+        <text class="form-label">出生身长 (cm)</text>
+        <input
+          class="form-input"
+          type="digit"
+          placeholder="例如 50.0"
+          value="{{formBirthHeight}}"
+          bindinput="onBirthHeightChange"
+        />
+      </view>
+
+      <!-- 备注 -->
+      <view class="form-group">
+        <text class="form-label">备注</text>
+        <textarea
+          class="form-textarea"
+          placeholder="可以记录过敏信息、特殊情况等"
+          value="{{formNote}}"
+          bindinput="onNoteChange"
+          maxlength="200"
+          auto-height
+        ></textarea>
+      </view>
+    </scroll-view>
+
+    <!-- 保存按钮 -->
+    <view class="edit-popup-footer">
+      <t-button theme="primary" block bind:tap="saveBabyInfo"
+        style="--td-button-primary-bg-color: #C8956C; --td-button-primary-border-color: #C8956C; --td-button-primary-active-bg-color: #B5845F; --td-button-primary-active-border-color: #B5845F; border-radius: 20rpx;">
+        保存
+      </t-button>
+    </view>
+  </view>
+</t-popup>
