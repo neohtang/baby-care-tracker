@@ -110,11 +110,9 @@ Page({
         });
       }, 100);
     } else if (intent.action === 'milestone') {
-      // 切到发育里程碑Tab
+      // 切到发育里程碑Tab，确保数据加载
       this.setData({ activeMainTab: 1 });
-      if (!this.data._milestoneLoaded) {
-        this.loadMilestoneData();
-      }
+      this.loadMilestoneData();
     }
   },
 
@@ -125,15 +123,17 @@ Page({
   },
 
   loadCurrentTabData() {
-    if (this.data.activeMainTab === 0) this.loadGrowthData();
-    else this.loadMilestoneData();
+    const tab = Number(this.data.activeMainTab);
+    if (tab === 0) this.loadGrowthData();
+    else if (tab === 1) this.loadMilestoneData();
   },
 
   onMainTabChange(e: WechatMiniprogram.CustomEvent) {
-    const value = typeof e.detail === 'object' ? e.detail.value : e.detail;
+    const raw = typeof e.detail === 'object' ? e.detail.value : e.detail;
+    const value = Number(raw);
     this.setData({ activeMainTab: value });
-    if (value === 0 && !this.data._growthLoaded) this.loadGrowthData();
-    else if (value === 1 && !this.data._milestoneLoaded) this.loadMilestoneData();
+    if (value === 0) this.loadGrowthData();
+    else if (value === 1) this.loadMilestoneData();
   },
 
   // ============ 生长数据模块 ============
@@ -281,11 +281,9 @@ Page({
 
   loadMilestoneData() {
     const baby = babyService.getCurrentBaby();
-    if (!baby) return;
-
     const rawGroups = milestoneService.getMilestonePlan();
     const summary = milestoneService.getSummary();
-    const ageMonths = baby.birthDate ? getAgeInMonths(baby.birthDate) : 0;
+    const ageMonths = baby?.birthDate ? getAgeInMonths(baby.birthDate) : 0;
 
     // Map service data to the shape expected by WXML template
     const groups = rawGroups.map(g => ({
@@ -369,6 +367,13 @@ Page({
   saveMilestoneRecord() {
     const item = this.data.selectedMilestone;
     if (!item) return;
+
+    const baby = babyService.getCurrentBaby();
+    if (!baby) {
+      wx.showToast({ title: '请先添加宝宝信息', icon: 'none' });
+      return;
+    }
+
     const form = this.data.milestoneForm;
 
     if (item.record) {
@@ -379,7 +384,7 @@ Page({
       wx.showToast({ title: '已更新', icon: 'success' });
     } else {
       milestoneService.addRecord({
-        babyId: babyService.getCurrentBabyId(),
+        babyId: baby.id,
         milestoneId: item.id,
         achievedDate: form.achievedDate,
         note: form.note,

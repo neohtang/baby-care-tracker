@@ -90,16 +90,17 @@ Page({
   },
 
   loadCurrentTabData() {
-    const tab = this.data.activeMainTab;
+    const tab = Number(this.data.activeMainTab);
     if (tab === 0) this.loadHealthData();
     else if (tab === 1) this.loadVaccineData();
   },
 
   onMainTabChange(e: WechatMiniprogram.CustomEvent) {
-    const value = typeof e.detail === 'object' ? e.detail.value : e.detail;
+    const raw = typeof e.detail === 'object' ? e.detail.value : e.detail;
+    const value = Number(raw);
     this.setData({ activeMainTab: value });
-    if (value === 0 && !this.data._healthLoaded) this.loadHealthData();
-    else if (value === 1 && !this.data._vaccineLoaded) this.loadVaccineData();
+    if (value === 0) this.loadHealthData();
+    else if (value === 1) this.loadVaccineData();
   },
 
   // ============ 健康记录模块 ============
@@ -186,9 +187,6 @@ Page({
   // ============ 疫苗模块 ============
 
   loadVaccineData() {
-    const baby = babyService.getCurrentBaby();
-    if (!baby) return;
-
     const rawGroups = vaccineService.getVaccinePlan();
     const summary = vaccineService.getSummary();
 
@@ -324,6 +322,12 @@ Page({
       return;
     }
 
+    const baby = babyService.getCurrentBaby();
+    if (!baby) {
+      wx.showToast({ title: '请先添加宝宝信息', icon: 'none' });
+      return;
+    }
+
     if (vaccine) {
       // 从疫苗计划中选择的疫苗
       if (vaccine.record) {
@@ -337,7 +341,7 @@ Page({
         wx.showToast({ title: '已更新', icon: 'success' });
       } else {
         vaccineService.addRecord({
-          babyId: babyService.getCurrentBabyId(),
+          babyId: baby.id,
           vaccineId: vaccine.vaccineId,
           doseNumber: vaccine.doseNumber,
           date: form.date,
@@ -355,7 +359,7 @@ Page({
         return;
       }
       vaccineService.addRecord({
-        babyId: babyService.getCurrentBabyId(),
+        babyId: baby.id,
         vaccineId: 'custom_' + Date.now(),
         doseNumber: parseInt(form.doseNumber, 10) || 1,
         vaccineName: form.vaccineName.trim(),

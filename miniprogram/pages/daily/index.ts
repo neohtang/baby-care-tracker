@@ -112,24 +112,20 @@ Page({
   },
 
   loadCurrentTabData() {
-    const tab = this.data.activeMainTab;
+    const tab = Number(this.data.activeMainTab);
     if (tab === 0) this.loadFeedingData();
     else if (tab === 1) this.loadSleepData();
     else if (tab === 2) this.loadDiaperData();
   },
 
   onMainTabChange(e: WechatMiniprogram.CustomEvent) {
-    const value = typeof e.detail === 'object' ? e.detail.value : e.detail;
+    const raw = typeof e.detail === 'object' ? e.detail.value : e.detail;
+    const value = Number(raw);
     this.setData({ activeMainTab: value });
 
-    // 懒加载
-    if (value === 0 && !this.data._feedingLoaded) {
-      this.loadFeedingData();
-    } else if (value === 1 && !this.data._sleepLoaded) {
-      this.loadSleepData();
-    } else if (value === 2 && !this.data._diaperLoaded) {
-      this.loadDiaperData();
-    }
+    if (value === 0) this.loadFeedingData();
+    else if (value === 1) this.loadSleepData();
+    else if (value === 2) this.loadDiaperData();
 
     // 切换到睡眠Tab时启动定时器
     if (value === 1 && this.data.isSleeping) {

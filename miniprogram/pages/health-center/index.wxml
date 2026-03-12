@@ -163,14 +163,10 @@
         </view>
 
         <!-- 空状态：无疫苗计划 -->
-        <view wx:if="{{vaccineGroups.length === 0 && hasBaby}}" class="empty-state">
+        <view wx:if="{{vaccineGroups.length === 0}}" class="empty-state">
           <image class="empty-icon-img" src="/assets/icons/vaccine.svg" mode="aspectFit" />
           <text class="empty-text">暂无疫苗接种计划</text>
           <text class="empty-hint">点击下方按钮手动添加接种记录</text>
-        </view>
-
-        <view wx:if="{{!hasBaby}}" class="empty-state">
-          <text class="empty-text">请先添加宝宝信息</text>
         </view>
 
         <!-- FAB 添加接种记录 -->
