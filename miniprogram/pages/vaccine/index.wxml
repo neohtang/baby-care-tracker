@@ -43,7 +43,7 @@
         <view class="timeline-items">
           <view
             class="vaccine-card {{vaccine.status}}"
-            wx:for="{{item.vaccines}}" wx:for-item="vaccine" wx:key="vaccine.id"
+            wx:for="{{item.vaccines}}" wx:for-item="vaccine" wx:key="*this"
             bindtap="onVaccineRecord" data-id="{{vaccine.vaccine.id}}"
           >
             <view class="vaccine-dot" style="background: {{vaccine.dotColor}};"></view>
@@ -97,10 +97,10 @@
         <view class="milestone-items">
           <view
             class="milestone-card {{ms.isCurrentFocus ? 'focus' : ''}} {{ms.status}}"
-            wx:for="{{item.milestones}}" wx:for-item="ms" wx:key="milestone.id"
+            wx:for="{{item.milestones}}" wx:for-item="ms" wx:key="milestoneId"
             bindtap="onMilestoneRecord" data-id="{{ms.milestone.id}}"
           >
-            <text class="milestone-star">{{ms.statusIcon}}</text>
+            <text class="milestone-star" style="color: {{ms.statusColor}};">{{ms.statusIcon}}</text>
             <view class="milestone-info">
               <view class="milestone-name-row">
                 <text class="milestone-name">{{ms.milestone.name}}</text>

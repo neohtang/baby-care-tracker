@@ -51,11 +51,11 @@
       <view class="ms-items">
         <view
           class="ms-card {{ms.isCurrentFocus ? 'focus' : ''}} {{ms.status}}"
-          wx:for="{{item.milestones}}" wx:for-item="ms" wx:key="milestone.id"
+          wx:for="{{item.milestones}}" wx:for-item="ms" wx:key="milestoneId"
           bindtap="onRecord" data-id="{{ms.milestone.id}}"
         >
           <view class="ms-card-header">
-            <image class="ms-star-img" src="{{ms.statusIcon}}" mode="aspectFit" />
+            <text class="ms-star" style="color: {{ms.statusColor}};">{{ms.statusIcon}}</text>
             <text class="ms-name">{{ms.milestone.name}}</text>
             <view class="ms-cat" style="background: {{ms.categoryColor}}15; color: {{ms.categoryColor}};">
               {{ms.categoryLabel}}
@@ -73,7 +73,7 @@
     </view>
   </view>
   <view wx:else class="empty-state">
-    <image class="empty-icon-img" src="/assets/icons/star-glow.svg" mode="aspectFit" />
+    <text class="empty-icon">☆</text>
     <text class="empty-text">当前筛选无匹配里程碑</text>
   </view>
 

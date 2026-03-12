@@ -25,11 +25,11 @@ import type {
   UpdateMilestoneRecordInput,
 } from '../types/index';
 
-/** 状态配置 */
+/** 状态配置（使用纯文字符号，避免 base64 图标在小程序中的兼容性问题） */
 const STATUS_CONFIG: Record<MilestoneStatus, { label: string; color: string; bgColor: string; icon: string }> = {
-  achieved: { label: '已达成', color: '#059669', bgColor: '#D1FAE5', icon: '/assets/icons/star.svg' },
-  pending: { label: '待达成', color: '#6B7280', bgColor: '#F3F4F6', icon: '/assets/icons/star-outline.svg' },
-  concern: { label: '需关注', color: '#DC2626', bgColor: '#FEE2E2', icon: '/assets/icons/warning.svg' },
+  achieved: { label: '已达成', color: '#059669', bgColor: '#D1FAE5', icon: '★' },
+  pending: { label: '待达成', color: '#6B7280', bgColor: '#F3F4F6', icon: '☆' },
+  concern: { label: '需关注', color: '#DC2626', bgColor: '#FEE2E2', icon: '⚠' },
 };
 
 class MilestoneService {
@@ -181,6 +181,7 @@ class MilestoneService {
         const catInfo = getCategoryInfo(milestone.category);
 
         return {
+          milestoneId: milestone.id,
           milestone,
           record,
           status,

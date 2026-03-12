@@ -1,5 +1,10 @@
 {
   "navigationBarTitleText": "发育里程碑",
   "enablePullDownRefresh": true,
-  "usingComponents": {}
+  "usingComponents": {
+    "t-popup": "tdesign-miniprogram/popup/popup",
+    "t-date-time-picker": "tdesign-miniprogram/date-time-picker/date-time-picker",
+    "t-icon": "tdesign-miniprogram/icon/icon",
+    "t-input": "tdesign-miniprogram/input/input"
+  }
 }
