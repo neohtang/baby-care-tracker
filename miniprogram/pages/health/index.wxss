@@ -1,6 +1,58 @@
 /* pages/health/index.wxss */
-.page-health { padding-bottom: 160rpx; }
-.temp-value { font-size: 72rpx; font-weight: 600; color: #34D399; }
-.temp-fever { color: #F87171; }
-.temp-high { color: #FBBF24; }
-.record-type-icon { width: 80rpx; height: 80rpx; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 36rpx; }
+.page-health { padding: 24rpx; padding-bottom: 180rpx; min-height: 100vh; background: #FBF8FF; }
+
+/* 体温大卡片 */
+.temp-card {
+  background: #FFFFFF; border-radius: 24rpx; padding: 48rpx 32rpx;
+  box-shadow: 0 4rpx 24rpx rgba(124,111,224,0.08);
+  display: flex; flex-direction: column; align-items: center; gap: 12rpx;
+}
+.temp-main { display: flex; align-items: flex-start; }
+.temp-value { font-size: 96rpx; font-weight: 300; line-height: 1; font-variant-numeric: tabular-nums; }
+.temp-degree { font-size: 36rpx; font-weight: 400; margin-top: 8rpx; }
+.temp-level-badge { font-size: 24rpx; padding: 6rpx 24rpx; border-radius: 999rpx; font-weight: 500; }
+.temp-hint { font-size: 26rpx; color: #9CA3AF; }
+
+/* 体温趋势 */
+.temp-trend { width: 100%; margin-top: 24rpx; padding-top: 20rpx; border-top: 1rpx solid #F3F4F6; }
+.trend-dots { display: flex; justify-content: space-around; }
+.trend-dot-wrap { display: flex; flex-direction: column; align-items: center; gap: 8rpx; }
+.trend-dot { width: 16rpx; height: 16rpx; border-radius: 50%; }
+.trend-time { font-size: 20rpx; color: #9CA3AF; }
+
+/* 快捷操作 */
+.quick-actions { display: flex; gap: 16rpx; margin-top: 24rpx; }
+.quick-btn {
+  flex: 1; display: flex; flex-direction: column; align-items: center; gap: 8rpx;
+  background: #FFFFFF; border-radius: 20rpx; padding: 28rpx 0;
+  box-shadow: 0 2rpx 16rpx rgba(0,0,0,0.04);
+  transition: all 0.2s ease;
+}
+.quick-btn:active { background: #F5F0FF; }
+.quick-icon { font-size: 36rpx; }
+.quick-icon-img { width: 36rpx; height: 36rpx; flex-shrink: 0; }
+.quick-text { font-size: 26rpx; color: #1A1A2E; font-weight: 500; }
+
+/* Tab */
+.tab-wrap { display: flex; background: #FFFFFF; border-radius: 20rpx; margin-top: 24rpx; padding: 8rpx; box-shadow: 0 2rpx 12rpx rgba(0,0,0,0.04); }
+.tab-item { flex: 1; text-align: center; padding: 16rpx 0; font-size: 28rpx; color: #9CA3AF; position: relative; transition: color 0.3s ease; }
+.tab-active { color: #7C6FE0; font-weight: 600; }
+.tab-indicator { position: absolute; bottom: 4rpx; left: 50%; transform: translateX(-50%); width: 40rpx; height: 6rpx; background: linear-gradient(90deg, #7C6FE0, #A78BFA); border-radius: 3rpx; }
+
+/* 记录列表 */
+.record-list { margin-top: 24rpx; display: flex; flex-direction: column; gap: 16rpx; }
+
+/* 空状态 */
+.empty-state { display: flex; flex-direction: column; align-items: center; padding: 80rpx 0; }
+.empty-icon { font-size: 80rpx; margin-bottom: 24rpx; opacity: 0.6; }
+.empty-icon-img { width: 80rpx; height: 80rpx; margin-bottom: 24rpx; opacity: 0.6; }
+.empty-title { font-size: 32rpx; font-weight: 500; color: #6B7280; margin-bottom: 12rpx; }
+.empty-desc { font-size: 26rpx; color: #9CA3AF; }
+
+/* FAB */
+.fab-container { position: fixed; right: 40rpx; bottom: 120rpx; z-index: 100; }
+.fab-btn { width: 112rpx; height: 112rpx; border-radius: 50%; background: linear-gradient(135deg, #7C6FE0, #A78BFA); display: flex; align-items: center; justify-content: center; box-shadow: 0 8rpx 32rpx rgba(124,111,224,0.4); }
+.fab-btn:active { transform: scale(0.9); }
+.fab-icon { font-size: 48rpx; color: #FFFFFF; font-weight: 300; line-height: 1; }
+.animate-scale { transition: transform 0.15s ease; }
+.animate-scale:active { transform: scale(0.95); }

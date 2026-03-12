@@ -1,0 +1,98 @@
+<!--components/record-card/index.wxml-->
+<!--通用记录卡片组件：支持左滑编辑/删除-->
+
+<view class="record-card-wrap">
+  <t-swipe-cell
+    wx:if="{{swipeable}}"
+    right="{{showEdit ? [{text: '编辑', className: 'swipe-edit-btn'}, {text: '删除', className: 'swipe-delete-btn'}] : [{text: '删除', className: 'swipe-delete-btn'}]}}"
+  >
+    <view class="record-card {{alert ? 'record-alert' : ''}}" bindtap="onTap">
+      <view class="record-main">
+        <!-- 左侧图标 -->
+        <view wx:if="{{icon}}" class="record-icon" style="background: {{iconBg}};">
+          <image class="record-icon-img" src="{{icon}}" mode="aspectFit" />
+        </view>
+
+        <!-- 内容区 -->
+        <view class="record-body">
+          <view class="record-header">
+            <text class="record-title">{{title}}</text>
+            <text class="record-time">{{timeText}}</text>
+          </view>
+
+          <!-- 详情 -->
+          <text wx:if="{{detail}}" class="record-detail">{{detail}}</text>
+
+          <!-- 标签 -->
+          <view wx:if="{{tags.length > 0}}" class="record-tags">
+            <view
+              wx:for="{{tags}}"
+              wx:key="text"
+              class="record-tag"
+              style="color: {{item.color || '#7C6FE0'}}; background: {{item.bgColor || '#F5F0FF'}};"
+            >
+              <text>{{item.text}}</text>
+            </view>
+          </view>
+
+          <!-- 异常提示 -->
+          <view wx:if="{{alert && alertText}}" class="record-alert-tip">
+            <image class="alert-icon-img" src="/assets/icons/warning.svg" mode="aspectFit" />
+            <text class="alert-text">{{alertText}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 自定义右侧操作按钮区域 -->
+    <view slot="right" class="swipe-actions">
+      <view wx:if="{{showEdit}}" class="swipe-btn swipe-edit" bindtap="onEdit">
+        <text>编辑</text>
+      </view>
+      <view class="swipe-btn swipe-del" bindtap="onDelete">
+        <text>删除</text>
+      </view>
+    </view>
+  </t-swipe-cell>
+
+  <!-- 非滑动模式 -->
+  <view wx:else class="record-card {{alert ? 'record-alert' : ''}}" bindtap="onTap">
+    <view class="record-main">
+      <view wx:if="{{icon}}" class="record-icon" style="background: {{iconBg}};">
+        <image class="record-icon-img" src="{{icon}}" mode="aspectFit" />
+      </view>
+      <view class="record-body">
+        <view class="record-header">
+          <text class="record-title">{{title}}</text>
+          <text class="record-time">{{timeText}}</text>
+        </view>
+        <text wx:if="{{detail}}" class="record-detail">{{detail}}</text>
+        <view wx:if="{{tags.length > 0}}" class="record-tags">
+          <view
+            wx:for="{{tags}}"
+            wx:key="text"
+            class="record-tag"
+            style="color: {{item.color || '#7C6FE0'}}; background: {{item.bgColor || '#F5F0FF'}};"
+          >
+            <text>{{item.text}}</text>
+          </view>
+        </view>
+        <view wx:if="{{alert && alertText}}" class="record-alert-tip">
+          <image class="alert-icon-img" src="/assets/icons/warning.svg" mode="aspectFit" />
+          <text class="alert-text">{{alertText}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 删除确认弹窗 -->
+  <t-dialog
+    visible="{{showDeleteConfirm}}"
+    title="确认删除"
+    content="删除后无法恢复，确定要删除这条记录吗？"
+    confirm-btn="删除"
+    cancel-btn="取消"
+    bind:confirm="onConfirmDelete"
+    bind:cancel="onCancelDelete"
+  />
+</view>

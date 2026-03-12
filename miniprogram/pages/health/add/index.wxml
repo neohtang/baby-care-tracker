@@ -1,26 +1,130 @@
 <!--pages/health/add/index.wxml-->
+<!--添加/编辑健康记录——完整实现-->
+
 <view class="page-add">
-  <view class="card flex-col flex-center">
-    <text class="temp-display">{{temperature}}°C</text>
-    <t-slider value="{{temperature}}" min="35" max="42" step="0.1" bind:change="onTempChange" style="width:100%;" />
-  </view>
+  <!-- 记录类型选择 -->
   <view class="card">
-    <view class="section-subtitle">测量方式</view>
-    <view class="type-selector flex-row">
-      <view wx:for="{{methodOptions}}" wx:key="value" class="type-option {{method === item.value ? 'type-active' : ''}} animate-scale" bindtap="onMethodChange" data-value="{{item.value}}">
-        <text class="type-label">{{item.label}}</text>
+    <view class="section-title">记录类型</view>
+    <view class="type-selector">
+      <view class="type-option {{recordType === 'temperature' ? 'type-active' : ''}} animate-scale" bindtap="onTypeChange" data-value="temperature">
+        <view class="type-icon-circle" style="background: linear-gradient(135deg, #D1FAE5, #A7F3D0);">
+          <image class="type-icon-img" src="/assets/icons/thermometer.svg" mode="aspectFit" />
+        </view>
+        <text class="type-label">体温</text>
+      </view>
+      <view class="type-option {{recordType === 'medication' ? 'type-active' : ''}} animate-scale" bindtap="onTypeChange" data-value="medication">
+        <view class="type-icon-circle" style="background: linear-gradient(135deg, #DBEAFE, #BFDBFE);">
+          <image class="type-icon-img" src="/assets/icons/medicine.svg" mode="aspectFit" />
+        </view>
+        <text class="type-label">用药</text>
+      </view>
+      <view class="type-option {{recordType === 'symptom' ? 'type-active' : ''}} animate-scale" bindtap="onTypeChange" data-value="symptom">
+        <view class="type-icon-circle" style="background: linear-gradient(135deg, #FEE2E2, #FECACA);">
+          <image class="type-icon-img" src="/assets/icons/bandage.svg" mode="aspectFit" />
+        </view>
+        <text class="type-label">症状</text>
       </view>
     </view>
   </view>
+
+  <!-- 体温输入 -->
+  <block wx:if="{{recordType === 'temperature'}}">
+    <view class="card temp-card-input">
+      <view class="temp-display">
+        <text class="temp-big" style="color: {{tempLevelColor}};">{{temperature}}</text>
+        <text class="temp-unit" style="color: {{tempLevelColor}};">°C</text>
+      </view>
+      <view class="temp-level-tag" style="background: {{tempLevelColor}}20; color: {{tempLevelColor}};">
+        {{tempLevelText}}
+      </view>
+      <t-slider
+        value="{{temperature * 10}}"
+        min="340"
+        max="430"
+        step="1"
+        bind:change="onTempSlider"
+        style="margin-top: 24rpx;"
+      />
+      <view class="temp-range">
+        <text>34.0°C</text>
+        <text>43.0°C</text>
+      </view>
+    </view>
+
+    <!-- 测量部位 -->
+    <view class="card">
+      <view class="section-title">测量方式</view>
+      <view class="site-grid">
+        <view
+          wx:for="{{siteOptions}}"
+          wx:key="value"
+          class="site-chip {{temperatureSite === item.value ? 'chip-active' : ''}} animate-scale"
+          bindtap="onSiteChange"
+          data-value="{{item.value}}"
+        >{{item.label}}</view>
+      </view>
+    </view>
+  </block>
+
+  <!-- 用药信息 -->
+  <block wx:if="{{recordType === 'medication'}}">
+    <view class="card">
+      <t-input
+        label="药物名称"
+        value="{{medicationName}}"
+        placeholder="如：布洛芬、对乙酰氨基酚"
+        bind:change="onMedNameChange"
+      />
+      <t-input
+        label="剂量"
+        value="{{medicationDosage}}"
+        placeholder="如：2ml、1片（可选）"
+        bind:change="onMedDosageChange"
+        style="margin-top: 16rpx;"
+      />
+    </view>
+  </block>
+
+  <!-- 症状选择 -->
+  <block wx:if="{{recordType === 'symptom'}}">
+    <view class="card">
+      <view class="section-title">常见症状</view>
+      <view class="symptom-grid">
+        <view
+          wx:for="{{commonSymptoms}}"
+          wx:key="*this"
+          class="symptom-chip {{selectedSymptoms.indexOf(item) > -1 ? 'chip-active' : ''}} animate-scale"
+          bindtap="onSymptomToggle"
+          data-value="{{item}}"
+        >{{item}}</view>
+      </view>
+    </view>
+  </block>
+
+  <!-- 时间 -->
   <view class="card">
-    <t-input label="症状" value="{{symptoms}}" placeholder="如：流鼻涕、咳嗽（可选）" bind:change="onSymptomsChange" />
-    <t-input label="用药" value="{{medication}}" placeholder="如：布洛芬 2ml（可选）" bind:change="onMedicationChange" />
+    <view class="time-row">
+      <text class="time-label">记录时间</text>
+      <text class="time-value">{{timeDisplay}}</text>
+    </view>
   </view>
+
+  <!-- 备注 -->
   <view class="card">
-    <view class="section-subtitle">备注</view>
-    <t-textarea value="{{note}}" placeholder="添加备注（可选）" maxlength="200" bind:change="onNoteChange" autosize />
+    <view class="section-title">备注</view>
+    <t-textarea
+      value="{{note}}"
+      placeholder="添加备注（可选）"
+      maxlength="200"
+      bind:change="onNoteChange"
+      autosize
+    />
   </view>
-  <view class="save-btn-container px-md safe-bottom">
-    <t-button theme="primary" block size="large" bindtap="onSave">保存记录</t-button>
+
+  <!-- 保存 -->
+  <view class="save-bar">
+    <view class="save-btn animate-scale" bindtap="onSave">
+      <text>{{editMode ? '更新记录' : '保存记录'}}</text>
+    </view>
   </view>
 </view>

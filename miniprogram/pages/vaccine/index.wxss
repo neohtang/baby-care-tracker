@@ -1,8 +1,120 @@
 /* pages/vaccine/index.wxss */
-.page-vaccine { padding-bottom: 40rpx; }
-.vaccine-month-label, .milestone-month-label {
-  font-size: 30rpx; font-weight: 600; color: #7C6FE0; margin: 24rpx 0 12rpx; padding-left: 8rpx;
+.page-vaccine { background: #FBF8FF; min-height: 100vh; padding-bottom: 40rpx; }
+
+/* 进度卡片 */
+.progress-card {
+  margin: 24rpx; padding: 28rpx 32rpx;
+  background: #FFFFFF; border-radius: 24rpx;
+  box-shadow: 0 2rpx 16rpx rgba(124,111,224,0.06);
 }
-.vaccine-item, .milestone-item { display: flex; flex-direction: row; align-items: center; }
-.vaccine-status-dot { width: 20rpx; height: 20rpx; border-radius: 50%; flex-shrink: 0; }
+.progress-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16rpx; }
+.progress-title { font-size: 28rpx; font-weight: 600; color: #1A1A2E; }
+.progress-percent { font-size: 36rpx; font-weight: 700; color: #7C6FE0; }
+.progress-bar-bg { height: 12rpx; border-radius: 6rpx; background: #F3F4F6; overflow: hidden; margin-bottom: 16rpx; }
+.progress-bar-fill {
+  height: 100%; border-radius: 6rpx;
+  background: linear-gradient(90deg, #34D399, #6EE7B7);
+  transition: width 0.5s ease;
+}
+.milestone-bar { background: linear-gradient(90deg, #7C6FE0, #A78BFA); }
+.progress-stats { display: flex; gap: 24rpx; }
+.progress-stat { display: flex; align-items: center; gap: 8rpx; }
+.stat-dot { width: 14rpx; height: 14rpx; border-radius: 50%; flex-shrink: 0; }
+.stat-text { font-size: 24rpx; color: #6B7280; }
+
+/* 疫苗时间线 */
+.timeline-section { padding: 0 24rpx; }
+.timeline-group { position: relative; padding-left: 40rpx; margin-bottom: 8rpx; }
+.timeline-group::before {
+  content: ''; position: absolute; left: 14rpx; top: 28rpx; bottom: 0;
+  width: 2rpx; background: #E5E7EB;
+}
+.timeline-group:last-child::before { display: none; }
+.timeline-month { display: flex; align-items: center; gap: 12rpx; margin-bottom: 16rpx; position: relative; }
+.timeline-month-dot {
+  position: absolute; left: -32rpx; top: 50%; transform: translateY(-50%);
+  width: 18rpx; height: 18rpx; border-radius: 50%;
+  background: #7C6FE0; border: 4rpx solid #E8E4F8;
+  z-index: 1;
+}
+.timeline-month-label { font-size: 30rpx; font-weight: 600; color: #7C6FE0; }
+.timeline-items { display: flex; flex-direction: column; gap: 12rpx; margin-bottom: 20rpx; }
+
+.vaccine-card {
+  background: #FFFFFF; border-radius: 20rpx; padding: 24rpx;
+  display: flex; align-items: flex-start; gap: 16rpx;
+  box-shadow: 0 2rpx 8rpx rgba(124,111,224,0.04);
+  transition: transform 0.15s;
+}
+.vaccine-card:active { transform: scale(0.98); }
+.vaccine-card.overdue { border-left: 4rpx solid #F87171; }
+.vaccine-dot {
+  width: 16rpx; height: 16rpx; border-radius: 50%; flex-shrink: 0; margin-top: 8rpx;
+}
+.vaccine-info { flex: 1; display: flex; flex-direction: column; gap: 4rpx; }
+.vaccine-name { font-size: 28rpx; font-weight: 500; color: #1A1A2E; }
+.vaccine-desc { font-size: 22rpx; color: #9CA3AF; }
+.vaccine-disease { font-size: 22rpx; color: #6B7280; }
+.vaccine-status-badge {
+  font-size: 22rpx; font-weight: 500; padding: 6rpx 16rpx;
+  border-radius: 999rpx; flex-shrink: 0; white-space: nowrap;
+}
+
+/* 里程碑列表 */
+.milestone-section { padding: 0 24rpx; }
+.milestone-group { margin-bottom: 16rpx; }
+.milestone-month-header { margin-bottom: 12rpx; margin-top: 8rpx; }
+.milestone-month-label { font-size: 30rpx; font-weight: 600; color: #7C6FE0; padding-left: 8rpx; }
+.milestone-items { display: flex; flex-direction: column; gap: 12rpx; }
+
+.milestone-card {
+  background: #FFFFFF; border-radius: 20rpx; padding: 24rpx;
+  display: flex; align-items: flex-start; gap: 16rpx;
+  box-shadow: 0 2rpx 8rpx rgba(124,111,224,0.04);
+  transition: transform 0.15s;
+}
+.milestone-card:active { transform: scale(0.98); }
+.milestone-card.focus { border-left: 4rpx solid #A78BFA; }
+.milestone-card.concern { border-left: 4rpx solid #F87171; }
 .milestone-star { font-size: 40rpx; flex-shrink: 0; }
+.milestone-info { flex: 1; display: flex; flex-direction: column; gap: 6rpx; }
+.milestone-name-row { display: flex; align-items: center; gap: 12rpx; flex-wrap: wrap; }
+.milestone-name { font-size: 28rpx; font-weight: 500; color: #1A1A2E; }
+.milestone-cat-badge { font-size: 20rpx; padding: 4rpx 12rpx; border-radius: 999rpx; }
+.milestone-desc { font-size: 24rpx; color: #6B7280; line-height: 1.5; }
+.milestone-date { font-size: 22rpx; color: #34D399; font-weight: 500; }
+.milestone-concern { font-size: 22rpx; color: #F87171; }
+
+/* 记录弹窗 */
+.record-popup {
+  padding: 40rpx 32rpx; padding-bottom: calc(40rpx + env(safe-area-inset-bottom));
+  background: #FFF; border-radius: 32rpx 32rpx 0 0;
+}
+.popup-header { margin-bottom: 24rpx; }
+.popup-title { font-size: 34rpx; font-weight: 600; color: #1A1A2E; display: block; }
+.popup-subtitle { font-size: 24rpx; color: #6B7280; margin-top: 8rpx; display: block; line-height: 1.5; }
+.popup-info-row {
+  background: #F5F0FF; border-radius: 16rpx; padding: 20rpx; margin-bottom: 24rpx;
+}
+.popup-info-text { font-size: 24rpx; color: #7C6FE0; line-height: 1.6; }
+.popup-form { margin-bottom: 24rpx; }
+.popup-form-row {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 20rpx 0; border-bottom: 1rpx solid #F3F4F6;
+}
+.popup-form-label { font-size: 28rpx; color: #1A1A2E; flex-shrink: 0; width: 150rpx; }
+.popup-form-value-row { display: flex; align-items: center; gap: 8rpx; }
+.popup-form-value { font-size: 28rpx; color: #7C6FE0; font-weight: 500; }
+.popup-form-input { flex: 1; }
+.popup-actions { display: flex; flex-direction: column; gap: 16rpx; }
+.popup-save-btn {
+  height: 88rpx; display: flex; align-items: center; justify-content: center;
+  background: linear-gradient(135deg, #7C6FE0, #A78BFA); color: #FFF;
+  font-size: 30rpx; font-weight: 600; border-radius: 44rpx;
+  box-shadow: 0 8rpx 24rpx rgba(124,111,224,0.3);
+}
+.popup-delete-btn {
+  height: 72rpx; display: flex; align-items: center; justify-content: center;
+  color: #F87171; font-size: 28rpx; border-radius: 36rpx;
+  background: #FEE2E2;
+}

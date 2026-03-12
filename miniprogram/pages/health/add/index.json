@@ -1,1 +1,6 @@
-{ "navigationBarTitleText": "添加健康记录", "usingComponents": {} }
+{
+  "navigationBarTitleText": "添加健康记录",
+  "usingComponents": {
+    "t-slider": "tdesign-miniprogram/slider/slider"
+  }
+}

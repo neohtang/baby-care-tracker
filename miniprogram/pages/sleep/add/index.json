@@ -1,1 +1,4 @@
-{ "navigationBarTitleText": "添加睡眠记录", "usingComponents": {} }
+{
+  "navigationBarTitleText": "添加睡眠记录",
+  "usingComponents": {}
+}

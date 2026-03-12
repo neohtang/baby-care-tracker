@@ -23,3 +23,14 @@ npm-debug.log*
 # Environment
 .env
 .env.local
+
+# Test & Coverage
+coverage/
+
+# CI artifacts
+preview.jpg
+*.key
+
+# WorkBuddy
+workbuddy
+workbuddy.pub

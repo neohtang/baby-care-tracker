@@ -1,0 +1,33 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "module": "CommonJS",
+    "lib": ["ES2020"],
+    "strict": true,
+    "noImplicitAny": false,
+    "strictNullChecks": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "declaration": false,
+    "outDir": "./dist-test",
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./miniprogram/*"]
+    },
+    "types": ["jest", "node"]
+  },
+  "include": [
+    "__tests__/**/*.ts",
+    "__tests__/**/*.d.ts",
+    "miniprogram/services/**/*.ts",
+    "miniprogram/utils/**/*.ts",
+    "miniprogram/data/**/*.ts",
+    "miniprogram/types/**/*.d.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "miniprogram_npm"
+  ]
+}

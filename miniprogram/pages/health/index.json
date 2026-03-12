@@ -1,1 +1,7 @@
-{ "navigationBarTitleText": "健康监测", "enablePullDownRefresh": true, "usingComponents": {} }
+{
+  "navigationBarTitleText": "健康监测",
+  "enablePullDownRefresh": true,
+  "usingComponents": {
+    "record-card": "/components/record-card/index"
+  }
+}

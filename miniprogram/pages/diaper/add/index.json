@@ -1,1 +1,6 @@
-{ "navigationBarTitleText": "添加排便记录", "usingComponents": {} }
+{
+  "navigationBarTitleText": "添加排便记录",
+  "usingComponents": {
+    "t-switch": "tdesign-miniprogram/switch/switch"
+  }
+}

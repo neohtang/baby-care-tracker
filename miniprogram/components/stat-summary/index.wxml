@@ -1,0 +1,36 @@
+<!--components/stat-summary/index.wxml-->
+<!--统计摘要组件：数字+标签+趋势箭头的摘要卡片网格-->
+
+<view class="stat-summary">
+  <text wx:if="{{title}}" class="stat-title">{{title}}</text>
+
+  <view class="stat-grid {{showCard ? 'stat-grid-card' : ''}}" style="{{gridStyle}}">
+    <view
+      wx:for="{{items}}"
+      wx:key="label"
+      class="stat-item {{clickable ? 'stat-clickable' : ''}}"
+      data-index="{{index}}"
+      bindtap="onItemTap"
+    >
+      <!-- 图标 -->
+      <view wx:if="{{item.icon}}" class="stat-icon" style="background: {{item.color || '#EDE9FE'}};">
+        <image class="stat-icon-img" src="{{item.icon}}" mode="aspectFit" />
+      </view>
+
+      <!-- 数值 -->
+      <view class="stat-value-wrap">
+        <text class="stat-value" style="color: {{item.valueColor || '#1A1A2E'}};">{{item.value}}</text>
+        <text wx:if="{{item.unit}}" class="stat-unit">{{item.unit}}</text>
+      </view>
+
+      <!-- 标签 -->
+      <text class="stat-label">{{item.label}}</text>
+
+      <!-- 趋势指示 -->
+      <view wx:if="{{item.trend}}" class="stat-trend {{item.trend === 'up' ? 'trend-up' : (item.trend === 'down' ? 'trend-down' : 'trend-stable')}}">
+        <text class="trend-arrow">{{item.trend === 'up' ? '↑' : (item.trend === 'down' ? '↓' : '→')}}</text>
+        <text wx:if="{{item.trendText}}" class="trend-text">{{item.trendText}}</text>
+      </view>
+    </view>
+  </view>
+</view>

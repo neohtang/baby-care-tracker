@@ -1,34 +1,86 @@
 <!--pages/diaper/index.wxml-->
+<!--排便记录页——完整实现-->
+
 <view class="page-diaper">
-  <view class="card flex-row flex-between">
-    <view class="stat-item flex-col flex-center">
-      <text class="stat-value" style="color:#7C6FE0;">{{todayStats.totalCount}}</text>
-      <text class="text-hint">今日总次数</text>
+  <!-- 今日统计 -->
+  <view class="stats-card">
+    <view class="stats-header">
+      <text class="stats-title">今日换尿布</text>
+      <text class="stats-badge {{todayStats.hasAlert ? 'badge-alert' : ''}}">{{todayStats.totalCount}}次</text>
     </view>
-    <view class="stat-item flex-col flex-center">
-      <text class="stat-value" style="color:#FBBF24;">{{todayStats.peeCount}}</text>
-      <text class="text-hint">小便</text>
-    </view>
-    <view class="stat-item flex-col flex-center">
-      <text class="stat-value" style="color:#34D399;">{{todayStats.poopCount}}</text>
-      <text class="text-hint">大便</text>
-    </view>
-  </view>
-  <view class="section-title px-md mt-lg">排便记录</view>
-  <view wx:if="{{records.length > 0}}" class="record-list">
-    <view class="card-sm flex-row" wx:for="{{records}}" wx:key="id">
-      <view class="record-type-icon" style="background: {{item.type === 'pee' ? '#FEF3C7' : '#D1FAE5'}};">
-        <text>{{item.type === 'pee' ? '💧' : '💩'}}</text>
-      </view>
-      <view class="flex-1 ml-sm">
-        <view class="flex-between">
-          <text style="font-weight:500;">{{item.typeName}}</text>
-          <text class="text-hint">{{item.timeText}}</text>
+    <view class="stats-grid">
+      <view class="stats-item">
+        <view class="stats-circle" style="background: linear-gradient(135deg, #EDE9FE, #F5F0FF);">
+          <text class="stats-circle-num" style="color: #7C6FE0;">{{todayStats.totalCount}}</text>
         </view>
-        <text wx:if="{{item.detail}}" class="text-secondary">{{item.detail}}</text>
+        <text class="stats-label">总次数</text>
+      </view>
+      <view class="stats-item">
+        <view class="stats-circle" style="background: linear-gradient(135deg, #FEF3C7, #FDE68A);">
+          <text class="stats-circle-num" style="color: #D97706;">{{todayStats.peeCount}}</text>
+        </view>
+        <text class="stats-label">小便</text>
+      </view>
+      <view class="stats-item">
+        <view class="stats-circle" style="background: linear-gradient(135deg, #D1FAE5, #A7F3D0);">
+          <text class="stats-circle-num" style="color: #059669;">{{todayStats.poopCount}}</text>
+        </view>
+        <text class="stats-label">大便</text>
       </view>
     </view>
   </view>
-  <view wx:else class="empty-state"><text class="empty-state-text">暂无排便记录</text></view>
-  <view class="fab-container"><t-fab icon="add" bind:click="goToAdd" /></view>
+
+  <!-- 快捷记录按钮 -->
+  <view class="quick-actions">
+    <view class="quick-btn animate-scale" bindtap="quickPee">
+      <image class="quick-icon-img" src="/assets/icons/waterdrop.svg" mode="aspectFit" />
+      <text class="quick-text">快速记录小便</text>
+    </view>
+    <view class="quick-btn quick-btn-green animate-scale" bindtap="quickPoop">
+      <image class="quick-icon-img" src="/assets/icons/poop.svg" mode="aspectFit" />
+      <text class="quick-text">记录大便</text>
+    </view>
+  </view>
+
+  <!-- 记录列表 -->
+  <view class="section-header">
+    <text class="section-title">排便记录</text>
+  </view>
+
+  <view wx:if="{{!isEmpty}}" class="record-list">
+    <record-card
+      wx:for="{{records}}"
+      wx:key="id"
+      recordId="{{item.id}}"
+      icon="{{item.icon}}"
+      iconBg="{{item.iconBg}}"
+      title="{{item.typeName}}"
+      timeText="{{item.timeText}}"
+      detail="{{item.detail}}"
+      tags="{{item.tags}}"
+      alert="{{item.isAbnormal}}"
+      alertText="{{item.alertText}}"
+      showEdit="{{true}}"
+      bind:edit="onEditRecord"
+      bind:delete="onDeleteRecord"
+    />
+  </view>
+
+  <view wx:elif="{{hasBaby}}" class="empty-state">
+    <image class="empty-icon-img" src="/assets/icons/diaper-pin.svg" mode="aspectFit" />
+    <text class="empty-title">暂无排便记录</text>
+    <text class="empty-desc">使用快捷按钮快速记录</text>
+  </view>
+  <view wx:else class="empty-state">
+    <image class="empty-icon-img" src="/assets/icons/baby.svg" mode="aspectFit" />
+    <text class="empty-title">请先添加宝宝信息</text>
+    <text class="empty-desc">前往设置页添加宝宝后即可记录</text>
+  </view>
+
+  <!-- FAB -->
+  <view class="fab-container">
+    <view class="fab-btn animate-scale" bindtap="goToAdd">
+      <text class="fab-icon">+</text>
+    </view>
+  </view>
 </view>

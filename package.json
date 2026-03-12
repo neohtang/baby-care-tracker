@@ -11,12 +11,24 @@
   ],
   "author": "",
   "license": "MIT",
+  "scripts": {
+    "upload": "node --localstorage-file=/tmp/miniprogram-ci-ls ci/upload.js",
+    "preview": "node --localstorage-file=/tmp/miniprogram-ci-ls ci/preview.js",
+    "build:npm": "node --localstorage-file=/tmp/miniprogram-ci-ls ci/pack-npm.js",
+    "test": "jest",
+    "test:coverage": "jest --coverage"
+  },
   "dependencies": {
-    "tdesign-miniprogram": "^1.7.0",
-    "dayjs": "^1.11.13"
+    "dayjs": "^1.11.13",
+    "tdesign-miniprogram": "^1.7.0"
   },
   "devDependencies": {
-    "typescript": "^5.4.0",
-    "miniprogram-api-typings": "^3.12.0"
+    "@types/jest": "^30.0.0",
+    "@types/node": "^25.4.0",
+    "jest": "^30.3.0",
+    "miniprogram-api-typings": "^3.12.0",
+    "miniprogram-ci": "^2.1.31",
+    "ts-jest": "^29.4.6",
+    "typescript": "^5.4.0"
   }
 }

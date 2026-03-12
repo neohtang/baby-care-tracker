@@ -1,17 +1,19 @@
 <!--pages/feeding/add/index.wxml-->
-<!--添加/编辑喂养记录-->
+<!--添加/编辑喂养记录——完整实现-->
 
 <view class="page-add">
   <!-- 喂养类型选择 -->
   <view class="card">
-    <view class="section-subtitle">喂养类型</view>
-    <view class="type-selector flex-row">
+    <view class="section-title">喂养类型</view>
+    <view class="type-selector">
       <view
         class="type-option {{feedingType === 'breast' ? 'type-active' : ''}} animate-scale"
         bindtap="onTypeChange"
         data-value="breast"
       >
-        <text class="type-icon">🤱</text>
+        <view class="type-icon-circle" style="background: linear-gradient(135deg, #FCE7F3, #F5F0FF);">
+          <image class="type-icon-img" src="/assets/icons/breastfeed.svg" mode="aspectFit" />
+        </view>
         <text class="type-label">母乳</text>
       </view>
       <view
@@ -19,7 +21,9 @@
         bindtap="onTypeChange"
         data-value="formula"
       >
-        <text class="type-icon">🍼</text>
+        <view class="type-icon-circle" style="background: linear-gradient(135deg, #DBEAFE, #EDE9FE);">
+          <image class="type-icon-img" src="/assets/icons/bottle.svg" mode="aspectFit" />
+        </view>
         <text class="type-label">配方奶</text>
       </view>
       <view
@@ -27,56 +31,73 @@
         bindtap="onTypeChange"
         data-value="solid"
       >
-        <text class="type-icon">🥣</text>
+        <view class="type-icon-circle" style="background: linear-gradient(135deg, #FEF3C7, #FDE68A);">
+          <image class="type-icon-img" src="/assets/icons/solid-food.svg" mode="aspectFit" />
+        </view>
         <text class="type-label">辅食</text>
       </view>
     </view>
   </view>
 
-  <!-- 母乳喂养：侧选择 + 计时器 -->
+  <!-- 母乳：侧选择 + 计时器/手动时长 -->
   <block wx:if="{{feedingType === 'breast'}}">
     <view class="card">
-      <view class="section-subtitle">哺乳侧</view>
-      <view class="side-selector flex-row">
+      <view class="section-title">哺乳侧</view>
+      <view class="side-selector">
         <view
           class="side-option {{side === 'left' ? 'side-active' : ''}} animate-scale"
-          bindtap="onSideChange"
-          data-value="left"
+          bindtap="onSideChange" data-value="left"
         >左侧</view>
         <view
           class="side-option {{side === 'right' ? 'side-active' : ''}} animate-scale"
-          bindtap="onSideChange"
-          data-value="right"
+          bindtap="onSideChange" data-value="right"
         >右侧</view>
         <view
           class="side-option {{side === 'both' ? 'side-active' : ''}} animate-scale"
-          bindtap="onSideChange"
-          data-value="both"
+          bindtap="onSideChange" data-value="both"
         >双侧</view>
       </view>
     </view>
 
-    <!-- 计时器 -->
-    <view class="card flex-col flex-center">
-      <view class="timer-display">
-        <text class="timer-text">{{timerSeconds < 600 ? '0' : ''}}{{Math.floor(timerSeconds / 60)}}:{{timerSeconds % 60 < 10 ? '0' : ''}}{{timerSeconds % 60}}</text>
+    <!-- 计时器或手动输入时长 -->
+    <view class="card">
+      <view class="section-header">
+        <view class="section-title">喂养时长</view>
+        <view class="mode-toggle animate-scale" bindtap="toggleTimerMode">
+          <text>{{isTimerMode ? '手动输入' : '使用计时器'}}</text>
+        </view>
       </view>
-      <view class="timer-controls flex-row mt-md">
-        <t-button theme="primary" size="large" shape="circle" bindtap="toggleTimer">
-          {{isTimerRunning ? '暂停' : '开始'}}
-        </t-button>
-        <t-button theme="default" size="large" shape="circle" bindtap="resetTimer" class="ml-sm">
-          重置
-        </t-button>
-      </view>
+
+      <block wx:if="{{isTimerMode}}">
+        <timer-widget
+          title=""
+          color="#7C6FE0"
+          bind:stop="onTimerStop"
+        />
+      </block>
+      <block wx:else>
+        <view class="duration-input-wrap">
+          <view class="duration-display">
+            <text class="duration-value">{{duration}}</text>
+            <text class="duration-unit">分钟</text>
+          </view>
+          <t-slider
+            value="{{duration}}"
+            min="0"
+            max="60"
+            step="1"
+            bind:change="onDurationInput"
+          />
+        </view>
+      </block>
     </view>
   </block>
 
-  <!-- 配方奶：奶量 -->
+  <!-- 配方奶：奶量 + 品牌 -->
   <block wx:if="{{feedingType === 'formula'}}">
     <view class="card">
-      <view class="section-subtitle">奶量 (ml)</view>
-      <view class="amount-display flex-center">
+      <view class="section-title">奶量 (ml)</view>
+      <view class="amount-display">
         <text class="amount-value">{{amount}}</text>
         <text class="amount-unit">ml</text>
       </view>
@@ -85,22 +106,41 @@
         min="0"
         max="300"
         step="10"
-        bind:change="onAmountChange"
+        bind:change="onAmountSlider"
       />
-      <view class="amount-presets flex-row mt-md">
-        <t-button size="small" variant="outline" data-value="60" bindtap="onAmountChange">60ml</t-button>
-        <t-button size="small" variant="outline" data-value="90" bindtap="onAmountChange">90ml</t-button>
-        <t-button size="small" variant="outline" data-value="120" bindtap="onAmountChange">120ml</t-button>
-        <t-button size="small" variant="outline" data-value="150" bindtap="onAmountChange">150ml</t-button>
+      <view class="presets-row">
+        <view
+          wx:for="{{amountPresets}}"
+          wx:key="*this"
+          class="preset-chip {{amount === item ? 'preset-active' : ''}} animate-scale"
+          bindtap="onAmountPreset"
+          data-value="{{item}}"
+        >{{item}}ml</view>
       </view>
+    </view>
+    <view class="card">
+      <t-input
+        label="品牌"
+        value="{{formulaBrand}}"
+        placeholder="配方奶品牌（可选）"
+        bind:change="onBrandChange"
+      />
     </view>
   </block>
 
-  <!-- 辅食：食材和重量 -->
+  <!-- 辅食：食材 + 量 -->
   <block wx:if="{{feedingType === 'solid'}}">
     <view class="card">
-      <view class="section-subtitle">辅食量 (g)</view>
-      <view class="amount-display flex-center">
+      <t-input
+        label="食材"
+        value="{{solidFood}}"
+        placeholder="如：米糊、南瓜泥"
+        bind:change="onFoodChange"
+      />
+    </view>
+    <view class="card">
+      <view class="section-title">辅食量 (g)</view>
+      <view class="amount-display">
         <text class="amount-value">{{amount}}</text>
         <text class="amount-unit">g</text>
       </view>
@@ -109,14 +149,22 @@
         min="0"
         max="200"
         step="5"
-        bind:change="onAmountChange"
+        bind:change="onAmountSlider"
       />
     </view>
   </block>
 
+  <!-- 时间选择 -->
+  <view class="card">
+    <view class="time-row">
+      <text class="time-label">记录时间</text>
+      <text class="time-value">{{startTimeDisplay}}</text>
+    </view>
+  </view>
+
   <!-- 备注 -->
   <view class="card">
-    <view class="section-subtitle">备注</view>
+    <view class="section-title">备注</view>
     <t-textarea
       value="{{note}}"
       placeholder="添加备注（可选）"
@@ -127,9 +175,9 @@
   </view>
 
   <!-- 保存按钮 -->
-  <view class="save-btn-container px-md safe-bottom">
-    <t-button theme="primary" block size="large" bindtap="onSave">
-      {{editMode ? '更新记录' : '保存记录'}}
-    </t-button>
+  <view class="save-bar">
+    <view class="save-btn animate-scale" bindtap="onSave">
+      <text>{{editMode ? '更新记录' : '保存记录'}}</text>
+    </view>
   </view>
 </view>

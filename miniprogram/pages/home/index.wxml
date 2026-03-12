@@ -3,85 +3,113 @@
 
 <view class="page-home">
   <!-- 宝宝信息卡片 -->
-  <view class="baby-card gradient-primary">
-    <view class="flex-row">
-      <view class="baby-avatar-wrapper">
-        <t-avatar
-          wx:if="{{babyInfo}}"
-          image="{{babyInfo.avatarUrl}}"
-          size="large"
-          shape="circle"
-        />
-        <t-avatar wx:else icon="user" size="large" shape="circle" />
+  <view class="baby-card" bindtap="goToBabyProfile">
+    <view class="baby-card-bg"></view>
+    <view class="baby-card-content">
+      <baby-avatar
+        avatarUrl="{{babyAvatarUrl}}"
+        name="{{babyName}}"
+        ageText="{{babyAgeText}}"
+        size="large"
+        showAge="{{false}}"
+        gender="{{babyGender}}"
+      />
+      <view class="baby-info-block">
+        <view class="baby-name-row">
+          <text class="baby-name">{{babyName || '添加宝宝信息'}}</text>
+          <view wx:if="{{babyGenderText}}" class="baby-gender-tag {{babyGender}}">
+            <text>{{babyGenderText}}</text>
+          </view>
+        </view>
+        <text class="baby-age">{{babyAgeText}}</text>
       </view>
-      <view class="baby-info ml-sm flex-1">
-        <text class="baby-name">{{babyInfo.name || '添加宝宝信息'}}</text>
-        <text class="baby-age">{{babyInfo.ageText || '请前往设置页完善信息'}}</text>
+      <view class="baby-card-arrow">
+        <t-icon name="chevron-right" size="40rpx" color="rgba(255,255,255,0.6)" />
       </view>
     </view>
   </view>
 
   <!-- 今日数据摘要 -->
-  <view class="section-title px-md mt-lg">今日概览</view>
-  <view class="summary-grid px-md">
-    <view class="summary-item card-sm animate-scale" bindtap="goToFeeding">
-      <view class="summary-icon feeding-icon">🍼</view>
-      <text class="summary-value">{{todaySummary.feedingCount}}</text>
-      <text class="summary-label">喂养(次)</text>
-    </view>
-    <view class="summary-item card-sm animate-scale" bindtap="goToSleep">
-      <view class="summary-icon sleep-icon">😴</view>
-      <text class="summary-value">{{todaySummary.sleepDuration}}</text>
-      <text class="summary-label">睡眠(小时)</text>
-    </view>
-    <view class="summary-item card-sm animate-scale" bindtap="goToDiaper">
-      <view class="summary-icon diaper-icon">👶</view>
-      <text class="summary-value">{{todaySummary.diaperCount}}</text>
-      <text class="summary-label">排便(次)</text>
-    </view>
-    <view class="summary-item card-sm animate-scale" bindtap="goToHealth">
-      <view class="summary-icon health-icon">🌡️</view>
-      <text class="summary-value">{{todaySummary.lastTemperature}}</text>
-      <text class="summary-label">体温(℃)</text>
+  <view class="section-header">
+    <text class="section-title">今日概览</text>
+    <text class="section-date">{{todayText || ''}}</text>
+  </view>
+
+  <view class="summary-grid">
+    <view
+      class="summary-card {{item.alert ? 'alert' : ''}}"
+      wx:for="{{summaryItems}}"
+      wx:key="label"
+      data-index="{{index}}"
+      bindtap="onSummaryTap"
+    >
+      <view class="summary-icon-wrapper" style="background: {{item.iconBg}};">
+        <image class="summary-icon-img" src="{{item.icon}}" mode="aspectFit" />
+      </view>
+      <view class="summary-data">
+        <view class="summary-value-row">
+          <text class="summary-value">{{item.value}}</text>
+          <text class="summary-unit">{{item.unit}}</text>
+        </view>
+        <text class="summary-label">{{item.label}}</text>
+      </view>
+      <text class="summary-detail">{{item.detail}}</text>
     </view>
   </view>
 
-  <!-- 快捷操作 -->
-  <view class="section-title px-md mt-lg">快捷记录</view>
-  <view class="quick-actions px-md flex-row">
-    <view class="quick-btn animate-scale" bindtap="goToFeeding">
-      <view class="quick-btn-icon" style="background: #EDE9FE;">🍼</view>
+  <!-- 快捷操作入口 -->
+  <view class="section-header">
+    <text class="section-title">快捷记录</text>
+  </view>
+
+  <view class="quick-actions">
+    <view class="quick-btn" bindtap="goToFeeding" hover-class="quick-btn-hover">
+      <view class="quick-btn-icon" style="background: linear-gradient(135deg, #EDE9FE, #DDD6FE);">
+        <image class="quick-btn-svg" src="/assets/icons/bottle.svg" mode="aspectFit" />
+      </view>
       <text class="quick-btn-text">喂奶</text>
     </view>
-    <view class="quick-btn animate-scale" bindtap="goToSleep">
-      <view class="quick-btn-icon" style="background: #DBEAFE;">😴</view>
+    <view class="quick-btn" bindtap="goToSleep" hover-class="quick-btn-hover">
+      <view class="quick-btn-icon" style="background: linear-gradient(135deg, #DBEAFE, #BFDBFE);">
+        <image class="quick-btn-svg" src="/assets/icons/sleep.svg" mode="aspectFit" />
+      </view>
       <text class="quick-btn-text">睡眠</text>
     </view>
-    <view class="quick-btn animate-scale" bindtap="goToDiaper">
-      <view class="quick-btn-icon" style="background: #D1FAE5;">👶</view>
+    <view class="quick-btn" bindtap="goToDiaper" hover-class="quick-btn-hover">
+      <view class="quick-btn-icon" style="background: linear-gradient(135deg, #D1FAE5, #A7F3D0);">
+        <image class="quick-btn-svg" src="/assets/icons/diaper-pin.svg" mode="aspectFit" />
+      </view>
       <text class="quick-btn-text">换尿布</text>
     </view>
-    <view class="quick-btn animate-scale" bindtap="goToHealth">
-      <view class="quick-btn-icon" style="background: #FEF3C7;">🌡️</view>
+    <view class="quick-btn" bindtap="goToHealth" hover-class="quick-btn-hover">
+      <view class="quick-btn-icon" style="background: linear-gradient(135deg, #FEF3C7, #FDE68A);">
+        <image class="quick-btn-svg" src="/assets/icons/thermometer.svg" mode="aspectFit" />
+      </view>
       <text class="quick-btn-text">量体温</text>
     </view>
   </view>
 
   <!-- 今日时间线 -->
-  <view class="section-title px-md mt-lg">今日记录</view>
-  <view wx:if="{{timeline.length > 0}}" class="timeline-list px-md">
-    <view class="timeline-item card-sm animate-fade-in" wx:for="{{timeline}}" wx:key="id">
-      <view class="timeline-dot" style="background: {{item.color}};"></view>
-      <view class="timeline-content flex-1">
-        <view class="flex-between">
-          <text class="timeline-type">{{item.typeName}}</text>
-          <text class="text-hint">{{item.timeText}}</text>
-        </view>
-        <text class="text-secondary mt-sm">{{item.summary}}</text>
-      </view>
+  <view class="section-header">
+    <text class="section-title">今日记录</text>
+    <text wx:if="{{timelineEvents.length > 0}}" class="section-count">{{timelineEvents.length}}条</text>
+  </view>
+
+  <view class="timeline-section">
+    <daily-timeline
+      wx:if="{{timelineEvents.length > 0}}"
+      events="{{timelineEvents}}"
+      maxCount="{{8}}"
+      clickable="{{true}}"
+      bind:eventtap="onTimelineEventTap"
+    />
+    <view wx:else class="empty-state">
+      <image class="empty-icon-img" src="/assets/icons/note.svg" mode="aspectFit" />
+      <text class="empty-text">今日暂无记录</text>
+      <text class="empty-hint">点击上方快捷按钮开始记录宝宝的一天</text>
     </view>
   </view>
-  <view wx:else class="empty-state">
-    <text class="empty-state-text">今日暂无记录，点击上方快捷按钮开始记录吧</text>
-  </view>
+
+  <!-- 底部安全区域 -->
+  <view class="safe-bottom"></view>
 </view>

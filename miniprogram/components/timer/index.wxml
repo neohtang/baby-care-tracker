@@ -1,0 +1,65 @@
+<!--components/timer/index.wxml-->
+<!--计时器组件：圆形进度环 + 时间显示 + 控制按钮-->
+
+<view class="timer-wrap">
+  <!-- 标题 -->
+  <text wx:if="{{title}}" class="timer-title">{{title}}</text>
+
+  <!-- 圆形进度环 -->
+  <view class="timer-circle" style="width: {{radius * 2}}rpx; height: {{radius * 2}}rpx;">
+    <!-- 底圈 -->
+    <view class="circle-bg" style="width: {{radius * 2 - 16}}rpx; height: {{radius * 2 - 16}}rpx; border-color: {{color}}20;"></view>
+
+    <!-- 进度弧线（使用 CSS conic-gradient 模拟） -->
+    <view
+      class="circle-progress"
+      style="width: {{radius * 2}}rpx; height: {{radius * 2}}rpx; background: conic-gradient({{color}} {{progressDeg}}deg, transparent {{progressDeg}}deg);"
+    >
+      <view class="circle-inner" style="width: {{radius * 2 - 16}}rpx; height: {{radius * 2 - 16}}rpx;"></view>
+    </view>
+
+    <!-- 时间显示 -->
+    <view class="timer-display">
+      <view class="time-text-wrap">
+        <text wx:if="{{displayHours}}" class="time-digits" style="color: {{color}};">{{displayHours}}:</text>
+        <text class="time-digits" style="color: {{color}};">{{displayMinutes}}</text>
+        <text class="time-colon" style="color: {{color}};">:</text>
+        <text class="time-digits" style="color: {{color}};">{{displaySeconds}}</text>
+      </view>
+      <text class="time-hint">{{isRunning ? '计时中...' : (seconds > 0 ? '已暂停' : '准备计时')}}</text>
+    </view>
+
+    <!-- 运行中脉冲点 -->
+    <view wx:if="{{isRunning}}" class="pulse-dot" style="background: {{color}};"></view>
+  </view>
+
+  <!-- 控制按钮组 -->
+  <view class="timer-controls">
+    <!-- 主按钮：开始/暂停 -->
+    <view
+      class="ctrl-btn ctrl-btn-primary {{isRunning ? 'ctrl-btn-pause' : ''}}"
+      style="background: {{isRunning ? '#F5F0FF' : color}}; color: {{isRunning ? color : '#FFFFFF'}};"
+      bindtap="onToggle"
+    >
+      <text>{{isRunning ? '暂停' : (seconds > 0 ? '继续' : '开始')}}</text>
+    </view>
+
+    <!-- 停止按钮（计时中或暂停后显示） -->
+    <view
+      wx:if="{{seconds > 0}}"
+      class="ctrl-btn ctrl-btn-stop"
+      bindtap="onStop"
+    >
+      <text>结束</text>
+    </view>
+
+    <!-- 重置按钮（暂停后显示） -->
+    <view
+      wx:if="{{seconds > 0 && !isRunning}}"
+      class="ctrl-btn ctrl-btn-reset"
+      bindtap="onReset"
+    >
+      <text>重置</text>
+    </view>
+  </view>
+</view>

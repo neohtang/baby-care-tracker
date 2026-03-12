@@ -1,0 +1,141 @@
+/* components/daily-timeline/index.wxss */
+/* 每日时间线组件样式 */
+
+.timeline-wrap {
+  padding: 8rpx 0;
+}
+
+/* 时间线单项 */
+.tl-item {
+  display: flex;
+  flex-direction: row;
+  min-height: 100rpx;
+  transition: background 0.15s ease;
+}
+
+.tl-clickable:active {
+  background: rgba(124, 111, 224, 0.04);
+  border-radius: 16rpx;
+}
+
+/* 左侧轴线 */
+.tl-axis {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 48rpx;
+  flex-shrink: 0;
+  padding-top: 6rpx;
+}
+
+/* 时间节点圆点 */
+.tl-dot {
+  width: 16rpx;
+  height: 16rpx;
+  border-radius: 50%;
+  flex-shrink: 0;
+  margin-top: 10rpx;
+}
+
+/* 连接线 */
+.tl-line {
+  width: 2rpx;
+  flex: 1;
+  background: linear-gradient(to bottom, #E5E7EB, #F3F4F6);
+  margin: 6rpx 0;
+  min-height: 30rpx;
+}
+
+/* 右侧内容区 */
+.tl-content {
+  flex: 1;
+  padding: 8rpx 0 24rpx 12rpx;
+  min-width: 0;
+}
+
+/* 头部：类型 + 时间 */
+.tl-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.tl-type-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8rpx;
+}
+
+.tl-icon {
+  font-size: 28rpx;
+}
+
+.tl-icon-img {
+  width: 28rpx;
+  height: 28rpx;
+  flex-shrink: 0;
+}
+
+.tl-type {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #1A1A2E;
+}
+
+.tl-time {
+  font-size: 22rpx;
+  color: #9CA3AF;
+  flex-shrink: 0;
+}
+
+/* 摘要 */
+.tl-summary {
+  display: block;
+  font-size: 24rpx;
+  color: #6B7280;
+  margin-top: 6rpx;
+  line-height: 1.5;
+}
+
+/* 查看更多 */
+.tl-more {
+  display: flex;
+  justify-content: center;
+  padding: 20rpx 0;
+}
+
+.tl-more-text {
+  font-size: 24rpx;
+  color: #7C6FE0;
+  font-weight: 500;
+}
+
+.tl-more:active .tl-more-text {
+  opacity: 0.7;
+}
+
+/* 空状态 */
+.tl-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 60rpx 0;
+}
+
+.tl-empty-icon {
+  font-size: 64rpx;
+  margin-bottom: 16rpx;
+  opacity: 0.5;
+}
+
+.tl-empty-icon-img {
+  width: 64rpx;
+  height: 64rpx;
+  margin-bottom: 16rpx;
+  opacity: 0.5;
+}
+
+.tl-empty-text {
+  font-size: 26rpx;
+  color: #9CA3AF;
+}

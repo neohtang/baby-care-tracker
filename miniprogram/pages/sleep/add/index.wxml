@@ -1,25 +1,104 @@
 <!--pages/sleep/add/index.wxml-->
+<!--添加/编辑睡眠记录——完整实现-->
+
 <view class="page-add">
+  <!-- 睡眠类型 -->
   <view class="card">
-    <view class="section-subtitle">睡眠类型</view>
-    <view class="type-selector flex-row">
-      <view class="type-option {{type === 'nap' ? 'type-active' : ''}} animate-scale" bindtap="onTypeChange" data-value="nap">
-        <text class="type-icon">☀️</text><text class="type-label">日间小睡</text>
+    <view class="section-title">睡眠类型</view>
+    <view class="type-selector">
+      <view
+        class="type-option {{type === 'nap' ? 'type-active' : ''}} animate-scale"
+        bindtap="onTypeChange" data-value="nap"
+      >
+        <view class="type-icon-circle" style="background: linear-gradient(135deg, #FEF3C7, #FDE68A);">
+          <image class="type-icon-img" src="/assets/icons/sun.svg" mode="aspectFit" />
+        </view>
+        <text class="type-label">日间小睡</text>
       </view>
-      <view class="type-option {{type === 'night' ? 'type-active' : ''}} animate-scale" bindtap="onTypeChange" data-value="night">
-        <text class="type-icon">🌙</text><text class="type-label">夜间睡眠</text>
+      <view
+        class="type-option {{type === 'night' ? 'type-active' : ''}} animate-scale"
+        bindtap="onTypeChange" data-value="night"
+      >
+        <view class="type-icon-circle" style="background: linear-gradient(135deg, #312E81, #4C1D95);">
+          <image class="type-icon-img" src="/assets/icons/moon.svg" mode="aspectFit" />
+        </view>
+        <text class="type-label">夜间睡眠</text>
       </view>
     </view>
   </view>
+
+  <!-- 时间选择 -->
   <view class="card">
-    <t-cell title="入睡时间" note="{{startTime || '请选择'}}" arrow bindtap="onStartTimeChange" />
-    <t-cell title="醒来时间" note="{{endTime || '请选择'}}" arrow bindtap="onEndTimeChange" />
+    <view class="time-row" bindtap="onStartTimeTap">
+      <view class="time-info">
+        <image class="time-icon-img" src="/assets/icons/bed.svg" mode="aspectFit" />
+        <text class="time-label">入睡时间</text>
+      </view>
+      <text class="time-value">{{startTimeDisplay || '请选择'}}</text>
+    </view>
+    <view class="time-divider"></view>
+    <view class="time-row" bindtap="onEndTimeTap">
+      <view class="time-info">
+        <image class="time-icon-img" src="/assets/icons/alarm.svg" mode="aspectFit" />
+        <text class="time-label">醒来时间</text>
+      </view>
+      <text class="time-value">{{endTimeDisplay || '请选择'}}</text>
+    </view>
+
+    <!-- 时长 -->
+    <view wx:if="{{duration > 0}}" class="duration-badge">
+      <text class="duration-text">睡了 {{durationText}}</text>
+    </view>
   </view>
+
+  <!-- 睡眠质量评分 -->
   <view class="card">
-    <view class="section-subtitle">备注</view>
-    <t-textarea value="{{note}}" placeholder="添加备注（可选）" maxlength="200" bind:change="onNoteChange" autosize />
+    <view class="section-title">睡眠质量</view>
+    <view class="quality-row">
+      <view
+        wx:for="{{[1,2,3,4,5]}}"
+        wx:key="*this"
+        class="quality-star animate-scale"
+        bindtap="onQualityChange"
+        data-value="{{item}}"
+      >
+        <image class="star-img {{quality >= item ? 'star-active' : 'star-inactive'}}" src="{{quality >= item ? '/assets/icons/star-filled.svg' : '/assets/icons/star-outline.svg'}}" mode="aspectFit" />
+      </view>
+    </view>
   </view>
-  <view class="save-btn-container px-md safe-bottom">
-    <t-button theme="primary" block size="large" bindtap="onSave">保存记录</t-button>
+
+  <!-- 备注 -->
+  <view class="card">
+    <view class="section-title">备注</view>
+    <t-textarea
+      value="{{note}}"
+      placeholder="添加备注（可选）"
+      maxlength="200"
+      bind:change="onNoteChange"
+      autosize
+    />
+  </view>
+
+  <!-- 保存 -->
+  <view class="save-bar">
+    <view class="save-btn animate-scale" bindtap="onSave">
+      <text>{{editMode ? '更新记录' : '保存记录'}}</text>
+    </view>
   </view>
 </view>
+
+<!-- 时间选择器 -->
+<t-date-time-picker
+  visible="{{showStartPicker}}"
+  mode="{{['date', 'hour', 'minute']}}"
+  title="选择入睡时间"
+  bind:confirm="onStartTimeConfirm"
+  bind:cancel="onPickerCancel"
+/>
+<t-date-time-picker
+  visible="{{showEndPicker}}"
+  mode="{{['date', 'hour', 'minute']}}"
+  title="选择醒来时间"
+  bind:confirm="onEndTimeConfirm"
+  bind:cancel="onPickerCancel"
+/>

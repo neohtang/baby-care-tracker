@@ -1,60 +1,88 @@
 <!--pages/feeding/index.wxml-->
-<!--喂养记录页-->
+<!--喂养记录页——完整实现-->
 
 <view class="page-feeding">
-  <!-- 今日统计 -->
-  <view class="card flex-row flex-between">
-    <view class="stat-item flex-col flex-center">
-      <text class="stat-value">{{todayStats.totalCount}}</text>
-      <text class="text-hint">今日次数</text>
+  <!-- 今日统计卡片 -->
+  <view class="stats-card">
+    <view class="stats-header">
+      <text class="stats-title">今日喂养</text>
+      <text class="stats-badge">{{todayStats.totalCount}}次</text>
     </view>
-    <view class="stat-item flex-col flex-center">
-      <text class="stat-value">{{todayStats.totalAmount}}</text>
-      <text class="text-hint">总奶量(ml)</text>
-    </view>
-    <view class="stat-item flex-col flex-center">
-      <text class="stat-value">{{todayStats.totalDuration}}</text>
-      <text class="text-hint">总时长(分)</text>
+    <view class="stats-grid">
+      <view class="stats-item">
+        <view class="stats-icon-wrap" style="background: linear-gradient(135deg, #FCE7F3, #F5F0FF);">
+          <image class="stats-icon-img" src="/assets/icons/breastfeed.svg" mode="aspectFit" />
+        </view>
+        <text class="stats-num">{{todayStats.breastCount}}</text>
+        <text class="stats-label">母乳</text>
+        <text class="stats-sub" wx:if="{{todayStats.totalBreastDuration > 0}}">{{todayStats.totalBreastDuration}}分钟</text>
+      </view>
+      <view class="stats-item">
+        <view class="stats-icon-wrap" style="background: linear-gradient(135deg, #DBEAFE, #EDE9FE);">
+          <image class="stats-icon-img" src="/assets/icons/bottle.svg" mode="aspectFit" />
+        </view>
+        <text class="stats-num">{{todayStats.formulaCount}}</text>
+        <text class="stats-label">配方奶</text>
+        <text class="stats-sub" wx:if="{{todayStats.totalFormulaAmount > 0}}">{{todayStats.totalFormulaAmount}}ml</text>
+      </view>
+      <view class="stats-item">
+        <view class="stats-icon-wrap" style="background: linear-gradient(135deg, #FEF3C7, #FDE68A);">
+          <image class="stats-icon-img" src="/assets/icons/solid-food.svg" mode="aspectFit" />
+        </view>
+        <text class="stats-num">{{todayStats.solidCount}}</text>
+        <text class="stats-label">辅食</text>
+      </view>
     </view>
   </view>
 
-  <!-- 类型切换 -->
-  <t-tabs value="{{activeTab}}" bind:change="onTabChange" space-evenly>
-    <t-tab-panel label="全部" value="0" />
-    <t-tab-panel label="母乳" value="1" />
-    <t-tab-panel label="配方奶" value="2" />
-    <t-tab-panel label="辅食" value="3" />
-  </t-tabs>
+  <!-- 类型筛选 Tab -->
+  <view class="tab-wrap">
+    <view
+      wx:for="{{tabs}}"
+      wx:key="value"
+      class="tab-item {{activeTab === item.value ? 'tab-active' : ''}}"
+      bindtap="onTabChange"
+      data-value="{{item.value}}"
+    >
+      <text>{{item.label}}</text>
+      <view wx:if="{{activeTab === item.value}}" class="tab-indicator"></view>
+    </view>
+  </view>
 
   <!-- 记录列表 -->
-  <view wx:if="{{records.length > 0}}" class="record-list">
-    <t-swipe-cell
+  <view wx:if="{{!isEmpty}}" class="record-list">
+    <record-card
       wx:for="{{records}}"
       wx:key="id"
-      right="{{[{text: '删除', className: 'swipe-delete-btn'}]}}"
-      bind:click="onDelete"
-      data-id="{{item.id}}"
-    >
-      <view class="card-sm flex-row animate-scale">
-        <view class="record-type-icon" style="background: {{item.iconBg}};">
-          <text>{{item.icon}}</text>
-        </view>
-        <view class="flex-1 ml-sm">
-          <view class="flex-between">
-            <text class="record-title">{{item.typeName}}</text>
-            <text class="text-hint">{{item.timeText}}</text>
-          </view>
-          <text class="text-secondary">{{item.detail}}</text>
-        </view>
-      </view>
-    </t-swipe-cell>
-  </view>
-  <view wx:else class="empty-state">
-    <text class="empty-state-text">暂无喂养记录</text>
+      recordId="{{item.id}}"
+      icon="{{item.icon}}"
+      iconBg="{{item.iconBg}}"
+      title="{{item.typeName}}"
+      timeText="{{item.timeText}}"
+      detail="{{item.detail}}"
+      tags="{{item.tags}}"
+      showEdit="{{true}}"
+      bind:edit="onEditRecord"
+      bind:delete="onDeleteRecord"
+    />
   </view>
 
-  <!-- 添加按钮 -->
+  <!-- 空状态 -->
+  <view wx:elif="{{hasBaby}}" class="empty-state">
+    <image class="empty-icon-img" src="/assets/icons/bottle.svg" mode="aspectFit" />
+    <text class="empty-title">暂无喂养记录</text>
+    <text class="empty-desc">点击下方按钮开始记录第一次喂养</text>
+  </view>
+  <view wx:else class="empty-state">
+    <image class="empty-icon-img" src="/assets/icons/baby.svg" mode="aspectFit" />
+    <text class="empty-title">请先添加宝宝信息</text>
+    <text class="empty-desc">前往设置页添加宝宝后即可记录</text>
+  </view>
+
+  <!-- 浮动添加按钮 -->
   <view class="fab-container">
-    <t-fab icon="add" bind:click="goToAdd" />
+    <view class="fab-btn animate-scale" bindtap="goToAdd">
+      <text class="fab-icon">+</text>
+    </view>
   </view>
 </view>

@@ -1,18 +1,117 @@
 <!--pages/milestone/index.wxml-->
 <view class="page-milestone">
-  <view class="section-title px-md">发育里程碑</view>
-  <view wx:if="{{milestones.length > 0}}" class="px-md">
-    <view class="card-sm animate-scale" wx:for="{{milestones}}" wx:key="id" bindtap="onRecord" data-id="{{item.id}}">
-      <view class="flex-row">
-        <text class="milestone-star">{{item.achieved ? '⭐' : '☆'}}</text>
-        <view class="flex-1 ml-sm">
-          <text style="font-weight:500;">{{item.name}}</text>
-          <text class="text-secondary">预期月龄: {{item.expectedMonth}}个月</text>
-        </view>
-        <text wx:if="{{item.achieved}}" class="tag tag-success">已达成</text>
-        <text wx:else class="tag tag-primary">待达成</text>
+  <!-- 顶部进度摘要 -->
+  <view class="summary-card">
+    <view class="summary-left">
+      <view class="summary-circle">
+        <text class="summary-percent">{{summary.progress}}</text>
+        <text class="summary-unit">%</text>
+      </view>
+      <text class="summary-label">达成进度</text>
+    </view>
+    <view class="summary-right">
+      <view class="summary-stat-row">
+        <text class="summary-stat-num" style="color:#34D399;">{{summary.achieved}}</text>
+        <text class="summary-stat-label">已达成</text>
+      </view>
+      <view class="summary-stat-row">
+        <text class="summary-stat-num" style="color:#9CA3AF;">{{summary.pending}}</text>
+        <text class="summary-stat-label">待达成</text>
+      </view>
+      <view class="summary-stat-row" wx:if="{{summary.concern > 0}}">
+        <text class="summary-stat-num" style="color:#F87171;">{{summary.concern}}</text>
+        <text class="summary-stat-label">需关注</text>
+      </view>
+      <view class="summary-stat-row">
+        <text class="summary-stat-num" style="color:#A78BFA;">{{summary.currentFocus}}</text>
+        <text class="summary-stat-label">当前关注</text>
       </view>
     </view>
   </view>
-  <view wx:else class="empty-state"><text class="empty-state-text">暂无里程碑数据</text></view>
+
+  <!-- 类别筛选 -->
+  <scroll-view scroll-x class="category-scroll">
+    <view class="category-list">
+      <view
+        wx:for="{{categories}}" wx:key="key"
+        class="category-chip {{activeCategory === item.key ? 'active' : ''}}"
+        style="{{activeCategory === item.key ? 'background:' + item.color + '; color:#FFF;' : ''}}"
+        bindtap="onCategoryChange" data-key="{{item.key}}"
+      >{{item.label}}</view>
+    </view>
+  </scroll-view>
+
+  <!-- 里程碑列表 -->
+  <view wx:if="{{milestoneGroups.length > 0}}" class="milestone-list">
+    <view class="ms-group" wx:for="{{milestoneGroups}}" wx:key="month">
+      <view class="ms-group-header">
+        <view class="ms-group-dot"></view>
+        <text class="ms-group-label">{{item.monthLabel}}</text>
+      </view>
+      <view class="ms-items">
+        <view
+          class="ms-card {{ms.isCurrentFocus ? 'focus' : ''}} {{ms.status}}"
+          wx:for="{{item.milestones}}" wx:for-item="ms" wx:key="milestone.id"
+          bindtap="onRecord" data-id="{{ms.milestone.id}}"
+        >
+          <view class="ms-card-header">
+            <image class="ms-star-img" src="{{ms.statusIcon}}" mode="aspectFit" />
+            <text class="ms-name">{{ms.milestone.name}}</text>
+            <view class="ms-cat" style="background: {{ms.categoryColor}}15; color: {{ms.categoryColor}};">
+              {{ms.categoryLabel}}
+            </view>
+          </view>
+          <text class="ms-desc">{{ms.description}}</text>
+          <view class="ms-footer">
+            <text wx:if="{{ms.dateText}}" class="ms-achieved-date">{{ms.dateText}}</text>
+            <text wx:if="{{ms.status === 'concern'}}" class="ms-concern-badge">需关注</text>
+            <text wx:elif="{{ms.isCurrentFocus && ms.status === 'pending'}}" class="ms-focus-badge">当前关注</text>
+          </view>
+          <text wx:if="{{ms.status === 'concern' && ms.concernTip}}" class="ms-concern-tip">{{ms.concernTip}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+  <view wx:else class="empty-state">
+    <image class="empty-icon-img" src="/assets/icons/star-glow.svg" mode="aspectFit" />
+    <text class="empty-text">当前筛选无匹配里程碑</text>
+  </view>
+
+  <!-- 记录弹窗 -->
+  <t-popup visible="{{showRecordPopup}}" placement="bottom" bind:visible-change="closeRecordPopup">
+    <view class="record-popup" wx:if="{{selectedItem}}">
+      <view class="popup-header">
+        <text class="popup-title">{{selectedItem.milestone.name}}</text>
+        <text class="popup-desc">{{selectedItem.description}}</text>
+      </view>
+
+      <view class="popup-form">
+        <view class="popup-row" bindtap="onDateTap">
+          <text class="popup-label">达成日期</text>
+          <view class="popup-value-row">
+            <text class="popup-value">{{recordForm.achievedDate}}</text>
+            <t-icon name="chevron-right" size="32rpx" color="#9CA3AF" />
+          </view>
+        </view>
+        <view class="popup-row">
+          <text class="popup-label">备注</text>
+          <t-input value="{{recordForm.note}}" placeholder="记录宝宝的表现" bind:change="onNoteChange" borderless class="popup-input" />
+        </view>
+      </view>
+
+      <view class="popup-btns">
+        <view class="btn-save" bindtap="saveRecord">
+          {{selectedItem.record ? '更新记录' : '记录达成'}}
+        </view>
+        <view wx:if="{{selectedItem.record}}" class="btn-delete" bindtap="deleteRecord">删除记录</view>
+      </view>
+    </view>
+  </t-popup>
+
+  <t-date-time-picker
+    title="选择达成日期"
+    visible="{{showDatePicker}}"
+    mode="date" value="{{recordForm.achievedDate}}" format="YYYY-MM-DD"
+    bind:confirm="onDateConfirm" bind:cancel="onDateCancel"
+  />
 </view>

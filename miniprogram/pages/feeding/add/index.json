@@ -1,4 +1,7 @@
 {
   "navigationBarTitleText": "添加喂养记录",
-  "usingComponents": {}
+  "usingComponents": {
+    "timer-widget": "/components/timer/index",
+    "t-slider": "tdesign-miniprogram/slider/slider"
+  }
 }

@@ -1,42 +1,102 @@
 <!--pages/diaper/add/index.wxml-->
+<!--添加/编辑排便记录——完整实现-->
+
 <view class="page-add">
+  <!-- 排便类型 -->
   <view class="card">
-    <view class="section-subtitle">类型</view>
-    <view class="type-selector flex-row">
+    <view class="section-title">类型</view>
+    <view class="type-selector">
       <view class="type-option {{type === 'pee' ? 'type-active' : ''}} animate-scale" bindtap="onTypeChange" data-value="pee">
-        <text class="type-icon">💧</text><text class="type-label">小便</text>
+        <view class="type-icon-circle" style="background: linear-gradient(135deg, #FEF3C7, #FDE68A);">
+          <image class="type-icon-img" src="/assets/icons/waterdrop.svg" mode="aspectFit" />
+        </view>
+        <text class="type-label">小便</text>
       </view>
       <view class="type-option {{type === 'poop' ? 'type-active' : ''}} animate-scale" bindtap="onTypeChange" data-value="poop">
-        <text class="type-icon">💩</text><text class="type-label">大便</text>
+        <view class="type-icon-circle" style="background: linear-gradient(135deg, #D1FAE5, #A7F3D0);">
+          <image class="type-icon-img" src="/assets/icons/poop.svg" mode="aspectFit" />
+        </view>
+        <text class="type-label">大便</text>
       </view>
       <view class="type-option {{type === 'both' ? 'type-active' : ''}} animate-scale" bindtap="onTypeChange" data-value="both">
-        <text class="type-icon">👶</text><text class="type-label">大小便</text>
+        <view class="type-icon-circle" style="background: linear-gradient(135deg, #EDE9FE, #F5F0FF);">
+          <image class="type-icon-img" src="/assets/icons/baby.svg" mode="aspectFit" />
+        </view>
+        <text class="type-label">大小便</text>
       </view>
     </view>
   </view>
+
+  <!-- 大便详情（非小便时显示） -->
   <block wx:if="{{type !== 'pee'}}">
+    <!-- 颜色选择 -->
     <view class="card">
-      <view class="section-subtitle">颜色</view>
-      <view class="option-grid">
-        <view wx:for="{{colorOptions}}" wx:key="*this" class="option-chip {{color === item ? 'chip-active' : ''}} animate-scale" bindtap="onColorChange" data-value="{{item}}">{{item}}</view>
+      <view class="section-title">颜色</view>
+      <view class="color-grid">
+        <view
+          wx:for="{{colorOptions}}"
+          wx:key="value"
+          class="color-chip {{poopColor === item.value ? 'chip-active' : ''}} animate-scale"
+          bindtap="onColorChange"
+          data-value="{{item.value}}"
+        >
+          <view class="color-dot" style="background: {{item.color}};"></view>
+          <text class="chip-text">{{item.label}}</text>
+        </view>
       </view>
     </view>
+
+    <!-- 质地选择 -->
     <view class="card">
-      <view class="section-subtitle">质地</view>
-      <view class="option-grid">
-        <view wx:for="{{textureOptions}}" wx:key="*this" class="option-chip {{texture === item ? 'chip-active' : ''}} animate-scale" bindtap="onTextureChange" data-value="{{item}}">{{item}}</view>
+      <view class="section-title">质地</view>
+      <view class="texture-grid">
+        <view
+          wx:for="{{textureOptions}}"
+          wx:key="value"
+          class="texture-chip {{poopTexture === item.value ? 'chip-active' : ''}} animate-scale"
+          bindtap="onTextureChange"
+          data-value="{{item.value}}"
+        >{{item.label}}</view>
       </view>
     </view>
-    <view class="card flex-between">
-      <text>标记为异常</text>
-      <t-switch value="{{isAbnormal}}" bind:change="onAbnormalChange" />
+
+    <!-- 异常标记 -->
+    <view class="card alert-card">
+      <view class="alert-row">
+        <view class="alert-info">
+          <image class="alert-icon-img" src="/assets/icons/warning.svg" mode="aspectFit" />
+          <text class="alert-label">标记为异常</text>
+        </view>
+        <t-switch value="{{alert !== 'none'}}" bind:change="onAlertChange" />
+      </view>
+      <text class="alert-hint">开启后会在首页高亮提醒</text>
     </view>
   </block>
+
+  <!-- 时间 -->
   <view class="card">
-    <view class="section-subtitle">备注</view>
-    <t-textarea value="{{note}}" placeholder="添加备注（可选）" maxlength="200" bind:change="onNoteChange" autosize />
+    <view class="time-row">
+      <text class="time-label">记录时间</text>
+      <text class="time-value">{{timeDisplay}}</text>
+    </view>
   </view>
-  <view class="save-btn-container px-md safe-bottom">
-    <t-button theme="primary" block size="large" bindtap="onSave">保存记录</t-button>
+
+  <!-- 备注 -->
+  <view class="card">
+    <view class="section-title">备注</view>
+    <t-textarea
+      value="{{note}}"
+      placeholder="添加备注（可选）"
+      maxlength="200"
+      bind:change="onNoteChange"
+      autosize
+    />
+  </view>
+
+  <!-- 保存 -->
+  <view class="save-bar">
+    <view class="save-btn animate-scale" bindtap="onSave">
+      <text>{{editMode ? '更新记录' : '保存记录'}}</text>
+    </view>
   </view>
 </view>

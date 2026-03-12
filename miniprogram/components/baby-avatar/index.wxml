@@ -1,0 +1,30 @@
+<!--components/baby-avatar/index.wxml-->
+<!--宝宝头像组件：圆形头像 + 月龄标签-->
+
+<view class="baby-avatar-wrap" bindtap="onTap">
+  <!-- 头像外环 -->
+  <view class="avatar-ring" style="width: {{avatarSize}}; height: {{avatarSize}}; background: {{ringGradient}};">
+    <!-- 有头像图片 -->
+    <image
+      wx:if="{{avatarUrl}}"
+      class="avatar-img"
+      src="{{avatarUrl}}"
+      mode="aspectFill"
+      style="width: calc({{avatarSize}} - 8rpx); height: calc({{avatarSize}} - 8rpx);"
+    />
+    <!-- 无头像：显示首字 -->
+    <view
+      wx:else
+      class="avatar-placeholder"
+      style="width: calc({{avatarSize}} - 8rpx); height: calc({{avatarSize}} - 8rpx); background: {{placeholderBg}}; font-size: {{fontSize}};"
+    >
+      <text wx:if="{{initial}}" class="avatar-initial">{{initial}}</text>
+      <image wx:else class="avatar-initial-img" src="/assets/icons/baby.svg" mode="aspectFit" />
+    </view>
+  </view>
+
+  <!-- 月龄标签 -->
+  <view wx:if="{{showAge && ageText}}" class="age-badge">
+    <text class="age-text">{{ageText}}</text>
+  </view>
+</view>

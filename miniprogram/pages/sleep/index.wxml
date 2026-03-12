@@ -1,55 +1,85 @@
 <!--pages/sleep/index.wxml-->
+<!--睡眠记录页——完整实现-->
+
 <view class="page-sleep">
   <!-- 今日统计 -->
-  <view class="card">
-    <view class="section-subtitle">今日睡眠</view>
-    <view class="flex-row flex-between mt-sm">
-      <view class="stat-item flex-col flex-center">
-        <text class="stat-value primary-text">{{todayStats.totalDuration}}</text>
-        <text class="text-hint">总时长(小时)</text>
+  <view class="stats-card">
+    <view class="stats-header">
+      <text class="stats-title">今日睡眠</text>
+      <text class="stats-badge">{{todayStats.totalDurationText}}h</text>
+    </view>
+    <view class="stats-grid">
+      <view class="stats-item">
+        <view class="stats-icon-wrap" style="background: linear-gradient(135deg, #DBEAFE, #C7D2FE);">
+          <image class="stats-icon-img" src="/assets/icons/timer.svg" mode="aspectFit" />
+        </view>
+        <text class="stats-num primary-text">{{todayStats.totalDurationText}}</text>
+        <text class="stats-label">总时长(h)</text>
       </view>
-      <view class="stat-item flex-col flex-center">
-        <text class="stat-value">{{todayStats.napCount}}</text>
-        <text class="text-hint">小睡次数</text>
+      <view class="stats-item">
+        <view class="stats-icon-wrap" style="background: linear-gradient(135deg, #FEF3C7, #FDE68A);">
+          <image class="stats-icon-img" src="/assets/icons/sun.svg" mode="aspectFit" />
+        </view>
+        <text class="stats-num">{{todayStats.napCount}}</text>
+        <text class="stats-label">小睡次数</text>
+        <text class="stats-sub" wx:if="{{todayStats.napDuration > 0}}">{{todayStats.napDurationText}}h</text>
       </view>
-      <view class="stat-item flex-col flex-center">
-        <text class="stat-value">{{todayStats.nightDuration}}</text>
-        <text class="text-hint">夜间(小时)</text>
+      <view class="stats-item">
+        <view class="stats-icon-wrap" style="background: linear-gradient(135deg, #312E81, #4C1D95);">
+          <image class="stats-icon-img" src="/assets/icons/moon.svg" mode="aspectFit" />
+        </view>
+        <text class="stats-num">{{todayStats.nightDurationText}}</text>
+        <text class="stats-label">夜间(h)</text>
       </view>
     </view>
   </view>
 
-  <!-- 一键睡眠 -->
-  <view class="card flex-center">
-    <view class="sleep-toggle animate-scale" bindtap="toggleSleep">
-      <view class="sleep-toggle-circle {{isSleeping ? 'sleeping' : ''}}">
-        <text class="sleep-toggle-icon">{{isSleeping ? '🌙' : '☀️'}}</text>
+  <!-- 一键睡眠控制器 -->
+  <view class="sleep-controller">
+    <view class="sleep-toggle-area animate-scale" bindtap="toggleSleep">
+      <view class="sleep-circle {{isSleeping ? 'sleeping' : ''}}">
+        <view class="sleep-ring {{isSleeping ? 'ring-pulse' : ''}}"></view>
+        <image class="sleep-emoji-img" src="{{isSleeping ? '/assets/icons/moon.svg' : '/assets/icons/sun.svg'}}" mode="aspectFit" />
       </view>
-      <text class="sleep-toggle-text mt-sm">{{isSleeping ? '点击结束睡眠' : '点击开始睡眠'}}</text>
+      <text class="sleep-action-text">{{isSleeping ? '点击结束睡眠' : '点击开始睡眠'}}</text>
+      <text wx:if="{{isSleeping && sleepDurationText}}" class="sleep-duration-text">已睡 {{sleepDurationText}}</text>
     </view>
   </view>
 
   <!-- 记录列表 -->
-  <view class="section-title px-md mt-lg">睡眠记录</view>
-  <view wx:if="{{records.length > 0}}" class="record-list">
-    <view class="card-sm flex-row" wx:for="{{records}}" wx:key="id">
-      <view class="record-type-icon" style="background: #DBEAFE;">
-        <text>{{item.type === 'nap' ? '☀️' : '🌙'}}</text>
-      </view>
-      <view class="flex-1 ml-sm">
-        <view class="flex-between">
-          <text class="record-title">{{item.type === 'nap' ? '日间小睡' : '夜间睡眠'}}</text>
-          <text class="text-hint">{{item.durationText}}</text>
-        </view>
-        <text class="text-secondary">{{item.startTimeText}} - {{item.endTimeText}}</text>
-      </view>
-    </view>
-  </view>
-  <view wx:else class="empty-state">
-    <text class="empty-state-text">暂无睡眠记录</text>
+  <view class="section-header">
+    <text class="section-title">睡眠记录</text>
   </view>
 
+  <view wx:if="{{!isEmpty}}" class="record-list">
+    <record-card
+      wx:for="{{records}}"
+      wx:key="id"
+      recordId="{{item.id}}"
+      icon="{{item.icon}}"
+      iconBg="{{item.iconBg}}"
+      title="{{item.typeName}}"
+      timeText="{{item.durationText}}"
+      detail="{{item.startTimeText}} - {{item.endTimeText}}"
+      bind:delete="onDeleteRecord"
+    />
+  </view>
+
+  <view wx:elif="{{hasBaby}}" class="empty-state">
+    <image class="empty-icon-img" src="/assets/icons/sleep.svg" mode="aspectFit" />
+    <text class="empty-title">暂无睡眠记录</text>
+    <text class="empty-desc">点击上方按钮开始记录睡眠</text>
+  </view>
+  <view wx:else class="empty-state">
+    <image class="empty-icon-img" src="/assets/icons/baby.svg" mode="aspectFit" />
+    <text class="empty-title">请先添加宝宝信息</text>
+    <text class="empty-desc">前往设置页添加宝宝后即可记录</text>
+  </view>
+
+  <!-- FAB -->
   <view class="fab-container">
-    <t-fab icon="add" bind:click="goToAdd" />
+    <view class="fab-btn animate-scale" bindtap="goToAdd">
+      <text class="fab-icon">+</text>
+    </view>
   </view>
 </view>

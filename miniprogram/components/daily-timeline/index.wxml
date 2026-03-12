@@ -1,0 +1,44 @@
+<!--components/daily-timeline/index.wxml-->
+<!--每日时间线组件：按时间顺序展示一天内所有类型的记录-->
+
+<view class="timeline-wrap">
+  <!-- 有记录 -->
+  <block wx:if="{{displayEvents.length > 0}}">
+    <view
+      wx:for="{{displayEvents}}"
+      wx:key="id"
+      class="tl-item {{clickable ? 'tl-clickable' : ''}}"
+      data-index="{{index}}"
+      bindtap="onEventTap"
+    >
+      <!-- 左侧轴线 -->
+      <view class="tl-axis">
+        <view class="tl-dot" style="background: {{item.color}}; box-shadow: 0 0 0 4rpx {{item.color}}30;"></view>
+        <view wx:if="{{index < displayEvents.length - 1}}" class="tl-line"></view>
+      </view>
+
+      <!-- 右侧内容 -->
+      <view class="tl-content">
+        <view class="tl-header">
+          <view class="tl-type-wrap">
+            <image class="tl-icon-img" src="{{item.icon}}" mode="aspectFit" />
+            <text class="tl-type">{{item.typeName}}</text>
+          </view>
+          <text class="tl-time">{{item.timeText}}</text>
+        </view>
+        <text wx:if="{{item.summary}}" class="tl-summary">{{item.summary}}</text>
+      </view>
+    </view>
+
+    <!-- 查看更多 -->
+    <view wx:if="{{hasMore}}" class="tl-more" bindtap="onShowMore">
+      <text class="tl-more-text">查看全部 {{totalCount}} 条记录</text>
+    </view>
+  </block>
+
+  <!-- 空状态 -->
+  <view wx:elif="{{showEmpty}}" class="tl-empty">
+    <image class="tl-empty-icon-img" src="/assets/icons/note.svg" mode="aspectFit" />
+    <text class="tl-empty-text">{{emptyText}}</text>
+  </view>
+</view>
