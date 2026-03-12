@@ -174,3 +174,7 @@ npx jest --coverage
 ## 开源协议
 
 [MIT License](./LICENSE)
+
+---
+
+**[English Version (README_EN.md)](./README_EN.md)**
