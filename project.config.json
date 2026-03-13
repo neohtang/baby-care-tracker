@@ -72,7 +72,7 @@
   },
   "compileType": "miniprogram",
   "libVersion": "3.4.0",
-  "appid": "wx1f1bc8e6ff2be61d",
+  "appid": "YOUR_APPID",
   "projectname": "baby-care-tracker",
   "condition": {},
   "srcMiniprogramRoot": "miniprogram/",
