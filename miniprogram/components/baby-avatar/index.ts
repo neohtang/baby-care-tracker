@@ -38,12 +38,12 @@ Component({
   },
 
   observers: {
-    'name': function(name: string) {
+    name: function (name: string) {
       this.setData({
         initial: name ? name.charAt(0) : '',
       });
     },
-    'size': function(size: string) {
+    size: function (size: string) {
       const sizeMap: Record<string, number> = {
         small: 64,
         medium: 96,
@@ -55,7 +55,7 @@ Component({
         fontSize: `${Math.round(px * 0.4)}rpx`,
       });
     },
-    'gender': function(gender: string) {
+    gender: function (gender: string) {
       const colorMap: Record<string, string[]> = {
         male: ['#7CAFD4', '#A8CBE4'],
         female: ['#F5A5B8', '#F8C4D0'],

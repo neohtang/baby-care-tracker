@@ -1,0 +1,71 @@
+<!--components/baby-switcher/index.wxml-->
+<!--全局悬浮宝宝切换组件 — Phase 3.5-->
+
+<view wx:if="{{visible}}" class="baby-switcher">
+  <!-- 悬浮球（可拖拽） -->
+  <view
+    class="switcher-fab {{switching ? 'fab-switching' : ''}} {{dragging ? 'fab-dragging' : ''}}"
+    style="left: {{fabX}}px; top: {{fabY}}px;"
+    catchtouchstart="onTouchStart"
+    catchtouchmove="onTouchMove"
+    catchtouchend="onTouchEnd"
+    catchtap="onFabTap"
+  >
+    <!-- 当前宝宝头像 -->
+    <view class="fab-avatar {{currentBaby.gender}}">
+      <image
+        wx:if="{{currentBaby.avatarUrl}}"
+        class="fab-avatar-img"
+        src="{{currentBaby.avatarUrl}}"
+        mode="aspectFill"
+      />
+      <text wx:else class="fab-avatar-initial">{{currentBaby.initial}}</text>
+    </view>
+    <!-- 数量指示器 -->
+    <view class="fab-badge">
+      <text class="fab-badge-text">{{babyList.length}}</text>
+    </view>
+    <!-- 切换动画环 -->
+    <view wx:if="{{switching}}" class="fab-switch-ring"></view>
+  </view>
+
+  <!-- 展开的选择面板 -->
+  <view wx:if="{{expanded}}" class="switcher-overlay" catchtap="onMaskTap">
+    <view class="switcher-panel" catchtap="">
+      <view class="panel-header">
+        <text class="panel-title">切换宝宝</text>
+        <view class="panel-close" bindtap="onMaskTap">
+          <t-icon name="close" size="36rpx" color="#B5A89C" />
+        </view>
+      </view>
+
+      <view class="panel-list">
+        <view
+          wx:for="{{babyList}}"
+          wx:key="id"
+          class="baby-item {{item.isCurrent ? 'baby-item-active' : ''}}"
+          data-id="{{item.id}}"
+          bindtap="onSelectBaby"
+          hover-class="baby-item-hover"
+        >
+          <!-- 头像 -->
+          <view class="baby-item-avatar {{item.gender}}">
+            <image wx:if="{{item.avatarUrl}}" class="baby-item-avatar-img" src="{{item.avatarUrl}}" mode="aspectFill" />
+            <text wx:else class="baby-item-initial">{{item.initial}}</text>
+          </view>
+
+          <!-- 信息 -->
+          <view class="baby-item-info">
+            <text class="baby-item-name">{{item.name}}</text>
+            <text class="baby-item-age">{{item.ageText}}</text>
+          </view>
+
+          <!-- 当前标记 -->
+          <view wx:if="{{item.isCurrent}}" class="baby-item-check">
+            <t-icon name="check" size="36rpx" color="#C8956C" />
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

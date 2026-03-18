@@ -1,0 +1,456 @@
+/* pages/family/index.wxss */
+/* 家庭协作页面样式 — Tender Bloom 主题 (Phase 3.2) */
+
+.page-family {
+  min-height: 100vh;
+  background: var(--td-bg-color-page, #fdf8f3);
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+/* ======= 引导页 ======= */
+.onboarding {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 120rpx 48rpx;
+}
+
+.onboarding-icon {
+  width: 180rpx;
+  height: 180rpx;
+  border-radius: 50%;
+  background: var(--td-bg-color-secondarycontainer, #f5ede4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 40rpx;
+}
+
+.onboarding-emoji {
+  font-size: 72rpx;
+}
+
+.onboarding-title {
+  font-size: 38rpx;
+  font-weight: 700;
+  color: var(--td-text-color-primary, #3d2e22);
+  margin-bottom: 16rpx;
+}
+
+.onboarding-desc {
+  font-size: 26rpx;
+  color: var(--td-text-color-secondary, #8b7b6b);
+  text-align: center;
+  line-height: 1.6;
+  margin-bottom: 48rpx;
+}
+
+.onboarding-actions {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20rpx;
+}
+
+.onboarding-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 28rpx 0;
+  border-radius: 20rpx;
+  font-size: 30rpx;
+  font-weight: 600;
+  gap: 12rpx;
+  transition: all 0.2s;
+}
+
+.onboarding-btn.primary {
+  background: linear-gradient(135deg, #c8956c 0%, #d4a97a 100%);
+  color: #ffffff;
+  box-shadow: 0 4rpx 16rpx rgba(200, 149, 108, 0.3);
+}
+
+.onboarding-btn.secondary {
+  background: var(--td-bg-color-container, #ffffff);
+  color: #c8956c;
+  border: 2rpx solid rgba(200, 149, 108, 0.3);
+}
+
+.btn-hover {
+  transform: scale(0.97);
+  opacity: 0.85;
+}
+
+/* ======= 家庭头部 ======= */
+.family-header {
+  position: relative;
+  margin: 24rpx;
+  padding: 40rpx 32rpx;
+  border-radius: 24rpx;
+  overflow: hidden;
+}
+
+.family-header-bg {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, #c8956c 0%, #d4a97a 50%, #e8c4a0 100%);
+}
+
+.family-orb {
+  position: absolute;
+  border-radius: 50%;
+}
+
+.family-orb-1 {
+  top: -30rpx;
+  right: -20rpx;
+  width: 160rpx;
+  height: 160rpx;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.family-orb-2 {
+  bottom: -40rpx;
+  left: 40rpx;
+  width: 120rpx;
+  height: 120rpx;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.family-header-content {
+  position: relative;
+  z-index: 1;
+}
+
+.family-name {
+  display: block;
+  font-size: 36rpx;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.family-meta {
+  display: block;
+  font-size: 26rpx;
+  color: rgba(255, 255, 255, 0.8);
+  margin-top: 8rpx;
+}
+
+/* ======= Section ======= */
+.section {
+  margin: 20rpx 24rpx;
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16rpx 0;
+}
+
+.section-title {
+  font-size: 30rpx;
+  font-weight: 700;
+  color: var(--td-text-color-primary, #3d2e22);
+}
+
+.invite-btn {
+  display: flex;
+  align-items: center;
+  gap: 6rpx;
+  padding: 8rpx 20rpx;
+  background: rgba(200, 149, 108, 0.1);
+  border-radius: 24rpx;
+}
+
+.invite-btn-text {
+  font-size: 24rpx;
+  color: #c8956c;
+  font-weight: 500;
+}
+
+.invite-btn-hover {
+  background: rgba(200, 149, 108, 0.2);
+}
+
+/* ======= 成员卡片 ======= */
+.member-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16rpx;
+}
+
+.member-card {
+  display: flex;
+  align-items: center;
+  padding: 24rpx;
+  background: var(--td-bg-color-container, #ffffff);
+  border-radius: 16rpx;
+  box-shadow: 0 2rpx 8rpx rgba(200, 149, 108, 0.06);
+}
+
+.member-card-hover {
+  background: var(--td-bg-color-secondarycontainer, #f5ede4);
+}
+
+.member-avatar-ring {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-right: 20rpx;
+}
+
+.member-avatar-ring.admin {
+  background: linear-gradient(135deg, #c8956c, #d4a97a);
+}
+
+.member-avatar-ring.editor {
+  background: linear-gradient(135deg, #7cafd4, #93c5fd);
+}
+
+.member-avatar-ring.viewer {
+  background: linear-gradient(135deg, #b5a89c, #c9beb2);
+}
+
+.member-avatar-text {
+  font-size: 32rpx;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.member-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.member-name-row {
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+}
+
+.member-name {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: var(--td-text-color-primary, #3d2e22);
+}
+
+.member-role-tag {
+  padding: 2rpx 14rpx;
+  border-radius: 12rpx;
+  font-size: 20rpx;
+  font-weight: 500;
+}
+
+.member-role-tag.admin {
+  background: rgba(200, 149, 108, 0.15);
+  color: #c8956c;
+}
+
+.member-role-tag.editor {
+  background: rgba(124, 175, 212, 0.15);
+  color: #5b8fb9;
+}
+
+.member-role-tag.viewer {
+  background: rgba(181, 168, 156, 0.15);
+  color: #8b7b6b;
+}
+
+.member-relationship {
+  font-size: 24rpx;
+  color: var(--td-text-color-secondary, #8b7b6b);
+  margin-top: 4rpx;
+}
+
+/* ======= 操作日志 ======= */
+.ops-list {
+  background: var(--td-bg-color-container, #ffffff);
+  border-radius: 16rpx;
+  padding: 16rpx 24rpx;
+}
+
+.ops-item {
+  display: flex;
+  align-items: flex-start;
+  padding: 16rpx 0;
+  border-bottom: 1rpx solid rgba(200, 149, 108, 0.08);
+}
+
+.ops-item:last-child {
+  border-bottom: none;
+}
+
+.ops-dot {
+  width: 12rpx;
+  height: 12rpx;
+  border-radius: 50%;
+  background: #d4a97a;
+  flex-shrink: 0;
+  margin-top: 10rpx;
+  margin-right: 16rpx;
+}
+
+.ops-text {
+  display: block;
+  font-size: 25rpx;
+  color: var(--td-text-color-primary, #3d2e22);
+  line-height: 1.5;
+}
+
+.ops-time {
+  display: block;
+  font-size: 22rpx;
+  color: var(--td-text-color-secondary, #8b7b6b);
+  margin-top: 4rpx;
+}
+
+/* ======= 危险按钮 ======= */
+.danger-btn {
+  text-align: center;
+  padding: 24rpx;
+  color: #e8736c;
+  font-size: 28rpx;
+}
+
+.danger-btn-hover {
+  opacity: 0.7;
+}
+
+/* ======= 弹窗 ======= */
+.popup-content {
+  padding: 40rpx 32rpx;
+  padding-bottom: calc(40rpx + env(safe-area-inset-bottom));
+  background: var(--td-bg-color-container, #ffffff);
+  border-radius: 28rpx 28rpx 0 0;
+}
+
+.popup-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 32rpx;
+}
+
+.popup-title {
+  font-size: 34rpx;
+  font-weight: 700;
+  color: var(--td-text-color-primary, #3d2e22);
+}
+
+.popup-footer {
+  margin-top: 32rpx;
+}
+
+/* 表单 */
+.form-group {
+  margin-bottom: 24rpx;
+}
+
+.form-label {
+  display: block;
+  font-size: 26rpx;
+  font-weight: 500;
+  color: var(--td-text-color-secondary, #8b7b6b);
+  margin-bottom: 12rpx;
+}
+
+.form-input {
+  padding: 20rpx 24rpx;
+  background: var(--td-bg-color-page, #fdf8f3);
+  border-radius: 16rpx;
+  font-size: 28rpx;
+  color: var(--td-text-color-primary, #3d2e22);
+}
+
+.invite-code-input {
+  text-align: center;
+  font-size: 36rpx;
+  font-weight: 700;
+  letter-spacing: 16rpx;
+}
+
+.form-picker {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20rpx 24rpx;
+  background: var(--td-bg-color-page, #fdf8f3);
+  border-radius: 16rpx;
+  font-size: 28rpx;
+  color: var(--td-text-color-primary, #3d2e22);
+}
+
+/* 邀请码展示 */
+.invite-code-display {
+  text-align: center;
+  padding: 40rpx 0;
+}
+
+.invite-code-label {
+  display: block;
+  font-size: 26rpx;
+  color: var(--td-text-color-secondary, #8b7b6b);
+  margin-bottom: 16rpx;
+}
+
+.invite-code-value {
+  display: block;
+  font-size: 56rpx;
+  font-weight: 800;
+  color: #c8956c;
+  letter-spacing: 20rpx;
+}
+
+.invite-code-expiry {
+  display: block;
+  font-size: 24rpx;
+  color: var(--td-text-color-secondary, #8b7b6b);
+  margin-top: 12rpx;
+}
+
+.invite-actions {
+  display: flex;
+  justify-content: center;
+  gap: 40rpx;
+  margin: 16rpx 0;
+}
+
+.invite-action-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8rpx;
+  padding: 16rpx 24rpx;
+  font-size: 24rpx;
+  color: #c8956c;
+}
+
+/* ======= 安全区 ======= */
+.safe-bottom {
+  height: calc(24rpx + env(safe-area-inset-bottom));
+}
+
+/* ======= 暗色模式 ======= */
+@media (prefers-color-scheme: dark) {
+  .family-header-bg {
+    background: linear-gradient(135deg, #8b6544 0%, #a07650 50%, #b8895e 100%);
+  }
+
+  .member-card {
+    box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.12);
+  }
+
+  .onboarding-btn.primary {
+    background: linear-gradient(135deg, #8b6544 0%, #a07650 100%);
+    box-shadow: 0 4rpx 16rpx rgba(139, 101, 68, 0.3);
+  }
+
+  .onboarding-btn.secondary {
+    border-color: rgba(200, 149, 108, 0.3);
+  }
+}

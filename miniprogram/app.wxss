@@ -8,27 +8,27 @@
 /* ========== Tender Bloom 主题变量 ========== */
 page {
   /* 主色系 — 温暖奶茶棕 */
-  --td-brand-color: #C8956C;
-  --td-brand-color-light: #D4A97A;
-  --td-brand-color-focus: #E8C4A0;
-  --td-brand-color-active: #B8854F;
-  --td-brand-color-disabled: #DCC5AD;
+  --td-brand-color: #c8956c;
+  --td-brand-color-light: #d4a97a;
+  --td-brand-color-focus: #e8c4a0;
+  --td-brand-color-active: #b8854f;
+  --td-brand-color-disabled: #dcc5ad;
 
   /* 功能色 — 温和自然 */
-  --td-success-color: #7EBEA5;
-  --td-warning-color: #F0B44A;
-  --td-error-color: #E8736C;
-  --td-info-color: #7CAFD4;
+  --td-success-color: #7ebea5;
+  --td-warning-color: #f0b44a;
+  --td-error-color: #e8736c;
+  --td-info-color: #7cafd4;
 
   /* 背景色 — 香草奶白 */
-  --td-bg-color-page: #FDF8F3;
-  --td-bg-color-container: #FFFFFF;
-  --td-bg-color-secondarycontainer: #F5EDE4;
+  --td-bg-color-page: #fdf8f3;
+  --td-bg-color-container: #ffffff;
+  --td-bg-color-secondarycontainer: #f5ede4;
 
   /* 文字色 — 浓缩咖啡系 */
-  --td-text-color-primary: #3D2E22;
-  --td-text-color-secondary: #8B7B6B;
-  --td-text-color-placeholder: #B5A89C;
+  --td-text-color-primary: #3d2e22;
+  --td-text-color-secondary: #8b7b6b;
+  --td-text-color-placeholder: #b5a89c;
 
   /* 圆角 */
   --td-radius-default: 16rpx;
@@ -38,37 +38,37 @@ page {
   /* === 自定义品牌扩展变量 === */
 
   /* 辅色 — 薄荷绿（健康/生长/活力） */
-  --color-mint: #7EBEA5;
-  --color-mint-light: #E8F5EE;
-  --color-mint-bg: #F0F9F5;
+  --color-mint: #7ebea5;
+  --color-mint-light: #e8f5ee;
+  --color-mint-bg: #f0f9f5;
 
   /* 点缀色 — 蜜桃粉（温柔/母性/关爱） */
-  --color-peach: #F5A5B8;
-  --color-peach-light: #FDE8ED;
-  --color-peach-bg: #FFF0F4;
+  --color-peach: #f5a5b8;
+  --color-peach-light: #fde8ed;
+  --color-peach-bg: #fff0f4;
 
   /* 警示色 — 琥珀蜜黄 */
-  --color-amber: #F0B44A;
-  --color-amber-light: #FEF3D6;
-  --color-amber-bg: #FFFBF0;
+  --color-amber: #f0b44a;
+  --color-amber-light: #fef3d6;
+  --color-amber-bg: #fffbf0;
 
   /* 错误色 — 珊瑚红 */
-  --color-coral: #E8736C;
-  --color-coral-light: #FDECEB;
-  --color-coral-bg: #FFF5F4;
+  --color-coral: #e8736c;
+  --color-coral-light: #fdeceb;
+  --color-coral-bg: #fff5f4;
 
   /* 信息色 — 天蓝雾 */
-  --color-sky: #7CAFD4;
-  --color-sky-light: #E3F0F9;
-  --color-sky-bg: #F0F7FC;
+  --color-sky: #7cafd4;
+  --color-sky-light: #e3f0f9;
+  --color-sky-bg: #f0f7fc;
 
   /* 渐变 */
-  --gradient-primary: linear-gradient(135deg, #C8956C 0%, #D4A97A 50%, #E8C4A0 100%);
-  --gradient-warm: linear-gradient(135deg, #FDF8F3 0%, #F5EDE4 100%);
-  --gradient-mint: linear-gradient(135deg, #7EBEA5 0%, #A8D8C4 100%);
-  --gradient-peach: linear-gradient(135deg, #F5A5B8 0%, #FAC8D4 100%);
-  --gradient-sky: linear-gradient(135deg, #7CAFD4 0%, #A3CBE5 100%);
-  --gradient-amber: linear-gradient(135deg, #F0B44A 0%, #F5CC7A 100%);
+  --gradient-primary: linear-gradient(135deg, #c8956c 0%, #d4a97a 50%, #e8c4a0 100%);
+  --gradient-warm: linear-gradient(135deg, #fdf8f3 0%, #f5ede4 100%);
+  --gradient-mint: linear-gradient(135deg, #7ebea5 0%, #a8d8c4 100%);
+  --gradient-peach: linear-gradient(135deg, #f5a5b8 0%, #fac8d4 100%);
+  --gradient-sky: linear-gradient(135deg, #7cafd4 0%, #a3cbe5 100%);
+  --gradient-amber: linear-gradient(135deg, #f0b44a 0%, #f5cc7a 100%);
 
   /* 阴影 */
   --shadow-card: 0 4rpx 20rpx rgba(200, 149, 108, 0.08);
@@ -77,26 +77,32 @@ page {
   --shadow-float: 0 8rpx 40rpx rgba(200, 149, 108, 0.18);
 
   /* 模块专属色（用于图标背景、时间线等） */
-  --module-feeding: #C8956C;
-  --module-feeding-bg: #FFF5ED;
-  --module-sleep: #7CAFD4;
-  --module-sleep-bg: #F0F7FC;
-  --module-diaper: #7EBEA5;
-  --module-diaper-bg: #F0F9F5;
-  --module-health: #F0B44A;
-  --module-health-bg: #FFFBF0;
-  --module-growth: #F5A5B8;
-  --module-growth-bg: #FFF0F4;
-  --module-vaccine: #9B8EC4;
-  --module-vaccine-bg: #F5F2FA;
-  --module-milestone: #D4A97A;
-  --module-milestone-bg: #FFF8F0;
+  --module-feeding: #c8956c;
+  --module-feeding-bg: #fff5ed;
+  --module-sleep: #7cafd4;
+  --module-sleep-bg: #f0f7fc;
+  --module-diaper: #7ebea5;
+  --module-diaper-bg: #f0f9f5;
+  --module-health: #f0b44a;
+  --module-health-bg: #fffbf0;
+  --module-growth: #f5a5b8;
+  --module-growth-bg: #fff0f4;
+  --module-vaccine: #9b8ec4;
+  --module-vaccine-bg: #f5f2fa;
+  --module-milestone: #d4a97a;
+  --module-milestone-bg: #fff8f0;
 
   /* 页面基础样式 */
-  background-color: #FDF8F3;
-  font-family: 'PingFang SC', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background-color: #fdf8f3;
+  font-family:
+    'PingFang SC',
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    Roboto,
+    sans-serif;
   font-size: 28rpx;
-  color: #3D2E22;
+  color: #3d2e22;
   line-height: 1.6;
 }
 
@@ -104,12 +110,14 @@ page {
 
 /* 卡片容器 */
 .card {
-  background: #FFFFFF;
+  background: #ffffff;
   border-radius: 24rpx;
   padding: 32rpx;
   margin: 0 24rpx 24rpx;
   box-shadow: var(--shadow-card);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 .card-hover {
@@ -118,7 +126,7 @@ page {
 }
 
 .card-sm {
-  background: #FFFFFF;
+  background: #ffffff;
   border-radius: 16rpx;
   padding: 24rpx;
   margin: 0 24rpx 16rpx;
@@ -150,7 +158,7 @@ page {
 .section-title {
   font-size: 36rpx;
   font-weight: 700;
-  color: #3D2E22;
+  color: #3d2e22;
   margin-bottom: 24rpx;
   letter-spacing: 1rpx;
 }
@@ -158,22 +166,22 @@ page {
 .section-subtitle {
   font-size: 30rpx;
   font-weight: 600;
-  color: #3D2E22;
+  color: #3d2e22;
   margin-bottom: 16rpx;
 }
 
 .text-secondary {
   font-size: 26rpx;
-  color: #8B7B6B;
+  color: #8b7b6b;
 }
 
 .text-hint {
   font-size: 24rpx;
-  color: #B5A89C;
+  color: #b5a89c;
 }
 
 .text-brand {
-  color: #C8956C;
+  color: #c8956c;
 }
 
 /* Flex 布局工具 */
@@ -209,21 +217,43 @@ page {
 }
 
 /* 间距 */
-.mt-sm { margin-top: 16rpx; }
-.mt-md { margin-top: 24rpx; }
-.mt-lg { margin-top: 32rpx; }
-.mb-sm { margin-bottom: 16rpx; }
-.mb-md { margin-bottom: 24rpx; }
-.mb-lg { margin-bottom: 32rpx; }
-.ml-sm { margin-left: 16rpx; }
-.mr-sm { margin-right: 16rpx; }
-.px-md { padding-left: 24rpx; padding-right: 24rpx; }
-.py-md { padding-top: 24rpx; padding-bottom: 24rpx; }
+.mt-sm {
+  margin-top: 16rpx;
+}
+.mt-md {
+  margin-top: 24rpx;
+}
+.mt-lg {
+  margin-top: 32rpx;
+}
+.mb-sm {
+  margin-bottom: 16rpx;
+}
+.mb-md {
+  margin-bottom: 24rpx;
+}
+.mb-lg {
+  margin-bottom: 32rpx;
+}
+.ml-sm {
+  margin-left: 16rpx;
+}
+.mr-sm {
+  margin-right: 16rpx;
+}
+.px-md {
+  padding-left: 24rpx;
+  padding-right: 24rpx;
+}
+.py-md {
+  padding-top: 24rpx;
+  padding-bottom: 24rpx;
+}
 
 /* 分隔线 */
 .divider {
   height: 1rpx;
-  background: #F0E8DF;
+  background: #f0e8df;
   margin: 24rpx 0;
 }
 
@@ -239,28 +269,28 @@ page {
 }
 
 .tag-primary {
-  background: #FFF5ED;
-  color: #C8956C;
+  background: #fff5ed;
+  color: #c8956c;
 }
 
 .tag-success {
   background: var(--color-mint-light);
-  color: #5A9E82;
+  color: #5a9e82;
 }
 
 .tag-warning {
   background: var(--color-amber-light);
-  color: #C8930A;
+  color: #c8930a;
 }
 
 .tag-error {
   background: var(--color-coral-light);
-  color: #C85650;
+  color: #c85650;
 }
 
 .tag-info {
   background: var(--color-sky-light);
-  color: #5A8FB4;
+  color: #5a8fb4;
 }
 
 /* 空状态 */
@@ -281,7 +311,7 @@ page {
 
 .empty-state-text {
   font-size: 28rpx;
-  color: #B5A89C;
+  color: #b5a89c;
   margin-top: 24rpx;
 }
 
@@ -320,23 +350,46 @@ page {
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20rpx); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(20rpx);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @keyframes fadeInScale {
-  from { opacity: 0; transform: scale(0.9); }
-  to { opacity: 1; transform: scale(1); }
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
 @keyframes pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.5; }
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
 }
 
 @keyframes ripple {
-  0% { transform: scale(1); opacity: 0.4; }
-  100% { transform: scale(1.8); opacity: 0; }
+  0% {
+    transform: scale(1);
+    opacity: 0.4;
+  }
+  100% {
+    transform: scale(1.8);
+    opacity: 0;
+  }
 }
 
 .animate-scale {
@@ -348,7 +401,9 @@ page {
 }
 
 .animate-card-hover {
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 /* 列表项通用样式 */
@@ -356,12 +411,12 @@ page {
   display: flex;
   align-items: center;
   padding: 28rpx 32rpx;
-  background: #FFFFFF;
+  background: #ffffff;
   transition: background 0.15s ease;
 }
 
 .list-item:active {
-  background: #FAF5F0;
+  background: #faf5f0;
 }
 
 .list-item-icon {
@@ -383,19 +438,19 @@ page {
 .list-item-title {
   font-size: 30rpx;
   font-weight: 500;
-  color: #3D2E22;
+  color: #3d2e22;
   line-height: 1.4;
 }
 
 .list-item-desc {
   font-size: 24rpx;
-  color: #8B7B6B;
+  color: #8b7b6b;
   margin-top: 4rpx;
   line-height: 1.4;
 }
 
 .list-item-arrow {
-  color: #B5A89C;
+  color: #b5a89c;
   margin-left: 12rpx;
   flex-shrink: 0;
 }
@@ -404,7 +459,7 @@ page {
 .popup-content {
   padding: 40rpx 32rpx;
   padding-bottom: calc(40rpx + env(safe-area-inset-bottom));
-  background: #FFFFFF;
+  background: #ffffff;
   border-radius: 32rpx 32rpx 0 0;
 }
 
@@ -418,7 +473,7 @@ page {
 .popup-title {
   font-size: 36rpx;
   font-weight: 700;
-  color: #3D2E22;
+  color: #3d2e22;
 }
 
 .popup-close {
@@ -427,7 +482,7 @@ page {
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #B5A89C;
+  color: #b5a89c;
 }
 
 /* 主按钮 */
@@ -436,7 +491,7 @@ page {
   height: 96rpx;
   border-radius: 20rpx;
   background: var(--gradient-primary);
-  color: #FFFFFF;
+  color: #ffffff;
   font-size: 32rpx;
   font-weight: 600;
   display: flex;
@@ -445,7 +500,9 @@ page {
   border: none;
   letter-spacing: 2rpx;
   box-shadow: 0 4rpx 16rpx rgba(200, 149, 108, 0.25);
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease;
 }
 
 .btn-primary:active {
@@ -454,7 +511,7 @@ page {
 }
 
 .btn-primary[disabled] {
-  background: #DCC5AD;
+  background: #dcc5ad;
   box-shadow: none;
 }
 
@@ -463,8 +520,8 @@ page {
   width: 100%;
   height: 96rpx;
   border-radius: 20rpx;
-  background: #F5EDE4;
-  color: #C8956C;
+  background: #f5ede4;
+  color: #c8956c;
   font-size: 32rpx;
   font-weight: 600;
   display: flex;
@@ -476,7 +533,7 @@ page {
 
 .btn-secondary:active {
   transform: scale(0.98);
-  background: #EDE3D8;
+  background: #ede3d8;
 }
 
 /* 表单项 */
@@ -487,24 +544,24 @@ page {
 .form-label {
   font-size: 26rpx;
   font-weight: 500;
-  color: #8B7B6B;
+  color: #8b7b6b;
   margin-bottom: 12rpx;
 }
 
 .form-input {
   height: 88rpx;
-  background: #FAF5F0;
+  background: #faf5f0;
   border-radius: 16rpx;
   padding: 0 24rpx;
   font-size: 30rpx;
-  color: #3D2E22;
+  color: #3d2e22;
   border: 2rpx solid transparent;
   transition: border-color 0.2s ease;
 }
 
 .form-input:focus {
-  border-color: #C8956C;
-  background: #FFFFFF;
+  border-color: #c8956c;
+  background: #ffffff;
 }
 
 /* 安全区域适配 */
@@ -515,6 +572,180 @@ page {
 /* 页面容器 */
 .page-container {
   min-height: 100vh;
-  background: #FDF8F3;
+  background: #fdf8f3;
   padding-bottom: calc(120rpx + env(safe-area-inset-bottom));
+}
+
+/* ========== 深色模式 Dark Mode ========== */
+/* 使用 @media (prefers-color-scheme: dark) 适配系统深色模式 */
+/* 配合 app.json "darkmode": true + theme.json 自动切换导航栏和 tabBar */
+
+@media (prefers-color-scheme: dark) {
+  page {
+    /* 主色系 — 暗色下稍微降饱和提亮 */
+    --td-brand-color: #d4a97a;
+    --td-brand-color-light: #c8956c;
+    --td-brand-color-focus: #b88654;
+    --td-brand-color-active: #e8c4a0;
+    --td-brand-color-disabled: #6b5a46;
+
+    /* 功能色 — 暗色下提亮 */
+    --td-success-color: #8ed4b5;
+    --td-warning-color: #f5c46a;
+    --td-error-color: #f09088;
+    --td-info-color: #8ec5e8;
+
+    /* 背景色 — 深色底 */
+    --td-bg-color-page: #1a1614;
+    --td-bg-color-container: #2a2420;
+    --td-bg-color-secondarycontainer: #362e28;
+
+    /* 文字色 — 浅色文字 */
+    --td-text-color-primary: #ede5dc;
+    --td-text-color-secondary: #a89a8c;
+    --td-text-color-placeholder: #78695c;
+
+    /* 辅助色系暗色版本 */
+    --color-mint: #8ed4b5;
+    --color-mint-light: #1e2d26;
+    --color-mint-bg: #1e2d26;
+    --color-peach: #f5b5c8;
+    --color-peach-light: #2d1e24;
+    --color-peach-bg: #2d1e24;
+    --color-amber: #f5c46a;
+    --color-amber-light: #2d2618;
+    --color-amber-bg: #2d2618;
+    --color-coral: #f09088;
+    --color-coral-light: #2d1c1a;
+    --color-coral-bg: #2d1c1a;
+    --color-sky: #8ec5e8;
+    --color-sky-light: #1a252d;
+    --color-sky-bg: #1a252d;
+
+    /* 渐变 — 暗色版 */
+    --gradient-primary: linear-gradient(135deg, #8b6b4a 0%, #a47e5c 50%, #c89e72 100%);
+    --gradient-warm: linear-gradient(135deg, #2a2420 0%, #362e28 100%);
+
+    /* 阴影 — 暗色下更深 */
+    --shadow-card: 0 4rpx 20rpx rgba(0, 0, 0, 0.25);
+    --shadow-card-hover: 0 8rpx 32rpx rgba(0, 0, 0, 0.35);
+    --shadow-card-sm: 0 2rpx 12rpx rgba(0, 0, 0, 0.2);
+    --shadow-float: 0 8rpx 40rpx rgba(0, 0, 0, 0.4);
+
+    /* 模块色 */
+    --module-feeding: #e8bd8e;
+    --module-feeding-bg: #3a2e20;
+    --module-sleep: #a0d4f0;
+    --module-sleep-bg: #222f3a;
+    --module-diaper: #a0e0c4;
+    --module-diaper-bg: #263a30;
+    --module-health: #f8d07a;
+    --module-health-bg: #3a3020;
+    --module-growth: #f5b5c8;
+    --module-growth-bg: #3a2630;
+    --module-vaccine: #c4b6e4;
+    --module-vaccine-bg: #2e2a3a;
+    --module-milestone: #e8bd8e;
+    --module-milestone-bg: #3a2e20;
+
+    /* 基础样式 */
+    background-color: #1a1614;
+    color: #ede5dc;
+  }
+
+  /* 硬编码颜色覆盖 */
+  .card,
+  .card-sm,
+  .list-item,
+  .popup-content {
+    background: var(--td-bg-color-container, #2a2420);
+  }
+
+  .list-item:active {
+    background: var(--td-bg-color-secondarycontainer, #362e28);
+  }
+
+  .divider {
+    background: #3d342c;
+  }
+
+  .section-title {
+    color: var(--td-text-color-primary, #ede5dc);
+  }
+
+  .text-secondary {
+    color: var(--td-text-color-secondary, #a89a8c);
+  }
+
+  .text-hint {
+    color: var(--td-text-color-placeholder, #78695c);
+  }
+
+  .btn-primary {
+    background: var(--gradient-primary);
+    box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.3);
+  }
+
+  .btn-secondary {
+    background: var(--td-bg-color-secondarycontainer, #362e28);
+    color: var(--td-brand-color, #d4a97a);
+  }
+
+  .form-input {
+    background: var(--td-bg-color-secondarycontainer, #362e28);
+    color: var(--td-text-color-primary, #ede5dc);
+  }
+
+  .form-input:focus {
+    background: var(--td-bg-color-container, #2a2420);
+  }
+
+  .tag-primary {
+    background: #2d2418;
+    color: #d4a97a;
+  }
+
+  .tag-success {
+    background: #1e2d26;
+    color: #8ed4b5;
+  }
+
+  .tag-warning {
+    background: #2d2618;
+    color: #f5c46a;
+  }
+
+  .tag-error {
+    background: #2d1c1a;
+    color: #f09088;
+  }
+
+  .tag-info {
+    background: #1a252d;
+    color: #8ec5e8;
+  }
+
+  .page-container {
+    background: var(--td-bg-color-page, #1a1614);
+  }
+
+  .list-item-title {
+    color: var(--td-text-color-primary, #ede5dc);
+  }
+
+  .list-item-desc {
+    color: var(--td-text-color-secondary, #a89a8c);
+  }
+
+  .popup-title {
+    color: var(--td-text-color-primary, #ede5dc);
+  }
+
+  .form-label {
+    color: var(--td-text-color-secondary, #a89a8c);
+  }
+
+  .empty-state-text {
+    color: var(--td-text-color-placeholder, #78695c);
+  }
 }

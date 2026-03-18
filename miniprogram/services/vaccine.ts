@@ -24,7 +24,10 @@ import type {
 } from '../types/index';
 
 /** 疫苗状态配置 */
-const STATUS_CONFIG: Record<VaccineStatus, { label: string; color: string; bgColor: string; dotColor: string }> = {
+const STATUS_CONFIG: Record<
+  VaccineStatus,
+  { label: string; color: string; bgColor: string; dotColor: string }
+> = {
   completed: { label: '已接种', color: '#059669', bgColor: '#D1FAE5', dotColor: '#34D399' },
   pending: { label: '待接种', color: '#D97706', bgColor: '#FEF3C7', dotColor: '#FBBF24' },
   overdue: { label: '已逾期', color: '#DC2626', bgColor: '#FEE2E2', dotColor: '#F87171' },
@@ -101,7 +104,7 @@ class VaccineService {
     if (updated) {
       eventBus.emit(Events.VACCINE_CHANGED, updated);
     }
-    return updated as VaccinationRecord || null;
+    return (updated as VaccinationRecord) || null;
   }
 
   /**
@@ -169,31 +172,33 @@ class VaccineService {
     const months = getScheduleMonths();
     const result: any[] = [];
 
-    months.forEach(month => {
+    months.forEach((month) => {
       const vaccineIds = VACCINE_SCHEDULE[month] || [];
-      const vaccines = vaccineIds.map(id => {
-        const vaccine = getVaccineById(id);
-        if (!vaccine) return null;
+      const vaccines = vaccineIds
+        .map((id) => {
+          const vaccine = getVaccineById(id);
+          if (!vaccine) return null;
 
-        const record = this.getRecordByVaccineId(id);
-        const status = this.getVaccineStatus(id, vaccine.recommendedMonth);
-        const recommendedDate = this.getRecommendedDate(vaccine.recommendedMonth);
-        const config = STATUS_CONFIG[status];
+          const record = this.getRecordByVaccineId(id);
+          const status = this.getVaccineStatus(id, vaccine.recommendedMonth);
+          const recommendedDate = this.getRecommendedDate(vaccine.recommendedMonth);
+          const config = STATUS_CONFIG[status];
 
-        return {
-          vaccine,
-          record,
-          status,
-          recommendedDate,
-          statusLabel: config.label,
-          statusColor: config.color,
-          statusBgColor: config.bgColor,
-          dotColor: config.dotColor,
-          dateText: record?.date
-            ? formatDate(record.date, 'YYYY-MM-DD')
-            : `推荐 ${formatDate(recommendedDate, 'MM月DD日')}`,
-        };
-      }).filter(Boolean);
+          return {
+            vaccine,
+            record,
+            status,
+            recommendedDate,
+            statusLabel: config.label,
+            statusColor: config.color,
+            statusBgColor: config.bgColor,
+            dotColor: config.dotColor,
+            dateText: record?.date
+              ? formatDate(record.date, 'YYYY-MM-DD')
+              : `推荐 ${formatDate(recommendedDate, 'MM月DD日')}`,
+          };
+        })
+        .filter(Boolean);
 
       if (vaccines.length > 0) {
         result.push({
@@ -223,7 +228,7 @@ class VaccineService {
     let pending = 0;
     let overdue = 0;
 
-    plan.forEach(group => {
+    plan.forEach((group) => {
       group.vaccines.forEach((v: any) => {
         total++;
         if (v.status === 'completed') completed++;
@@ -251,7 +256,7 @@ class VaccineService {
     const ageInMonths = getAgeInMonths(baby.birthDate);
     const upcoming: VaccinePlanItem[] = [];
 
-    VACCINE_LIST.forEach(vaccine => {
+    VACCINE_LIST.forEach((vaccine) => {
       if (Math.abs(vaccine.recommendedMonth - ageInMonths) <= 1) {
         const record = this.getRecordByVaccineId(vaccine.id);
         if (!record || record.status !== 'completed') {

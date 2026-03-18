@@ -5,6 +5,8 @@ import { feedingService } from '../../services/feeding';
 import { sleepService } from '../../services/sleep';
 import { diaperService } from '../../services/diaper';
 import { babyService } from '../../services/baby';
+import { reminderService } from '../../services/reminder';
+import { store } from '../../store/index';
 import { formatDuration } from '../../utils/date';
 import eventBus, { Events } from '../../utils/event-bus';
 import type { FeedingType } from '../../types/index';
@@ -61,27 +63,48 @@ Page({
     diaperEmpty: true,
 
     // 懒加载标记
-    _feedingLoaded: true,  // 首次Tab默认加载
+    _feedingLoaded: true, // 首次Tab默认加载
     _sleepLoaded: false,
     _diaperLoaded: false,
+
+    // ===== 喂养提醒横幅 =====
+    feedingReminder: null as any,
+    showFeedingReminder: false,
+
+    // ===== 主题 =====
+    pageStyle: '',
   },
 
   _unsubscribers: [] as (() => void)[],
   _durationTimer: null as number | null,
+  _reminderTimer: null as number | null,
+  _storeDisconnect: null as (() => void) | null,
 
   onLoad() {
+    // Store 自动推送 pageStyle（替代 THEME_CHANGED 订阅）
+    this._storeDisconnect = store.connect(this as any, {
+      pageStyle: true,
+    });
+
+    // 保留页面级细粒度 EventBus 订阅
     this._unsubscribers.push(
-      eventBus.on(Events.FEEDING_CHANGED, () => this.loadFeedingData()),
+      eventBus.on(Events.FEEDING_CHANGED, () => {
+        this.loadFeedingData();
+        this.loadFeedingReminder();
+      }),
       eventBus.on(Events.SLEEP_CHANGED, () => this.loadSleepData()),
       eventBus.on(Events.DIAPER_CHANGED, () => this.loadDiaperData()),
       eventBus.on(Events.BABY_SWITCHED, () => this.refreshAll()),
       eventBus.on(Events.DATA_RESTORED, () => this.refreshAll()),
+      eventBus.on(Events.REMINDER_SETTINGS_CHANGED, () => this.loadFeedingReminder()),
     );
   },
 
   onShow() {
     this.checkBaby();
     this.loadCurrentTabData();
+    this.loadFeedingReminder();
+    this.startReminderTimer();
     if (this.data.isSleeping || sleepService.isSleeping()) {
       this.startDurationTimer();
     }
@@ -89,12 +112,18 @@ Page({
 
   onHide() {
     this.clearDurationTimer();
+    this.clearReminderTimer();
   },
 
   onUnload() {
-    this._unsubscribers.forEach(fn => fn());
+    this._unsubscribers.forEach((fn) => fn());
     this._unsubscribers = [];
+    if (this._storeDisconnect) {
+      this._storeDisconnect();
+      this._storeDisconnect = null;
+    }
     this.clearDurationTimer();
+    this.clearReminderTimer();
   },
 
   // ============ 通用方法 ============
@@ -349,9 +378,7 @@ Page({
       return;
     }
     const typeStr = typeof type === 'string' ? type : '';
-    const url = typeStr
-      ? `/pages/diaper/add/index?type=${typeStr}`
-      : '/pages/diaper/add/index';
+    const url = typeStr ? `/pages/diaper/add/index?type=${typeStr}` : '/pages/diaper/add/index';
     wx.navigateTo({ url });
   },
 
@@ -373,6 +400,43 @@ Page({
         }
       },
     });
+  },
+
+  // ============ 喂养提醒横幅 ============
+
+  loadFeedingReminder() {
+    try {
+      const status = reminderService.getFeedingReminderStatus();
+      if (status && status.hasReminder) {
+        this.setData({
+          feedingReminder: status,
+          showFeedingReminder: true,
+        });
+      } else {
+        this.setData({ feedingReminder: null, showFeedingReminder: false });
+      }
+    } catch (e) {
+      console.error('[Daily] 加载喂养提醒失败:', e);
+    }
+  },
+
+  startReminderTimer() {
+    this.clearReminderTimer();
+    // 每分钟刷新一次提醒状态
+    this._reminderTimer = setInterval(() => {
+      this.loadFeedingReminder();
+    }, 60000) as unknown as number;
+  },
+
+  clearReminderTimer() {
+    if (this._reminderTimer) {
+      clearInterval(this._reminderTimer);
+      this._reminderTimer = null;
+    }
+  },
+
+  onReminderTap() {
+    this.goToAddFeeding();
   },
 
   // ============ 下拉刷新 ============

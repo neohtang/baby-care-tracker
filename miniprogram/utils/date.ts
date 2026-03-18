@@ -11,7 +11,10 @@ import dayjs from 'dayjs';
  * @param targetDate 目标日期 YYYY-MM-DD（默认今天）
  * @returns { months: 完整月数, days: 剩余天数, totalDays: 总天数 }
  */
-export function calculateAge(birthDate: string, targetDate?: string): {
+export function calculateAge(
+  birthDate: string,
+  targetDate?: string,
+): {
   months: number;
   days: number;
   totalDays: number;
@@ -228,4 +231,36 @@ export function getWeekRange(dateStr: string): { start: string; end: string } {
     start: monday.format('YYYY-MM-DD'),
     end: sunday.format('YYYY-MM-DD'),
   };
+}
+
+/**
+ * 获取最近 N 天的日期数组（含今天，从远到近排列）
+ * @param n 天数，默认 7
+ * @returns YYYY-MM-DD 格式的日期数组
+ */
+export function getLastNDays(n: number = 7): string[] {
+  const dates: string[] = [];
+  const today = dayjs();
+
+  for (let i = n - 1; i >= 0; i--) {
+    dates.push(today.subtract(i, 'day').format('YYYY-MM-DD'));
+  }
+
+  return dates;
+}
+
+/**
+ * 获取日期的星期几简称
+ * @returns 如 "周一"、"周二"、...、"周日"
+ */
+export function getWeekdayShort(dateStr: string): string {
+  const weekdays = ['周日', '周一', '周二', '周三', '周四', '周五', '周六'];
+  return weekdays[dayjs(dateStr).day()];
+}
+
+/**
+ * 获取日期的短格式标签（MM/DD）
+ */
+export function getShortDateLabel(dateStr: string): string {
+  return dayjs(dateStr).format('MM/DD');
 }

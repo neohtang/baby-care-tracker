@@ -1,0 +1,534 @@
+/* pages/report/index.wxss */
+/* 成长报告页面样式 — Tender Bloom 主题 (Phase 3.4) */
+
+.page-report {
+  min-height: 100vh;
+  background: var(--td-bg-color-page, #fdf8f3);
+  padding-bottom: calc(140rpx + env(safe-area-inset-bottom));
+}
+
+/* ======= 报告类型切换 ======= */
+.type-switcher {
+  display: flex;
+  margin: 24rpx 24rpx 0;
+  background: var(--td-bg-color-container, #ffffff);
+  border-radius: 20rpx;
+  padding: 6rpx;
+  box-shadow: 0 2rpx 12rpx rgba(200, 149, 108, 0.06);
+}
+
+.type-btn {
+  flex: 1;
+  text-align: center;
+  padding: 20rpx 0;
+  border-radius: 16rpx;
+  font-size: 28rpx;
+  font-weight: 500;
+  color: var(--td-text-color-secondary, #8b7b6b);
+  transition: all 0.25s ease;
+}
+
+.type-btn.active {
+  background: linear-gradient(135deg, #c8956c 0%, #d4a97a 100%);
+  color: #ffffff;
+  font-weight: 600;
+  box-shadow: 0 4rpx 16rpx rgba(200, 149, 108, 0.3);
+}
+
+/* ======= 日期翻页 ======= */
+.date-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 20rpx 24rpx;
+  padding: 16rpx 8rpx;
+}
+
+.date-nav-btn {
+  width: 72rpx;
+  height: 72rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: var(--td-bg-color-container, #ffffff);
+  box-shadow: 0 2rpx 8rpx rgba(200, 149, 108, 0.08);
+  transition: all 0.2s;
+}
+
+.date-nav-btn.disabled {
+  opacity: 0.4;
+}
+
+.nav-btn-hover {
+  transform: scale(0.92);
+  background: var(--td-bg-color-secondarycontainer, #f5ede4);
+}
+
+.date-nav-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.date-nav-label {
+  font-size: 32rpx;
+  font-weight: 700;
+  color: var(--td-text-color-primary, #3d2e22);
+}
+
+.date-nav-range {
+  font-size: 24rpx;
+  color: var(--td-text-color-secondary, #8b7b6b);
+  margin-top: 4rpx;
+}
+
+/* ======= 空状态 ======= */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 120rpx 48rpx;
+}
+
+.empty-icon-circle {
+  width: 160rpx;
+  height: 160rpx;
+  border-radius: 50%;
+  background: var(--td-bg-color-secondarycontainer, #f5ede4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 32rpx;
+}
+
+.empty-title {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: var(--td-text-color-primary, #3d2e22);
+  margin-bottom: 12rpx;
+}
+
+.empty-hint {
+  font-size: 26rpx;
+  color: var(--td-text-color-secondary, #8b7b6b);
+  text-align: center;
+}
+
+/* ======= 报告内容区 ======= */
+.report-content {
+  padding: 0 24rpx;
+}
+
+/* 报告头部 */
+.report-header {
+  padding: 32rpx;
+  margin-bottom: 20rpx;
+  background: linear-gradient(135deg, #c8956c 0%, #d4a97a 50%, #e8c4a0 100%);
+  border-radius: 24rpx;
+  position: relative;
+  overflow: hidden;
+}
+
+.report-header::before {
+  content: '';
+  position: absolute;
+  top: -30rpx;
+  right: -20rpx;
+  width: 180rpx;
+  height: 180rpx;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.report-header::after {
+  content: '';
+  position: absolute;
+  bottom: -40rpx;
+  left: 40rpx;
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.report-title {
+  display: block;
+  font-size: 38rpx;
+  font-weight: 700;
+  color: #ffffff;
+  position: relative;
+  z-index: 1;
+}
+
+.report-meta {
+  display: block;
+  font-size: 26rpx;
+  color: rgba(255, 255, 255, 0.85);
+  margin-top: 12rpx;
+  position: relative;
+  z-index: 1;
+}
+
+/* ======= 数据卡片 ======= */
+.data-card {
+  background: var(--td-bg-color-container, #ffffff);
+  border-radius: 20rpx;
+  margin-bottom: 20rpx;
+  overflow: hidden;
+  box-shadow: 0 2rpx 12rpx rgba(200, 149, 108, 0.06);
+  animation: cardFadeIn 0.4s ease forwards;
+  opacity: 0;
+}
+
+.data-card:nth-child(2) {
+  animation-delay: 0.05s;
+}
+.data-card:nth-child(3) {
+  animation-delay: 0.1s;
+}
+.data-card:nth-child(4) {
+  animation-delay: 0.15s;
+}
+.data-card:nth-child(5) {
+  animation-delay: 0.2s;
+}
+.data-card:nth-child(6) {
+  animation-delay: 0.25s;
+}
+.data-card:nth-child(7) {
+  animation-delay: 0.3s;
+}
+
+@keyframes cardFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(16rpx);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  padding: 28rpx 32rpx 0;
+}
+
+.card-dot {
+  width: 10rpx;
+  height: 10rpx;
+  border-radius: 50%;
+  margin-right: 16rpx;
+}
+
+.card-title {
+  font-size: 30rpx;
+  font-weight: 600;
+  color: var(--td-text-color-primary, #3d2e22);
+}
+
+.card-body {
+  padding: 20rpx 32rpx 28rpx;
+}
+
+/* 统计行 */
+.stat-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 12rpx 0;
+}
+
+.stat-label {
+  font-size: 26rpx;
+  color: var(--td-text-color-secondary, #8b7b6b);
+  flex-shrink: 0;
+  width: 160rpx;
+}
+
+.stat-value {
+  font-size: 26rpx;
+  font-weight: 600;
+  color: var(--td-text-color-primary, #3d2e22);
+  text-align: right;
+  flex: 1;
+}
+
+/* 比例条 */
+.stat-bar-group {
+  flex: 1;
+  margin-left: 16rpx;
+}
+
+.stat-bar-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8rpx;
+}
+
+.stat-bar-item:last-child {
+  margin-bottom: 0;
+}
+
+.stat-bar {
+  height: 12rpx;
+  border-radius: 6rpx;
+  min-width: 8rpx;
+  max-width: 60%;
+  transition: width 0.5s ease;
+}
+
+.stat-bar-label {
+  font-size: 22rpx;
+  color: var(--td-text-color-secondary, #8b7b6b);
+  margin-left: 12rpx;
+  white-space: nowrap;
+}
+
+/* ======= 生长发育指标 ======= */
+.growth-metrics {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 8rpx 0;
+}
+
+.growth-metric-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+}
+
+.growth-metric-value {
+  font-size: 40rpx;
+  font-weight: 700;
+  color: var(--td-text-color-primary, #3d2e22);
+  line-height: 1.2;
+}
+
+.growth-metric-unit {
+  font-size: 22rpx;
+  color: var(--td-text-color-secondary, #8b7b6b);
+  margin-top: 4rpx;
+}
+
+.growth-metric-label {
+  font-size: 24rpx;
+  color: var(--td-text-color-secondary, #8b7b6b);
+  margin-top: 8rpx;
+}
+
+.growth-metric-divider {
+  width: 1rpx;
+  height: 60rpx;
+  background: var(--td-component-border, rgba(200, 149, 108, 0.15));
+}
+
+/* ======= 里程碑进度 ======= */
+.milestone-progress-section {
+  padding: 8rpx 0;
+}
+
+.milestone-progress-bar-track {
+  height: 16rpx;
+  background: var(--td-bg-color-secondarycontainer, #f5ede4);
+  border-radius: 8rpx;
+  overflow: hidden;
+}
+
+.milestone-progress-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #fbbf24 0%, #f59e0b 100%);
+  border-radius: 8rpx;
+  transition: width 0.6s ease;
+  min-width: 4rpx;
+}
+
+.milestone-progress-text {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 12rpx;
+}
+
+.milestone-progress-label {
+  font-size: 24rpx;
+  color: var(--td-text-color-secondary, #8b7b6b);
+}
+
+.milestone-progress-pct {
+  font-size: 24rpx;
+  font-weight: 600;
+  color: #fbbf24;
+}
+
+/* ======= 迷你趋势图 ======= */
+.mini-chart {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-around;
+  height: 200rpx;
+  padding-top: 16rpx;
+}
+
+.mini-chart-bar-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+  height: 100%;
+  justify-content: flex-end;
+}
+
+.mini-chart-bar {
+  width: 70%;
+  max-width: 48rpx;
+  min-height: 4rpx;
+  background: linear-gradient(180deg, #d4a97a 0%, #e8c4a0 100%);
+  border-radius: 6rpx 6rpx 0 0;
+  transition: height 0.4s ease;
+}
+
+.mini-chart-count {
+  font-size: 20rpx;
+  font-weight: 600;
+  color: var(--td-text-color-primary, #3d2e22);
+  margin-top: 6rpx;
+}
+
+.mini-chart-label {
+  font-size: 18rpx;
+  color: var(--td-text-color-secondary, #8b7b6b);
+  margin-top: 4rpx;
+}
+
+/* ======= Canvas 画布（隐藏） ======= */
+.canvas-container {
+  position: fixed;
+  left: -9999px;
+  top: -9999px;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+}
+
+/* ======= 底部操作栏 ======= */
+.action-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  padding: 16rpx 24rpx;
+  padding-bottom: calc(16rpx + env(safe-area-inset-bottom));
+  background: var(--td-bg-color-container, #ffffff);
+  box-shadow: 0 -2rpx 16rpx rgba(200, 149, 108, 0.08);
+  z-index: 100;
+}
+
+.action-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20rpx 0;
+  border-radius: 16rpx;
+  transition: all 0.2s;
+}
+
+.action-btn-hover {
+  transform: scale(0.96);
+  opacity: 0.85;
+}
+
+.generate-btn {
+  flex: 2;
+  background: linear-gradient(135deg, #c8956c 0%, #d4a97a 100%);
+  margin-right: 16rpx;
+  box-shadow: 0 4rpx 16rpx rgba(200, 149, 108, 0.3);
+}
+
+.generate-btn .action-btn-text {
+  color: #ffffff;
+  font-size: 28rpx;
+  font-weight: 600;
+  margin-left: 10rpx;
+}
+
+.save-btn {
+  flex: 1;
+  background: var(--td-bg-color-secondarycontainer, #f5ede4);
+  margin-right: 16rpx;
+}
+
+.save-text {
+  color: #c8956c;
+  font-size: 26rpx;
+  font-weight: 500;
+  margin-left: 8rpx;
+}
+
+.share-btn {
+  flex: 1;
+  background: var(--td-bg-color-secondarycontainer, #f5ede4);
+}
+
+.share-text {
+  color: #c8956c;
+  font-size: 26rpx;
+  font-weight: 500;
+  margin-left: 8rpx;
+}
+
+/* ======= 安全区 ======= */
+.safe-bottom {
+  height: env(safe-area-inset-bottom);
+}
+
+/* ======= 暗色模式 ======= */
+@media (prefers-color-scheme: dark) {
+  .type-switcher {
+    box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.2);
+  }
+
+  .type-btn {
+    color: var(--td-text-color-secondary, #a89b8f);
+  }
+
+  .type-btn.active {
+    background: linear-gradient(135deg, #a07650 0%, #b8895e 100%);
+    box-shadow: 0 4rpx 16rpx rgba(160, 118, 80, 0.3);
+  }
+
+  .date-nav-btn {
+    box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.15);
+  }
+
+  .report-header {
+    background: linear-gradient(135deg, #8b6544 0%, #a07650 50%, #b8895e 100%);
+  }
+
+  .data-card {
+    box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.15);
+  }
+
+  .mini-chart-bar {
+    background: linear-gradient(180deg, #a07650 0%, #b8895e 100%);
+  }
+
+  .generate-btn {
+    background: linear-gradient(135deg, #8b6544 0%, #a07650 100%);
+    box-shadow: 0 4rpx 16rpx rgba(139, 101, 68, 0.3);
+  }
+
+  .action-bar {
+    box-shadow: 0 -2rpx 16rpx rgba(0, 0, 0, 0.2);
+  }
+
+  .milestone-progress-bar-fill {
+    background: linear-gradient(90deg, #d4a020 0%, #c49018 100%);
+  }
+}

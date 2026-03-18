@@ -1,0 +1,323 @@
+/* components/baby-switcher/index.wxss */
+/* 全局悬浮宝宝切换组件 — Phase 3.5 */
+
+.baby-switcher {
+  position: relative;
+  z-index: 999;
+}
+
+/* ======= 悬浮球 ======= */
+.switcher-fab {
+  position: fixed;
+  z-index: 999;
+  width: 104rpx;
+  height: 104rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.switcher-fab:not(.fab-dragging) {
+  transition:
+    left 0.3s ease,
+    top 0s,
+    transform 0.3s ease;
+}
+
+.fab-dragging {
+  transform: scale(1.1);
+}
+
+.fab-switching {
+  animation: fabPulse 0.5s ease;
+}
+
+/* 头像区域 */
+.fab-avatar {
+  width: 96rpx;
+  height: 96rpx;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #c8956c, #d4a97a);
+  box-shadow: 0 8rpx 24rpx rgba(200, 149, 108, 0.35);
+  border: 4rpx solid #ffffff;
+  overflow: hidden;
+  transition: transform 0.2s ease;
+}
+
+.fab-avatar.male {
+  background: linear-gradient(135deg, #7cafd4, #a8cbe4);
+  box-shadow: 0 8rpx 24rpx rgba(124, 175, 212, 0.35);
+}
+
+.fab-avatar.female {
+  background: linear-gradient(135deg, #f5a5b8, #f8c4d0);
+  box-shadow: 0 8rpx 24rpx rgba(245, 165, 184, 0.35);
+}
+
+.fab-avatar-img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+}
+
+.fab-avatar-initial {
+  font-size: 40rpx;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+/* 数量徽标 */
+.fab-badge {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 36rpx;
+  height: 36rpx;
+  border-radius: 50%;
+  background: var(--td-brand-color, #c8956c);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 3rpx solid #ffffff;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.15);
+}
+
+.fab-badge-text {
+  font-size: 20rpx;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+/* 切换动画环 */
+.fab-switch-ring {
+  position: absolute;
+  top: -4rpx;
+  left: -4rpx;
+  right: -4rpx;
+  bottom: -4rpx;
+  border-radius: 50%;
+  border: 4rpx solid var(--td-brand-color, #c8956c);
+  animation: ringExpand 0.5s ease forwards;
+}
+
+/* ======= 选择面板遮罩 ======= */
+.switcher-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fadeIn 0.2s ease;
+}
+
+/* ======= 选择面板 ======= */
+.switcher-panel {
+  width: 600rpx;
+  max-height: 70vh;
+  background: var(--td-bg-color-container, #ffffff);
+  border-radius: 28rpx;
+  padding: 32rpx;
+  box-shadow: 0 16rpx 48rpx rgba(0, 0, 0, 0.15);
+  animation: panelSlideIn 0.3s ease;
+}
+
+.panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24rpx;
+}
+
+.panel-title {
+  font-size: 34rpx;
+  font-weight: 700;
+  color: var(--td-text-color-primary, #3d2e22);
+}
+
+.panel-close {
+  padding: 8rpx;
+}
+
+/* ======= 宝宝列表 ======= */
+.panel-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12rpx;
+}
+
+.baby-item {
+  display: flex;
+  align-items: center;
+  padding: 20rpx 24rpx;
+  border-radius: 20rpx;
+  background: var(--td-bg-color-secondarycontainer, #f9f4ef);
+  transition: all 0.2s ease;
+}
+
+.baby-item-hover {
+  transform: scale(0.98);
+  opacity: 0.8;
+}
+
+.baby-item-active {
+  background: linear-gradient(135deg, rgba(200, 149, 108, 0.12), rgba(200, 149, 108, 0.06));
+  border: 2rpx solid rgba(200, 149, 108, 0.3);
+}
+
+/* 列表项头像 */
+.baby-item-avatar {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #c8956c, #d4a97a);
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+.baby-item-avatar.male {
+  background: linear-gradient(135deg, #7cafd4, #a8cbe4);
+}
+
+.baby-item-avatar.female {
+  background: linear-gradient(135deg, #f5a5b8, #f8c4d0);
+}
+
+.baby-item-avatar-img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+}
+
+.baby-item-initial {
+  font-size: 32rpx;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+/* 列表项信息 */
+.baby-item-info {
+  flex: 1;
+  margin-left: 20rpx;
+  display: flex;
+  flex-direction: column;
+  gap: 4rpx;
+}
+
+.baby-item-name {
+  font-size: 30rpx;
+  font-weight: 600;
+  color: var(--td-text-color-primary, #3d2e22);
+}
+
+.baby-item-age {
+  font-size: 24rpx;
+  color: var(--td-text-color-secondary, #8b7b6b);
+}
+
+/* 当前选中标记 */
+.baby-item-check {
+  flex-shrink: 0;
+  width: 48rpx;
+  height: 48rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ======= 动画 ======= */
+@keyframes fabPulse {
+  0% {
+    transform: scale(1);
+  }
+  30% {
+    transform: scale(0.85);
+  }
+  60% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes ringExpand {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1.5);
+    opacity: 0;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes panelSlideIn {
+  from {
+    opacity: 0;
+    transform: scale(0.85) translateY(20rpx);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* ======= 深色模式 ======= */
+@media (prefers-color-scheme: dark) {
+  .fab-avatar {
+    border-color: #2a2420;
+  }
+
+  .fab-badge {
+    border-color: #2a2420;
+  }
+
+  .switcher-panel {
+    background: var(--td-bg-color-container, #2a2420);
+    box-shadow: 0 16rpx 48rpx rgba(0, 0, 0, 0.4);
+  }
+
+  .panel-title {
+    color: var(--td-text-color-primary, #ede5dc);
+  }
+
+  .baby-item {
+    background: var(--td-bg-color-secondarycontainer, #362e28);
+  }
+
+  .baby-item-active {
+    background: linear-gradient(135deg, rgba(212, 169, 122, 0.15), rgba(212, 169, 122, 0.08));
+    border-color: rgba(212, 169, 122, 0.3);
+  }
+
+  .baby-item-name {
+    color: var(--td-text-color-primary, #ede5dc);
+  }
+
+  .baby-item-age {
+    color: var(--td-text-color-secondary, #a89a8c);
+  }
+}

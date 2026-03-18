@@ -59,7 +59,7 @@ Component({
   },
 
   observers: {
-    'events, maxCount': function(events: any[], maxCount: number) {
+    'events, maxCount': function (events: any[], maxCount: number) {
       if (!events || events.length === 0) {
         this.setData({ displayEvents: [], hasMore: false });
         return;

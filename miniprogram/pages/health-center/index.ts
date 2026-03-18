@@ -4,6 +4,7 @@
 import { healthService } from '../../services/health';
 import { vaccineService } from '../../services/vaccine';
 import { babyService } from '../../services/baby';
+import { store } from '../../store/index';
 import eventBus, { Events } from '../../utils/event-bus';
 
 const HEALTH_TABS = [
@@ -55,11 +56,20 @@ Page({
     // 懒加载标记
     _healthLoaded: true,
     _vaccineLoaded: false,
+
+    // 主题
+    pageStyle: '',
   },
 
   _unsubscribers: [] as (() => void)[],
+  _storeDisconnect: null as (() => void) | null,
 
   onLoad() {
+    // Store 自动推送 pageStyle
+    this._storeDisconnect = store.connect(this as any, {
+      pageStyle: true,
+    });
+
     this._unsubscribers.push(
       eventBus.on(Events.HEALTH_CHANGED, () => this.loadHealthData()),
       eventBus.on(Events.VACCINE_CHANGED, () => this.loadVaccineData()),
@@ -74,8 +84,12 @@ Page({
   },
 
   onUnload() {
-    this._unsubscribers.forEach(fn => fn());
+    this._unsubscribers.forEach((fn) => fn());
     this._unsubscribers = [];
+    if (this._storeDisconnect) {
+      this._storeDisconnect();
+      this._storeDisconnect = null;
+    }
   },
 
   checkBaby() {
@@ -114,7 +128,13 @@ Page({
 
     // 最新体温
     const latestTemp = healthService.getLatestTemperature();
-    let tempData: any = { latestTemp: '--', latestTempLevel: 'normal', latestTempColor: '#7EBEA5', latestTempLevelText: '', latestTempTime: '' };
+    let tempData: any = {
+      latestTemp: '--',
+      latestTempLevel: 'normal',
+      latestTempColor: '#7EBEA5',
+      latestTempLevelText: '',
+      latestTempTime: '',
+    };
     if (latestTemp) {
       const level = healthService.getTemperatureLevel(latestTemp.temperature);
       tempData = {
@@ -193,7 +213,7 @@ Page({
     // Map service data → WXML template expected shape
     // Service returns: { month, monthLabel, vaccines: [{ vaccine: {name,doseNumber,...}, record, status, statusLabel, dateText, ... }] }
     // Template expects: { month, label, items: [{ vaccineId, name, doseNumber, diseases, status, statusText, record, ... }] }
-    const vaccineGroups = rawGroups.map(g => ({
+    const vaccineGroups = rawGroups.map((g) => ({
       month: g.month,
       label: g.monthLabel,
       items: g.vaccines.map((v: any) => ({

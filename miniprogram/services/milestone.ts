@@ -26,7 +26,10 @@ import type {
 } from '../types/index';
 
 /** 状态配置（使用纯文字符号，避免 base64 图标在小程序中的兼容性问题） */
-const STATUS_CONFIG: Record<MilestoneStatus, { label: string; color: string; bgColor: string; icon: string }> = {
+const STATUS_CONFIG: Record<
+  MilestoneStatus,
+  { label: string; color: string; bgColor: string; icon: string }
+> = {
   achieved: { label: '已达成', color: '#059669', bgColor: '#D1FAE5', icon: '★' },
   pending: { label: '待达成', color: '#6B7280', bgColor: '#F3F4F6', icon: '☆' },
   concern: { label: '需关注', color: '#DC2626', bgColor: '#FEE2E2', icon: '⚠' },
@@ -109,7 +112,7 @@ class MilestoneService {
     if (updated) {
       eventBus.emit(Events.MILESTONE_CHANGED, updated);
     }
-    return updated as MilestoneRecord || null;
+    return (updated as MilestoneRecord) || null;
   }
 
   /**
@@ -167,16 +170,16 @@ class MilestoneService {
     const monthGroups = getMilestoneMonthGroups();
     const result: any[] = [];
 
-    monthGroups.forEach(month => {
-      const milestonesInMonth = MILESTONE_LIST.filter(m => m.expectedMonthStart === month);
+    monthGroups.forEach((month) => {
+      const milestonesInMonth = MILESTONE_LIST.filter((m) => m.expectedMonthStart === month);
       const baby = babyService.getCurrentBaby();
       const ageInMonths = baby ? getAgeInMonths(baby.birthDate) : 0;
 
-      const milestones = milestonesInMonth.map(milestone => {
+      const milestones = milestonesInMonth.map((milestone) => {
         const record = this.getRecordByMilestoneId(milestone.id);
         const status = this.getMilestoneStatus(milestone.id);
-        const isCurrentFocus = ageInMonths >= milestone.expectedMonthStart &&
-                               ageInMonths <= milestone.expectedMonthEnd;
+        const isCurrentFocus =
+          ageInMonths >= milestone.expectedMonthStart && ageInMonths <= milestone.expectedMonthEnd;
         const statusCfg = STATUS_CONFIG[status];
         const catInfo = getCategoryInfo(milestone.category);
 
@@ -192,17 +195,16 @@ class MilestoneService {
           statusIcon: statusCfg.icon,
           categoryLabel: catInfo?.label || '',
           categoryColor: catInfo?.color || '#6B7280',
-          dateText: record?.achievedDate
-            ? formatDate(record.achievedDate, 'MM月DD日达成')
-            : '',
+          dateText: record?.achievedDate ? formatDate(record.achievedDate, 'MM月DD日达成') : '',
           description: milestone.description,
           concernTip: milestone.concernTip || '',
         };
       });
 
-      const monthEnd = milestonesInMonth.length > 0
-        ? Math.max(...milestonesInMonth.map(m => m.expectedMonthEnd))
-        : month + 1;
+      const monthEnd =
+        milestonesInMonth.length > 0
+          ? Math.max(...milestonesInMonth.map((m) => m.expectedMonthEnd))
+          : month + 1;
 
       result.push({
         month,
@@ -224,7 +226,7 @@ class MilestoneService {
     const ageInMonths = getAgeInMonths(baby.birthDate);
     const milestones = getMilestonesByAge(ageInMonths);
 
-    return milestones.map(milestone => ({
+    return milestones.map((milestone) => ({
       milestone,
       record: this.getRecordByMilestoneId(milestone.id),
       status: this.getMilestoneStatus(milestone.id),
@@ -247,7 +249,7 @@ class MilestoneService {
     let pending = 0;
     let concern = 0;
 
-    MILESTONE_LIST.forEach(m => {
+    MILESTONE_LIST.forEach((m) => {
       const status = this.getMilestoneStatus(m.id);
       if (status === 'achieved') achieved++;
       else if (status === 'concern') concern++;

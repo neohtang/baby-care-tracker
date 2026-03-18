@@ -5,7 +5,13 @@
 
 import { feedingStorage, generateId, nowISO } from './storage';
 import { validateFeedingRecord } from '../utils/validator';
-import { getToday, formatTime, getRelativeTime, diffInMinutes, formatDuration } from '../utils/date';
+import {
+  getToday,
+  formatTime,
+  getRelativeTime,
+  diffInMinutes,
+  formatDuration,
+} from '../utils/date';
 import { babyService } from './baby';
 import eventBus, { Events } from '../utils/event-bus';
 import type {
@@ -62,7 +68,7 @@ class FeedingService {
    * 按类型筛选今日记录
    */
   getTodayRecordsByType(type: FeedingType): FeedingRecord[] {
-    return this.getTodayRecords().filter(r => r.type === type);
+    return this.getTodayRecords().filter((r) => r.type === type);
   }
 
   /**
@@ -125,7 +131,7 @@ class FeedingService {
     if (updated) {
       eventBus.emit(Events.FEEDING_CHANGED, updated);
     }
-    return updated as FeedingRecord || null;
+    return (updated as FeedingRecord) || null;
   }
 
   /**
@@ -156,19 +162,19 @@ class FeedingService {
       totalSolidAmount: 0,
     };
 
-    records.forEach(r => {
+    records.forEach((r) => {
       switch (r.type) {
         case 'breast':
           summary.breastCount++;
-          summary.totalBreastDuration += (r.duration || 0);
+          summary.totalBreastDuration += r.duration || 0;
           break;
         case 'formula':
           summary.formulaCount++;
-          summary.totalFormulaAmount += (r.amount || 0);
+          summary.totalFormulaAmount += r.amount || 0;
           break;
         case 'solid':
           summary.solidCount++;
-          summary.totalSolidAmount += (r.amount || 0);
+          summary.totalSolidAmount += r.amount || 0;
           break;
       }
     });
@@ -242,8 +248,10 @@ class FeedingService {
   /**
    * 批量格式化记录列表
    */
-  formatRecordsForDisplay(records: FeedingRecord[]): ReturnType<typeof this.formatRecordForDisplay>[] {
-    return records.map(r => this.formatRecordForDisplay(r));
+  formatRecordsForDisplay(
+    records: FeedingRecord[],
+  ): ReturnType<typeof this.formatRecordForDisplay>[] {
+    return records.map((r) => this.formatRecordForDisplay(r));
   }
 
   /**

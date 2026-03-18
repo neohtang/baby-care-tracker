@@ -50,7 +50,7 @@ describe('StorageService', () => {
     });
 
     it('有数据时返回正确数据', () => {
-      const item = { id: '1', name: '小明' };
+      const item = { id: '1', name: '小明' } as any;
       babyStorage.add(item);
       const all = babyStorage.getAll();
       expect(all).toHaveLength(1);
@@ -68,8 +68,8 @@ describe('StorageService', () => {
   // ========== getById ==========
   describe('getById', () => {
     it('存在的 ID 返回对应记录', () => {
-      babyStorage.add({ id: 'a', name: 'A' });
-      babyStorage.add({ id: 'b', name: 'B' });
+      babyStorage.add({ id: 'a', name: 'A' } as any);
+      babyStorage.add({ id: 'b', name: 'B' } as any);
       expect(babyStorage.getById('a')?.name).toBe('A');
     });
 
@@ -81,9 +81,9 @@ describe('StorageService', () => {
   // ========== query ==========
   describe('query', () => {
     it('按条件筛选', () => {
-      babyStorage.add({ id: '1', gender: 'male' });
-      babyStorage.add({ id: '2', gender: 'female' });
-      babyStorage.add({ id: '3', gender: 'male' });
+      babyStorage.add({ id: '1', gender: 'male' } as any);
+      babyStorage.add({ id: '2', gender: 'female' } as any);
+      babyStorage.add({ id: '3', gender: 'male' } as any);
       const males = babyStorage.query((item: any) => item.gender === 'male');
       expect(males).toHaveLength(2);
     });
@@ -92,9 +92,9 @@ describe('StorageService', () => {
   // ========== queryByDateRange ==========
   describe('queryByDateRange', () => {
     it('按日期范围查询', () => {
-      feedingStorage.add({ id: '1', startTime: '2025-06-10T08:00:00' });
-      feedingStorage.add({ id: '2', startTime: '2025-06-15T08:00:00' });
-      feedingStorage.add({ id: '3', startTime: '2025-06-20T08:00:00' });
+      feedingStorage.add({ id: '1', startTime: '2025-06-10T08:00:00' } as any);
+      feedingStorage.add({ id: '2', startTime: '2025-06-15T08:00:00' } as any);
+      feedingStorage.add({ id: '3', startTime: '2025-06-20T08:00:00' } as any);
 
       const results = feedingStorage.queryByDateRange('startTime' as any, '2025-06-10', '2025-06-15');
       expect(results).toHaveLength(2);
@@ -104,15 +104,15 @@ describe('StorageService', () => {
   // ========== add ==========
   describe('add', () => {
     it('新记录插入到头部', () => {
-      babyStorage.add({ id: '1', name: 'First' });
-      babyStorage.add({ id: '2', name: 'Second' });
+      babyStorage.add({ id: '1', name: 'First' } as any);
+      babyStorage.add({ id: '2', name: 'Second' } as any);
       const all = babyStorage.getAll();
       expect(all[0].id).toBe('2'); // 后插入的在头部
       expect(all[1].id).toBe('1');
     });
 
     it('add 返回插入的记录', () => {
-      const item = { id: '1', name: 'Test' };
+      const item = { id: '1', name: 'Test' } as any;
       const returned = babyStorage.add(item);
       expect(returned).toEqual(item);
     });
@@ -121,11 +121,11 @@ describe('StorageService', () => {
   // ========== addBatch ==========
   describe('addBatch', () => {
     it('批量添加到头部', () => {
-      babyStorage.add({ id: '0', name: 'Existing' });
+      babyStorage.add({ id: '0', name: 'Existing' } as any);
       babyStorage.addBatch([
         { id: '1', name: 'Batch1' },
         { id: '2', name: 'Batch2' },
-      ]);
+      ] as any[]);
       const all = babyStorage.getAll();
       expect(all).toHaveLength(3);
       expect(all[0].id).toBe('1'); // batch 在头部
@@ -135,7 +135,7 @@ describe('StorageService', () => {
   // ========== update ==========
   describe('update', () => {
     it('正常更新返回更新后的记录', () => {
-      babyStorage.add({ id: '1', name: 'Old' });
+      babyStorage.add({ id: '1', name: 'Old' } as any);
       const updated = babyStorage.update('1', { name: 'New' } as any);
       expect(updated?.name).toBe('New');
     });
@@ -146,7 +146,7 @@ describe('StorageService', () => {
     });
 
     it('不允许修改 id', () => {
-      babyStorage.add({ id: '1', name: 'Original' });
+      babyStorage.add({ id: '1', name: 'Original' } as any);
       babyStorage.update('1', { id: 'changed', name: 'Updated' } as any);
       const item = babyStorage.getById('1');
       expect(item?.id).toBe('1'); // ID 不变
@@ -157,7 +157,7 @@ describe('StorageService', () => {
   // ========== remove ==========
   describe('remove', () => {
     it('存在的记录删除成功返回 true', () => {
-      babyStorage.add({ id: '1', name: 'Test' });
+      babyStorage.add({ id: '1', name: 'Test' } as any);
       expect(babyStorage.remove('1')).toBe(true);
       expect(babyStorage.getAll()).toHaveLength(0);
     });
@@ -170,9 +170,9 @@ describe('StorageService', () => {
   // ========== removeBatch ==========
   describe('removeBatch', () => {
     it('批量删除返回删除数量', () => {
-      babyStorage.add({ id: '1', name: 'A' });
-      babyStorage.add({ id: '2', name: 'B' });
-      babyStorage.add({ id: '3', name: 'C' });
+      babyStorage.add({ id: '1', name: 'A' } as any);
+      babyStorage.add({ id: '2', name: 'B' } as any);
+      babyStorage.add({ id: '3', name: 'C' } as any);
       const count = babyStorage.removeBatch(['1', '3']);
       expect(count).toBe(2);
       expect(babyStorage.getAll()).toHaveLength(1);
@@ -183,8 +183,8 @@ describe('StorageService', () => {
   // ========== clear ==========
   describe('clear', () => {
     it('清空所有数据', () => {
-      babyStorage.add({ id: '1', name: 'A' });
-      babyStorage.add({ id: '2', name: 'B' });
+      babyStorage.add({ id: '1', name: 'A' } as any);
+      babyStorage.add({ id: '2', name: 'B' } as any);
       babyStorage.clear();
       expect(babyStorage.getAll()).toHaveLength(0);
     });
@@ -194,7 +194,7 @@ describe('StorageService', () => {
   describe('count', () => {
     it('正确返回记录数量', () => {
       expect(babyStorage.count()).toBe(0);
-      babyStorage.add({ id: '1', name: 'A' });
+      babyStorage.add({ id: '1', name: 'A' } as any);
       expect(babyStorage.count()).toBe(1);
     });
   });
@@ -203,7 +203,7 @@ describe('StorageService', () => {
   describe('paginate', () => {
     beforeEach(() => {
       for (let i = 1; i <= 25; i++) {
-        babyStorage.add({ id: `${i}`, name: `Baby${i}` });
+        babyStorage.add({ id: `${i}`, name: `Baby${i}` } as any);
       }
     });
 
@@ -244,7 +244,7 @@ describe('StorageService', () => {
   // ========== getRawData / restoreFromBackup ==========
   describe('getRawData / restoreFromBackup', () => {
     it('getRawData 返回带版本号的包装数据', () => {
-      babyStorage.add({ id: '1', name: 'Test' });
+      babyStorage.add({ id: '1', name: 'Test' } as any);
       const raw = babyStorage.getRawData();
       expect(raw.version).toBe(1);
       expect(raw.data).toHaveLength(1);
@@ -257,7 +257,7 @@ describe('StorageService', () => {
         data: [{ id: '1', name: 'Restored' }, { id: '2', name: 'Restored2' }],
         lastUpdated: '2025-06-15T00:00:00.000Z',
       };
-      babyStorage.restoreFromBackup(backup);
+      babyStorage.restoreFromBackup(backup as any);
       expect(babyStorage.getAll()).toHaveLength(2);
       expect(babyStorage.getById('1')?.name).toBe('Restored');
     });
@@ -296,13 +296,16 @@ describe('StorageService', () => {
     });
 
     it('写入异常调用 showToast', () => {
-      (wx.setStorageSync as jest.Mock).mockImplementationOnce(() => {
-        throw new Error('Storage full');
-      });
-
       const storage = createStorage<any>('test_write_error');
       const consoleSpy = jest.spyOn(console, 'error').mockImplementation();
       storage.add({ id: '1', name: 'Test' });
+
+      // debounce 机制下需要先 mock 再 flush 强制触发写入
+      (wx.setStorageSync as jest.Mock).mockImplementationOnce(() => {
+        throw new Error('Storage full');
+      });
+      storage.flush();
+
       expect(wx.showToast).toHaveBeenCalledWith(
         expect.objectContaining({ title: expect.stringContaining('保存失败') })
       );

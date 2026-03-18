@@ -1,0 +1,98 @@
+<!--pages/statistics/index.wxml-->
+<!--数据统计页面 — 近7天喂养/睡眠/排便趋势-->
+
+<page-meta page-style="{{pageStyle}}" />
+<view class="page-statistics">
+  <!-- 页面头部 -->
+  <view class="page-header">
+    <text class="page-title">近7天趋势</text>
+    <text class="page-date-range">{{dateRangeText}}</text>
+  </view>
+
+  <!-- 喂养趋势卡片 -->
+  <view class="trend-card animate-fade-in" style="animation-delay: 0.05s">
+    <view class="trend-card-header">
+      <view class="trend-card-icon" style="background: #fff5ed">
+        <image class="trend-card-icon-img" src="/assets/icons/bottle.svg" mode="aspectFit" />
+      </view>
+      <view class="trend-card-info">
+        <text class="trend-card-name">喂养统计</text>
+        <view class="trend-card-stats">
+          <text class="stat-text">日均 <text class="stat-num">{{feedingAvg}}</text> 次</text>
+          <text class="stat-divider">·</text>
+          <text class="stat-text">配方奶 <text class="stat-num">{{feedingFormulaAvg}}</text> ml/天</text>
+        </view>
+      </view>
+    </view>
+    <view class="trend-chart-area">
+      <trend-chart
+        title=""
+        labels="{{feedingLabels}}"
+        series="{{feedingSeries}}"
+        unit="次"
+        stacked="{{true}}"
+        width="{{chartWidth}}"
+        height="{{320}}"
+      />
+    </view>
+  </view>
+
+  <!-- 睡眠趋势卡片 -->
+  <view class="trend-card animate-fade-in" style="animation-delay: 0.1s">
+    <view class="trend-card-header">
+      <view class="trend-card-icon" style="background: #eff6ff">
+        <image class="trend-card-icon-img" src="/assets/icons/sleep.svg" mode="aspectFit" />
+      </view>
+      <view class="trend-card-info">
+        <text class="trend-card-name">睡眠统计</text>
+        <view class="trend-card-stats">
+          <text class="stat-text">日均 <text class="stat-num">{{sleepAvgHours}}</text> 小时</text>
+          <text class="stat-divider">·</text>
+          <text class="stat-text">夜间 <text class="stat-num">{{sleepNightAvg}}</text> h</text>
+        </view>
+      </view>
+    </view>
+    <view class="trend-chart-area">
+      <trend-chart
+        title=""
+        labels="{{sleepLabels}}"
+        series="{{sleepSeries}}"
+        unit="小时"
+        stacked="{{true}}"
+        width="{{chartWidth}}"
+        height="{{320}}"
+      />
+    </view>
+  </view>
+
+  <!-- 排便趋势卡片 -->
+  <view class="trend-card animate-fade-in" style="animation-delay: 0.15s">
+    <view class="trend-card-header">
+      <view class="trend-card-icon" style="background: #ecfdf5">
+        <image class="trend-card-icon-img" src="/assets/icons/diaper-pin.svg" mode="aspectFit" />
+      </view>
+      <view class="trend-card-info">
+        <text class="trend-card-name">排便统计</text>
+        <view class="trend-card-stats">
+          <text class="stat-text">日均 <text class="stat-num">{{diaperAvg}}</text> 次</text>
+          <text class="stat-divider">·</text>
+          <text class="stat-text">大便 <text class="stat-num">{{diaperPoopAvg}}</text> 次/天</text>
+        </view>
+      </view>
+    </view>
+    <view class="trend-chart-area">
+      <trend-chart
+        title=""
+        labels="{{diaperLabels}}"
+        series="{{diaperSeries}}"
+        unit="次"
+        stacked="{{true}}"
+        width="{{chartWidth}}"
+        height="{{320}}"
+      />
+    </view>
+  </view>
+
+  <!-- 底部安全区域 -->
+  <view class="safe-bottom"></view>
+</view>

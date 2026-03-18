@@ -114,8 +114,8 @@ Page({
     if (editMode) {
       const result = diaperService.updateRecord(recordId, {
         type,
-        poopColor: type !== 'pee' && poopColor ? poopColor as PoopColor : undefined,
-        poopTexture: type !== 'pee' && poopTexture ? poopTexture as PoopTexture : undefined,
+        poopColor: type !== 'pee' && poopColor ? (poopColor as PoopColor) : undefined,
+        poopTexture: type !== 'pee' && poopTexture ? (poopTexture as PoopTexture) : undefined,
         alert: alert as DiaperAlert,
         note: note || undefined,
         time,
@@ -128,8 +128,8 @@ Page({
       const result = diaperService.addRecord({
         babyId,
         type,
-        poopColor: type !== 'pee' && poopColor ? poopColor as PoopColor : undefined,
-        poopTexture: type !== 'pee' && poopTexture ? poopTexture as PoopTexture : undefined,
+        poopColor: type !== 'pee' && poopColor ? (poopColor as PoopColor) : undefined,
+        poopTexture: type !== 'pee' && poopTexture ? (poopTexture as PoopTexture) : undefined,
         alert: alert as DiaperAlert,
         note: note || undefined,
         time,

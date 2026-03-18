@@ -57,7 +57,9 @@ export interface VaccinationRecord {
 export type CreateVaccinationInput = Omit<VaccinationRecord, 'id' | 'createdAt' | 'updatedAt'>;
 
 /** 更新疫苗接种记录的入参 */
-export type UpdateVaccinationInput = Partial<Omit<VaccinationRecord, 'id' | 'babyId' | 'createdAt' | 'updatedAt'>>;
+export type UpdateVaccinationInput = Partial<
+  Omit<VaccinationRecord, 'id' | 'babyId' | 'createdAt' | 'updatedAt'>
+>;
 
 /** 疫苗接种计划项（列表展示用） */
 export interface VaccinePlanItem {

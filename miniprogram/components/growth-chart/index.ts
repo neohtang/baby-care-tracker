@@ -77,7 +77,7 @@ Component({
   },
 
   observers: {
-    'type, gender, whoData, babyData': function() {
+    'type, gender, whoData, babyData': function () {
       // 数据变化时重绘
       if (this._ready) {
         this.drawChart();
@@ -116,7 +116,8 @@ Component({
      */
     drawChart() {
       const query = this.createSelectorQuery();
-      query.select(`#${this.data.canvasId}`)
+      query
+        .select(`#${this.data.canvasId}`)
         .fields({ node: true, size: true })
         .exec((res: any) => {
           if (!res || !res[0] || !res[0].node) {
@@ -170,8 +171,10 @@ Component({
           }
 
           // 坐标转换函数
-          const toX = (month: number) => padding.left + (month - xMin) / (xMax - xMin) * chartWidth;
-          const toY = (value: number) => padding.top + (1 - (value - yMin) / (yMax - yMin)) * chartHeight;
+          const toX = (month: number) =>
+            padding.left + ((month - xMin) / (xMax - xMin)) * chartWidth;
+          const toY = (value: number) =>
+            padding.top + (1 - (value - yMin) / (yMax - yMin)) * chartHeight;
 
           // 1. 绘制网格
           this._drawGrid(ctx, padding, chartWidth, chartHeight, xMin, xMax, yMin, yMax, toX, toY);
@@ -187,15 +190,34 @@ Component({
           }
 
           // 4. 绘制坐标轴标签
-          this._drawAxisLabels(ctx, padding, chartWidth, chartHeight, xMin, xMax, yMin, yMax, toX, toY, config);
+          this._drawAxisLabels(
+            ctx,
+            padding,
+            chartWidth,
+            chartHeight,
+            xMin,
+            xMax,
+            yMin,
+            yMax,
+            toX,
+            toY,
+            config,
+          );
         });
     },
 
     /** 绘制网格 */
     _drawGrid(
-      ctx: any, padding: any, chartWidth: number, chartHeight: number,
-      xMin: number, xMax: number, yMin: number, yMax: number,
-      toX: Function, toY: Function
+      ctx: any,
+      padding: any,
+      chartWidth: number,
+      chartHeight: number,
+      xMin: number,
+      xMax: number,
+      yMin: number,
+      yMax: number,
+      toX: (v: number) => number,
+      toY: (v: number) => number,
     ) {
       ctx.strokeStyle = CHART_CONFIG.colors.grid;
       ctx.lineWidth = 0.5;
@@ -233,7 +255,12 @@ Component({
     },
 
     /** 绘制 WHO 百分位区间 */
-    _drawWHOBands(ctx: any, whoData: any[], toX: Function, toY: Function) {
+    _drawWHOBands(
+      ctx: any,
+      whoData: any[],
+      toX: (v: number) => number,
+      toY: (v: number) => number,
+    ) {
       if (whoData.length < 2) return;
 
       // P3-P97 填充区间
@@ -304,7 +331,12 @@ Component({
     },
 
     /** 绘制宝宝数据 */
-    _drawBabyData(ctx: any, babyData: any[], toX: Function, toY: Function) {
+    _drawBabyData(
+      ctx: any,
+      babyData: any[],
+      toX: (v: number) => number,
+      toY: (v: number) => number,
+    ) {
       const validData = babyData.filter((d: any) => d.value !== undefined && d.value !== null);
       if (validData.length === 0) return;
 
@@ -357,9 +389,17 @@ Component({
 
     /** 绘制坐标轴标签 */
     _drawAxisLabels(
-      ctx: any, padding: any, chartWidth: number, chartHeight: number,
-      xMin: number, xMax: number, yMin: number, yMax: number,
-      toX: Function, toY: Function, config: any
+      ctx: any,
+      padding: any,
+      chartWidth: number,
+      chartHeight: number,
+      xMin: number,
+      xMax: number,
+      yMin: number,
+      yMax: number,
+      toX: (v: number) => number,
+      toY: (v: number) => number,
+      config: any,
     ) {
       ctx.font = '10px PingFang SC';
       ctx.fillStyle = CHART_CONFIG.colors.axisLabel;

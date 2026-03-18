@@ -3,23 +3,26 @@
 
 .page-health {
   min-height: 100vh;
-  background: var(--td-bg-color-page, #FDF8F3);
+  background: var(--td-bg-color-page, #fdf8f3);
   padding-bottom: env(safe-area-inset-bottom);
 }
 
 .health-tabs {
-  --td-tab-item-color: var(--td-text-color-secondary, #8B7B6B);
-  --td-tab-item-active-color: var(--td-brand-color, #C8956C);
-  --td-tab-track-color: var(--td-brand-color, #C8956C);
+  --td-tab-item-color: var(--td-text-color-secondary, #8b7b6b);
+  --td-tab-item-active-color: var(--td-brand-color, #c8956c);
+  --td-tab-track-color: var(--td-brand-color, #c8956c);
   --td-tab-track-thickness: 6rpx;
   --td-tab-item-font-size: 30rpx;
 }
 
-.tab-content { padding: 24rpx 0; min-height: calc(100vh - 100rpx); }
+.tab-content {
+  padding: 24rpx 0;
+  min-height: calc(100vh - 100rpx);
+}
 
 /* ======= 体温大卡片 ======= */
 .temp-card {
-  background: #FFFFFF;
+  background: #ffffff;
   border-radius: 24rpx;
   padding: 32rpx;
   margin: 0 24rpx 20rpx;
@@ -46,7 +49,7 @@
 
 .temp-unit {
   font-size: 28rpx;
-  color: var(--td-text-color-secondary, #8B7B6B);
+  color: var(--td-text-color-secondary, #8b7b6b);
   font-weight: 500;
 }
 
@@ -59,7 +62,7 @@
 
 .temp-time {
   font-size: 22rpx;
-  color: var(--td-text-color-placeholder, #B5A89C);
+  color: var(--td-text-color-placeholder, #b5a89c);
   margin-left: auto;
 }
 
@@ -70,7 +73,7 @@
   height: 60rpx;
   margin-top: 20rpx;
   padding-top: 8rpx;
-  border-top: 1rpx solid #F0E8DF;
+  border-top: 1rpx solid #f0e8df;
 }
 
 .temp-dot {
@@ -95,7 +98,7 @@
   align-items: center;
   gap: 8rpx;
   padding: 20rpx 0;
-  background: #FFFFFF;
+  background: #ffffff;
   border-radius: 20rpx;
   box-shadow: var(--shadow-card-sm);
 }
@@ -109,12 +112,15 @@
   justify-content: center;
 }
 
-.health-quick-img { width: 36rpx; height: 36rpx; }
+.health-quick-img {
+  width: 36rpx;
+  height: 36rpx;
+}
 
 .health-quick-text {
   font-size: 24rpx;
   font-weight: 500;
-  color: var(--td-text-color-secondary, #8B7B6B);
+  color: var(--td-text-color-secondary, #8b7b6b);
 }
 
 /* ======= 筛选 Tab ======= */
@@ -130,23 +136,25 @@
   border-radius: 999rpx;
   font-size: 26rpx;
   font-weight: 500;
-  color: var(--td-text-color-secondary, #8B7B6B);
-  background: #FFFFFF;
-  border: 2rpx solid #F0E8DF;
+  color: var(--td-text-color-secondary, #8b7b6b);
+  background: #ffffff;
+  border: 2rpx solid #f0e8df;
   transition: all 0.2s ease;
 }
 
 .filter-tab.active {
-  background: var(--td-brand-color, #C8956C);
-  color: #FFFFFF;
-  border-color: var(--td-brand-color, #C8956C);
+  background: var(--td-brand-color, #c8956c);
+  color: #ffffff;
+  border-color: var(--td-brand-color, #c8956c);
 }
 
-.record-list { padding: 0 24rpx; }
+.record-list {
+  padding: 0 24rpx;
+}
 
 /* ======= 疫苗进度卡片 ======= */
 .vaccine-progress-card {
-  background: #FFFFFF;
+  background: #ffffff;
   border-radius: 24rpx;
   padding: 28rpx 32rpx;
   margin: 0 24rpx 20rpx;
@@ -163,18 +171,18 @@
 .vaccine-progress-title {
   font-size: 30rpx;
   font-weight: 600;
-  color: var(--td-text-color-primary, #3D2E22);
+  color: var(--td-text-color-primary, #3d2e22);
 }
 
 .vaccine-progress-percent {
   font-size: 30rpx;
   font-weight: 700;
-  color: var(--td-brand-color, #C8956C);
+  color: var(--td-brand-color, #c8956c);
 }
 
 .vaccine-progress-bar {
   height: 12rpx;
-  background: var(--td-bg-color-secondarycontainer, #F5EDE4);
+  background: var(--td-bg-color-secondarycontainer, #f5ede4);
   border-radius: 6rpx;
   overflow: hidden;
   margin-bottom: 20rpx;
@@ -204,13 +212,19 @@
   font-weight: 700;
 }
 
-.vaccine-stat-completed { color: var(--color-mint, #7EBEA5); }
-.vaccine-stat-pending { color: var(--color-amber, #F0B44A); }
-.vaccine-stat-overdue { color: var(--color-coral, #E8736C); }
+.vaccine-stat-completed {
+  color: var(--color-mint, #7ebea5);
+}
+.vaccine-stat-pending {
+  color: var(--color-amber, #f0b44a);
+}
+.vaccine-stat-overdue {
+  color: var(--color-coral, #e8736c);
+}
 
 .vaccine-stat-label {
   font-size: 22rpx;
-  color: var(--td-text-color-secondary, #8B7B6B);
+  color: var(--td-text-color-secondary, #8b7b6b);
 }
 
 /* ======= 疫苗时间线 ======= */
@@ -233,24 +247,24 @@
   width: 16rpx;
   height: 16rpx;
   border-radius: 50%;
-  background: var(--td-brand-color, #C8956C);
+  background: var(--td-brand-color, #c8956c);
 }
 
 .vaccine-month-text {
   font-size: 28rpx;
   font-weight: 600;
-  color: var(--td-text-color-primary, #3D2E22);
+  color: var(--td-text-color-primary, #3d2e22);
 }
 
 .vaccine-month-count {
   font-size: 22rpx;
-  color: var(--td-text-color-placeholder, #B5A89C);
+  color: var(--td-text-color-placeholder, #b5a89c);
   margin-left: auto;
 }
 
 .vaccine-items {
   padding-left: 28rpx;
-  border-left: 3rpx solid #F0E8DF;
+  border-left: 3rpx solid #f0e8df;
   margin-left: 7rpx;
 }
 
@@ -258,7 +272,7 @@
   display: flex;
   align-items: center;
   padding: 20rpx 24rpx;
-  background: #FFFFFF;
+  background: #ffffff;
   border-radius: 16rpx;
   margin-bottom: 12rpx;
   box-shadow: var(--shadow-card-sm);
@@ -267,7 +281,9 @@
   transition: background 0.15s ease;
 }
 
-.vaccine-item-hover { background: #FDF8F3; }
+.vaccine-item-hover {
+  background: #fdf8f3;
+}
 
 .vaccine-status-dot {
   width: 16rpx;
@@ -276,7 +292,10 @@
   flex-shrink: 0;
 }
 
-.vaccine-item-body { flex: 1; min-width: 0; }
+.vaccine-item-body {
+  flex: 1;
+  min-width: 0;
+}
 
 .vaccine-name-row {
   display: flex;
@@ -287,18 +306,18 @@
 .vaccine-name {
   font-size: 28rpx;
   font-weight: 600;
-  color: var(--td-text-color-primary, #3D2E22);
+  color: var(--td-text-color-primary, #3d2e22);
 }
 
 .vaccine-dose {
   font-size: 22rpx;
-  color: var(--td-text-color-secondary, #8B7B6B);
+  color: var(--td-text-color-secondary, #8b7b6b);
   flex-shrink: 0;
 }
 
 .vaccine-diseases {
   font-size: 22rpx;
-  color: var(--td-text-color-placeholder, #B5A89C);
+  color: var(--td-text-color-placeholder, #b5a89c);
   margin-top: 4rpx;
   display: block;
   overflow: hidden;
@@ -308,7 +327,7 @@
 
 .vaccine-date-text {
   font-size: 22rpx;
-  color: var(--td-brand-color, #C8956C);
+  color: var(--td-brand-color, #c8956c);
   margin-top: 4rpx;
   display: block;
 }
@@ -323,17 +342,28 @@
 }
 
 /* ======= FAB ======= */
-.fab-container { position: fixed; right: 32rpx; bottom: 180rpx; z-index: 100; }
+.fab-container {
+  position: fixed;
+  right: 32rpx;
+  bottom: 180rpx;
+  z-index: 100;
+}
 
 .fab-btn {
-  width: 112rpx; height: 112rpx; border-radius: 50%;
+  width: 112rpx;
+  height: 112rpx;
+  border-radius: 50%;
   background: var(--gradient-primary);
-  display: flex; align-items: center; justify-content: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   box-shadow: 0 8rpx 32rpx rgba(200, 149, 108, 0.25);
   transition: transform 0.15s ease;
 }
 
-.fab-btn:active { transform: scale(0.92); }
+.fab-btn:active {
+  transform: scale(0.92);
+}
 
 .fab-btn-amber {
   background: var(--gradient-amber);
@@ -341,7 +371,7 @@
 }
 
 .fab-btn-vaccine {
-  background: linear-gradient(135deg, #9B8EC4, #B5A5D8);
+  background: linear-gradient(135deg, #9b8ec4, #b5a5d8);
   box-shadow: 0 8rpx 32rpx rgba(155, 142, 196, 0.25);
 }
 
@@ -349,7 +379,7 @@
 .popup-content {
   padding: 40rpx 32rpx;
   padding-bottom: calc(40rpx + env(safe-area-inset-bottom));
-  background: #FFFFFF;
+  background: #ffffff;
   border-radius: 32rpx 32rpx 0 0;
 }
 
@@ -363,13 +393,16 @@
 .popup-title {
   font-size: 36rpx;
   font-weight: 700;
-  color: var(--td-text-color-primary, #3D2E22);
+  color: var(--td-text-color-primary, #3d2e22);
 }
 
 .popup-close {
-  width: 56rpx; height: 56rpx;
-  display: flex; align-items: center; justify-content: center;
-  color: #B5A89C;
+  width: 56rpx;
+  height: 56rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #b5a89c;
 }
 
 .popup-vaccine-info {
@@ -379,17 +412,21 @@
 .popup-vaccine-name {
   font-size: 28rpx;
   font-weight: 500;
-  color: var(--td-brand-color, #C8956C);
+  color: var(--td-brand-color, #c8956c);
 }
 
-.popup-form-scroll { max-height: 50vh; }
+.popup-form-scroll {
+  max-height: 50vh;
+}
 
-.form-group { margin-bottom: 24rpx; }
+.form-group {
+  margin-bottom: 24rpx;
+}
 
 .form-label {
   font-size: 26rpx;
   font-weight: 500;
-  color: var(--td-text-color-secondary, #8B7B6B);
+  color: var(--td-text-color-secondary, #8b7b6b);
   margin-bottom: 8rpx;
   display: block;
 }
@@ -399,19 +436,19 @@
   align-items: center;
   justify-content: space-between;
   height: 88rpx;
-  background: #FAF5F0;
+  background: #faf5f0;
   border-radius: 16rpx;
   padding: 0 24rpx;
 }
 
 .form-date-text {
   font-size: 30rpx;
-  color: var(--td-text-color-primary, #3D2E22);
+  color: var(--td-text-color-primary, #3d2e22);
 }
 
 .form-date-placeholder {
   font-size: 30rpx;
-  color: var(--td-text-color-placeholder, #B5A89C);
+  color: var(--td-text-color-placeholder, #b5a89c);
 }
 
 .popup-actions {
@@ -426,7 +463,7 @@
   height: 96rpx;
   border-radius: 20rpx;
   background: var(--gradient-primary);
-  color: #FFFFFF;
+  color: #ffffff;
   font-size: 32rpx;
   font-weight: 600;
   display: flex;
@@ -435,14 +472,16 @@
   box-shadow: 0 4rpx 16rpx rgba(200, 149, 108, 0.25);
 }
 
-.btn-primary:active { transform: scale(0.98); }
+.btn-primary:active {
+  transform: scale(0.98);
+}
 
 .btn-delete {
   width: 100%;
   height: 88rpx;
   border-radius: 20rpx;
-  background: var(--color-coral-light, #FDECEB);
-  color: var(--color-coral, #E8736C);
+  background: var(--color-coral-light, #fdeceb);
+  color: var(--color-coral, #e8736c);
   font-size: 30rpx;
   font-weight: 500;
   display: flex;
@@ -452,22 +491,175 @@
 
 /* ======= 空状态 ======= */
 .empty-state {
-  display: flex; flex-direction: column; align-items: center;
-  justify-content: center; padding: 80rpx 40rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 80rpx 40rpx;
 }
 
-.empty-icon-img { width: 80rpx; height: 80rpx; margin-bottom: 24rpx; opacity: 0.4; }
+.empty-icon-img {
+  width: 80rpx;
+  height: 80rpx;
+  margin-bottom: 24rpx;
+  opacity: 0.4;
+}
 
-.empty-text { font-size: 30rpx; color: var(--td-text-color-secondary); font-weight: 500; }
+.empty-text {
+  font-size: 30rpx;
+  color: var(--td-text-color-secondary);
+  font-weight: 500;
+}
 
-.empty-hint { font-size: 24rpx; color: var(--td-text-color-placeholder); margin-top: 12rpx; }
+.empty-hint {
+  font-size: 24rpx;
+  color: var(--td-text-color-placeholder);
+  margin-top: 12rpx;
+}
 
 /* ======= 动画 ======= */
-.animate-fade-in { animation: fadeIn 0.3s ease-in-out; }
-.animate-scale { transition: transform 0.15s ease; }
-.animate-scale:active { transform: scale(0.96); }
+.animate-fade-in {
+  animation: fadeIn 0.3s ease-in-out;
+}
+.animate-scale {
+  transition: transform 0.15s ease;
+}
+.animate-scale:active {
+  transform: scale(0.96);
+}
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10rpx); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(10rpx);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ========== 深色模式适配 ========== */
+@media (prefers-color-scheme: dark) {
+  .page-health {
+    background: var(--td-bg-color-page, #1a1614);
+  }
+
+  .health-tabs {
+    --td-tab-nav-bg-color: var(--td-bg-color-page, #1a1614);
+  }
+
+  .temp-card {
+    background: var(--td-bg-color-container, #2a2420);
+  }
+
+  .temp-unit {
+    color: var(--td-text-color-secondary, #a89a8c);
+  }
+
+  .temp-time {
+    color: var(--td-text-color-placeholder, #78695c);
+  }
+
+  .temp-trend {
+    border-top-color: #3d342c;
+  }
+
+  .health-quick-btn {
+    background: var(--td-bg-color-container, #2a2420);
+    box-shadow: var(--shadow-card-sm);
+  }
+
+  .health-quick-text {
+    color: var(--td-text-color-secondary, #a89a8c);
+  }
+
+  .filter-tab {
+    background: var(--td-bg-color-container, #2a2420);
+    border-color: #3d342c;
+    color: var(--td-text-color-secondary, #a89a8c);
+  }
+
+  .filter-tab.active {
+    background: var(--td-brand-color, #d4a97a);
+    color: #ffffff;
+    border-color: var(--td-brand-color, #d4a97a);
+  }
+
+  .vaccine-progress-card {
+    background: var(--td-bg-color-container, #2a2420);
+  }
+
+  .vaccine-progress-title {
+    color: var(--td-text-color-primary, #ede5dc);
+  }
+
+  .vaccine-stat-label {
+    color: var(--td-text-color-secondary, #a89a8c);
+  }
+
+  .vaccine-month-text {
+    color: var(--td-text-color-primary, #ede5dc);
+  }
+
+  .vaccine-month-count {
+    color: var(--td-text-color-placeholder, #78695c);
+  }
+
+  .vaccine-items {
+    border-left-color: #3d342c;
+  }
+
+  .vaccine-item {
+    background: var(--td-bg-color-container, #2a2420);
+    box-shadow: var(--shadow-card-sm);
+  }
+
+  .vaccine-item-hover {
+    background: var(--td-bg-color-secondarycontainer, #362e28);
+  }
+
+  .vaccine-name {
+    color: var(--td-text-color-primary, #ede5dc);
+  }
+
+  .vaccine-dose {
+    color: var(--td-text-color-secondary, #a89a8c);
+  }
+
+  .vaccine-diseases {
+    color: var(--td-text-color-placeholder, #78695c);
+  }
+
+  .popup-content {
+    background: var(--td-bg-color-container, #2a2420);
+  }
+
+  .popup-title {
+    color: var(--td-text-color-primary, #ede5dc);
+  }
+
+  .form-label {
+    color: var(--td-text-color-secondary, #a89a8c);
+  }
+
+  .form-date-input {
+    background: #362e28;
+  }
+
+  .form-date-text {
+    color: var(--td-text-color-primary, #ede5dc);
+  }
+
+  .form-date-placeholder {
+    color: var(--td-text-color-placeholder, #78695c);
+  }
+
+  .empty-text {
+    color: var(--td-text-color-secondary, #a89a8c);
+  }
+
+  .empty-hint {
+    color: var(--td-text-color-placeholder, #78695c);
+  }
 }

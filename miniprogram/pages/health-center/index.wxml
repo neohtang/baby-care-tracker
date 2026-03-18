@@ -1,6 +1,7 @@
 <!--pages/health-center/index.wxml-->
 <!--健康监测合并页 — 健康记录 + 疫苗接种 (Tender Bloom 主题)-->
 
+<page-meta page-style="{{pageStyle}}" />
 <view class="page-health">
   <t-tabs defaultValue="{{0}}" bind:change="onMainTabChange" t-class="health-tabs">
     <!-- ===== 健康记录 Tab ===== -->
@@ -13,7 +14,11 @@
               <text class="temp-value" style="color: {{latestTempColor}};">{{latestTemp}}</text>
               <text class="temp-unit">℃</text>
             </view>
-            <view wx:if="{{latestTempLevelText}}" class="temp-level-badge" style="background: {{latestTempColor}}20; color: {{latestTempColor}};">
+            <view
+              wx:if="{{latestTempLevelText}}"
+              class="temp-level-badge"
+              style="background: {{latestTempColor}}20; color: {{latestTempColor}};"
+            >
               <text>{{latestTempLevelText}}</text>
             </view>
             <text wx:if="{{latestTempTime}}" class="temp-time">{{latestTempTime}}</text>
@@ -32,19 +37,19 @@
         <!-- 三个快捷操作按钮 -->
         <view class="health-quick-actions">
           <view class="health-quick-btn" data-type="temperature" bindtap="goToAddHealth" hover-class="animate-scale">
-            <view class="health-quick-icon" style="background: var(--color-amber-bg);">
+            <view class="health-quick-icon" style="background: var(--color-amber-bg)">
               <image src="/assets/icons/thermometer.svg" mode="aspectFit" class="health-quick-img" />
             </view>
             <text class="health-quick-text">量体温</text>
           </view>
           <view class="health-quick-btn" data-type="medication" bindtap="goToAddHealth" hover-class="animate-scale">
-            <view class="health-quick-icon" style="background: var(--color-sky-bg);">
+            <view class="health-quick-icon" style="background: var(--color-sky-bg)">
               <image src="/assets/icons/medicine.svg" mode="aspectFit" class="health-quick-img" />
             </view>
             <text class="health-quick-text">记用药</text>
           </view>
           <view class="health-quick-btn" data-type="symptom" bindtap="goToAddHealth" hover-class="animate-scale">
-            <view class="health-quick-icon" style="background: var(--color-peach-bg);">
+            <view class="health-quick-icon" style="background: var(--color-peach-bg)">
               <image src="/assets/icons/stethoscope.svg" mode="aspectFit" class="health-quick-img" />
             </view>
             <text class="health-quick-text">记症状</text>
@@ -154,7 +159,10 @@
                   <text wx:if="{{vaccine.diseases}}" class="vaccine-diseases">预防：{{vaccine.diseases}}</text>
                   <text wx:if="{{vaccine.dateText}}" class="vaccine-date-text">{{vaccine.dateText}}</text>
                 </view>
-                <view class="vaccine-status-badge" style="background: {{vaccine.statusBgColor || '#FEF3C7'}}; color: {{vaccine.statusColor || '#D97706'}};">
+                <view
+                  class="vaccine-status-badge"
+                  style="background: {{vaccine.statusBgColor || '#FEF3C7'}}; color: {{vaccine.statusColor || '#D97706'}};"
+                >
                   <text>{{vaccine.statusText}}</text>
                 </view>
               </view>
@@ -183,7 +191,9 @@
   <t-popup visible="{{showVaccinePopup}}" placement="bottom" bind:visible-change="closeVaccinePopup">
     <view class="popup-content">
       <view class="popup-header">
-        <text class="popup-title">{{selectedVaccine ? (selectedVaccine.record ? '编辑接种记录' : '记录接种信息') : '添加接种记录'}}</text>
+        <text class="popup-title"
+          >{{selectedVaccine ? (selectedVaccine.record ? '编辑接种记录' : '记录接种信息') : '添加接种记录'}}</text
+        >
         <view class="popup-close" bindtap="closeVaccinePopup">
           <t-icon name="close" size="40rpx" />
         </view>
@@ -197,32 +207,55 @@
         <!-- 手动添加时显示疫苗名称和剂次输入 -->
         <block wx:if="{{!selectedVaccine}}">
           <view class="form-group">
-            <text class="form-label">疫苗名称 <text style="color: var(--td-error-color, #E8736C);">*</text></text>
-            <t-input placeholder="如：乙肝疫苗、百白破疫苗" value="{{vaccineForm.vaccineName}}" bind:change="onVaccineNameInput" />
+            <text class="form-label">疫苗名称 <text style="color: var(--td-error-color, #e8736c)">*</text></text>
+            <t-input
+              placeholder="如：乙肝疫苗、百白破疫苗"
+              value="{{vaccineForm.vaccineName}}"
+              bind:change="onVaccineNameInput"
+            />
           </view>
           <view class="form-group">
             <text class="form-label">剂次</text>
-            <t-input type="number" placeholder="如：1（默认第1剂）" value="{{vaccineForm.doseNumber}}" bind:change="onVaccineDoseInput" />
+            <t-input
+              type="number"
+              placeholder="如：1（默认第1剂）"
+              value="{{vaccineForm.doseNumber}}"
+              bind:change="onVaccineDoseInput"
+            />
           </view>
         </block>
         <view class="form-group">
           <text class="form-label">接种日期</text>
           <view class="form-date-input" bindtap="onVaccineDateTap">
-            <text class="{{vaccineForm.date ? 'form-date-text' : 'form-date-placeholder'}}">{{vaccineForm.date || '请选择日期'}}</text>
+            <text class="{{vaccineForm.date ? 'form-date-text' : 'form-date-placeholder'}}"
+              >{{vaccineForm.date || '请选择日期'}}</text
+            >
             <t-icon name="calendar" size="36rpx" color="#B5A89C" />
           </view>
         </view>
         <view class="form-group">
           <text class="form-label">接种机构</text>
-          <t-input placeholder="请输入接种机构" value="{{vaccineForm.location}}" bind:change="onVaccineLocationChange" />
+          <t-input
+            placeholder="请输入接种机构"
+            value="{{vaccineForm.location}}"
+            bind:change="onVaccineLocationChange"
+          />
         </view>
         <view class="form-group">
           <text class="form-label">疫苗批号</text>
-          <t-input placeholder="请输入批号(可选)" value="{{vaccineForm.batchNumber}}" bind:change="onVaccineBatchChange" />
+          <t-input
+            placeholder="请输入批号(可选)"
+            value="{{vaccineForm.batchNumber}}"
+            bind:change="onVaccineBatchChange"
+          />
         </view>
         <view class="form-group">
           <text class="form-label">接种反应</text>
-          <t-input placeholder="如有不良反应请记录(可选)" value="{{vaccineForm.reaction}}" bind:change="onVaccineReactionChange" />
+          <t-input
+            placeholder="如有不良反应请记录(可选)"
+            value="{{vaccineForm.reaction}}"
+            bind:change="onVaccineReactionChange"
+          />
         </view>
         <view class="form-group">
           <text class="form-label">备注</text>
@@ -232,7 +265,9 @@
 
       <view class="popup-actions">
         <view class="btn-primary" bindtap="saveVaccineRecord">保存</view>
-        <view wx:if="{{selectedVaccine && selectedVaccine.record}}" class="btn-delete" bindtap="deleteVaccineRecord">删除记录</view>
+        <view wx:if="{{selectedVaccine && selectedVaccine.record}}" class="btn-delete" bindtap="deleteVaccineRecord"
+          >删除记录</view
+        >
       </view>
     </view>
   </t-popup>
@@ -246,4 +281,7 @@
     bind:confirm="onVaccineDateConfirm"
     bind:cancel="onVaccineDateCancel"
   />
+
+  <!-- 多宝宝切换悬浮球 -->
+  <baby-switcher />
 </view>

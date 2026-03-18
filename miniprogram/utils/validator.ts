@@ -56,7 +56,7 @@ export function validateNumberRange(
   fieldName: string,
   min: number,
   max: number,
-  required: boolean = false
+  required: boolean = false,
 ): string | null {
   if (value === undefined || value === null) {
     return required ? `${fieldName}不能为空` : null;
@@ -80,7 +80,7 @@ export function validateEnum<T extends string>(
   value: T | undefined,
   fieldName: string,
   allowedValues: T[],
-  required: boolean = true
+  required: boolean = true,
 ): string | null {
   if (value === undefined || value === null) {
     return required ? `${fieldName}不能为空` : null;
@@ -208,18 +208,27 @@ export function validateDiaperRecord(data: any): ValidationResult {
   if (typeErr) errors.push(typeErr);
 
   if (data.poopColor) {
-    const colorErr = validateEnum(
-      data.poopColor, '大便颜色',
-      ['yellow', 'green', 'brown', 'black', 'red', 'white', 'other']
-    );
+    const colorErr = validateEnum(data.poopColor, '大便颜色', [
+      'yellow',
+      'green',
+      'brown',
+      'black',
+      'red',
+      'white',
+      'other',
+    ]);
     if (colorErr) errors.push(colorErr);
   }
 
   if (data.poopTexture) {
-    const textureErr = validateEnum(
-      data.poopTexture, '大便质地',
-      ['watery', 'soft', 'normal', 'hard', 'mucus', 'other']
-    );
+    const textureErr = validateEnum(data.poopTexture, '大便质地', [
+      'watery',
+      'soft',
+      'normal',
+      'hard',
+      'mucus',
+      'other',
+    ]);
     if (textureErr) errors.push(textureErr);
   }
 
@@ -232,7 +241,11 @@ export function validateDiaperRecord(data: any): ValidationResult {
 export function validateHealthRecord(data: any): ValidationResult {
   const errors: string[] = [];
 
-  const typeErr = validateEnum(data.recordType, '记录类型', ['temperature', 'medication', 'symptom']);
+  const typeErr = validateEnum(data.recordType, '记录类型', [
+    'temperature',
+    'medication',
+    'symptom',
+  ]);
   if (typeErr) errors.push(typeErr);
 
   const timeErr = validateDate(data.time, '记录时间');
@@ -243,10 +256,13 @@ export function validateHealthRecord(data: any): ValidationResult {
     if (tempErr) errors.push(tempErr);
 
     if (data.temperatureSite) {
-      const siteErr = validateEnum(
-        data.temperatureSite, '测量部位',
-        ['axillary', 'forehead', 'ear', 'oral', 'rectal']
-      );
+      const siteErr = validateEnum(data.temperatureSite, '测量部位', [
+        'axillary',
+        'forehead',
+        'ear',
+        'oral',
+        'rectal',
+      ]);
       if (siteErr) errors.push(siteErr);
     }
   }
@@ -307,7 +323,12 @@ export function validateVaccinationRecord(data: any): ValidationResult {
   const dateErr = validateDate(data.date, '接种日期');
   if (dateErr) errors.push(dateErr);
 
-  const statusErr = validateEnum(data.status, '接种状态', ['pending', 'completed', 'overdue', 'skipped']);
+  const statusErr = validateEnum(data.status, '接种状态', [
+    'pending',
+    'completed',
+    'overdue',
+    'skipped',
+  ]);
   if (statusErr) errors.push(statusErr);
 
   return result(errors.length === 0, errors);

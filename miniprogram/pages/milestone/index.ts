@@ -13,10 +13,7 @@ Page({
   data: {
     milestoneGroups: [] as WechatMiniprogram.IAnyObject[],
     summary: { total: 0, achieved: 0, pending: 0, concern: 0, progress: 0, currentFocus: 0 },
-    categories: [
-      { key: 'all', label: '全部', color: '#C8956C' },
-      ...MILESTONE_CATEGORIES,
-    ],
+    categories: [{ key: 'all', label: '全部', color: '#C8956C' }, ...MILESTONE_CATEGORIES],
     activeCategory: 'all' as CategoryFilter,
     babyAgeMonths: 0,
     // 记录弹窗
@@ -44,7 +41,7 @@ Page({
   },
 
   onUnload() {
-    this._unsubscribers.forEach(fn => fn());
+    this._unsubscribers.forEach((fn) => fn());
   },
 
   loadData() {
@@ -66,10 +63,12 @@ Page({
   filterByCategory(groups: any[], category: CategoryFilter): any[] {
     if (category === 'all') return groups;
 
-    return groups.map(group => ({
-      ...group,
-      milestones: group.milestones.filter((m: any) => m.milestone.category === category),
-    })).filter(group => group.milestones.length > 0);
+    return groups
+      .map((group) => ({
+        ...group,
+        milestones: group.milestones.filter((m: any) => m.milestone.category === category),
+      }))
+      .filter((group) => group.milestones.length > 0);
   },
 
   onCategoryChange(e: WechatMiniprogram.CustomEvent) {

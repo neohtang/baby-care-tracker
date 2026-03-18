@@ -1,7 +1,0 @@
-{
-  "navigationBarTitleText": "生长发育",
-  "enablePullDownRefresh": true,
-  "usingComponents": {
-    "growth-chart": "/components/growth-chart/index"
-  }
-}

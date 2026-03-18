@@ -2,20 +2,72 @@
   "pages": [
     "pages/home/index",
     "pages/daily/index",
+    "pages/statistics/index",
     "pages/health-center/index",
     "pages/growth-center/index",
-    "pages/profile/index",
-    "pages/feeding/add/index",
-    "pages/sleep/add/index",
-    "pages/diaper/add/index",
-    "pages/health/add/index",
-    "pages/milestone/index"
+    "pages/profile/index"
   ],
+  "subpackages": [
+    {
+      "root": "pages/feeding",
+      "name": "feeding",
+      "pages": ["add/index"]
+    },
+    {
+      "root": "pages/sleep",
+      "name": "sleep",
+      "pages": ["add/index"]
+    },
+    {
+      "root": "pages/diaper",
+      "name": "diaper",
+      "pages": ["add/index"]
+    },
+    {
+      "root": "pages/health",
+      "name": "health",
+      "pages": ["add/index"]
+    },
+    {
+      "root": "pages/milestone",
+      "name": "milestone",
+      "pages": ["index"]
+    },
+    {
+      "root": "pages/report",
+      "name": "report",
+      "pages": ["index"]
+    },
+    {
+      "root": "pages/ai-advisor",
+      "name": "ai-advisor",
+      "pages": ["index"]
+    },
+    {
+      "root": "pages/family",
+      "name": "family",
+      "pages": ["index"]
+    }
+  ],
+  "preloadRule": {
+    "pages/daily/index": {
+      "network": "all",
+      "packages": ["feeding", "sleep", "diaper"]
+    },
+    "pages/health-center/index": {
+      "network": "all",
+      "packages": ["health"]
+    },
+    "pages/growth-center/index": {
+      "network": "all",
+      "packages": ["milestone"]
+    }
+  },
   "tabBar": {
-    "color": "#B5A89C",
-    "selectedColor": "#C8956C",
-    "backgroundColor": "#FFFFFF",
-    "borderStyle": "white",
+    "color": "@tabFontColor",
+    "selectedColor": "@tabSelectedColor",
+    "backgroundColor": "@tabBgColor",
+    "borderStyle": "@tabBorderStyle",
     "list": [
       {
         "pagePath": "pages/home/index",
@@ -50,12 +102,14 @@
     ]
   },
   "window": {
-    "backgroundTextStyle": "light",
-    "navigationBarBackgroundColor": "#C8956C",
+    "backgroundTextStyle": "@bgTxtStyle",
+    "navigationBarBackgroundColor": "@navBgColor",
     "navigationBarTitleText": "宝宝养护追踪",
-    "navigationBarTextStyle": "white",
-    "backgroundColor": "#FDF8F3"
+    "navigationBarTextStyle": "@navTxtStyle",
+    "backgroundColor": "@bgColor"
   },
+  "darkmode": true,
+  "themeLocation": "theme.json",
   "lazyCodeLoading": "requiredComponents",
   "usingComponents": {
     "t-icon": "tdesign-miniprogram/icon/icon",
@@ -64,8 +118,10 @@
     "t-date-time-picker": "tdesign-miniprogram/date-time-picker/date-time-picker",
     "t-popup": "tdesign-miniprogram/popup/popup",
     "t-tabs": "tdesign-miniprogram/tabs/tabs",
-    "t-tab-panel": "tdesign-miniprogram/tab-panel/tab-panel"
+    "t-tab-panel": "tdesign-miniprogram/tab-panel/tab-panel",
+    "baby-switcher": "/components/baby-switcher/index"
   },
   "sitemapLocation": "sitemap.json",
-  "style": "v2"
+  "style": "v2",
+  "cloud": true
 }

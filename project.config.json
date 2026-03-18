@@ -77,6 +77,8 @@
   "condition": {},
   "srcMiniprogramRoot": "miniprogram/",
   "miniprogramRoot": "miniprogram/",
+  "cloudfunctionRoot": "cloudfunctions/",
+  "cloudbaseRoot": "cloudfunctions/",
   "simulatorPluginLibVersion": {},
   "editorSetting": {}
 }

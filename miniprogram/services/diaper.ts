@@ -144,7 +144,7 @@ class DiaperService {
     if (updated) {
       eventBus.emit(Events.DIAPER_CHANGED, updated);
     }
-    return updated as DiaperRecord || null;
+    return (updated as DiaperRecord) || null;
   }
 
   /**
@@ -168,7 +168,7 @@ class DiaperService {
     let peeCount = 0;
     let poopCount = 0;
 
-    records.forEach(r => {
+    records.forEach((r) => {
       if (r.type === 'pee') {
         peeCount++;
       } else if (r.type === 'poop') {
@@ -252,7 +252,7 @@ class DiaperService {
     }
 
     const isAbnormal = record.alert !== undefined && record.alert !== 'none';
-    const alertText = isAbnormal && record.alert ? (ALERT_TEXT[record.alert] || '') : '';
+    const alertText = isAbnormal && record.alert ? ALERT_TEXT[record.alert] || '' : '';
 
     if (isAbnormal) {
       tags.push({
@@ -279,8 +279,10 @@ class DiaperService {
   /**
    * 批量格式化记录列表
    */
-  formatRecordsForDisplay(records: DiaperRecord[]): ReturnType<typeof this.formatRecordForDisplay>[] {
-    return records.map(r => this.formatRecordForDisplay(r));
+  formatRecordsForDisplay(
+    records: DiaperRecord[],
+  ): ReturnType<typeof this.formatRecordForDisplay>[] {
+    return records.map((r) => this.formatRecordForDisplay(r));
   }
 
   /**

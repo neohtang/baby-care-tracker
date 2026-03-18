@@ -4,6 +4,7 @@
 import { growthService } from '../../services/growth';
 import { milestoneService } from '../../services/milestone';
 import { babyService } from '../../services/baby';
+import { store } from '../../store/index';
 import { getAgeInMonths } from '../../utils/date';
 import { MILESTONE_CATEGORIES } from '../../data/milestones';
 import eventBus, { Events } from '../../utils/event-bus';
@@ -19,9 +20,14 @@ Page({
     // ===== 生长数据模块 =====
     growthRecords: [] as IAnyObject[],
     latest: {
-      weight: '--', height: '--', headCircumference: '--',
-      dateText: '暂无记录', hasData: false,
-      weightPercentile: '', heightPercentile: '', headPercentile: '',
+      weight: '--',
+      height: '--',
+      headCircumference: '--',
+      dateText: '暂无记录',
+      hasData: false,
+      weightPercentile: '',
+      heightPercentile: '',
+      headPercentile: '',
     },
     chartType: 'weight' as GrowthMetric,
     chartTabs: [
@@ -42,7 +48,12 @@ Page({
     // ===== 里程碑模块 =====
     milestoneGroups: [] as IAnyObject[],
     milestoneSummary: {
-      total: 0, achieved: 0, pending: 0, concern: 0, progress: 0, currentFocus: 0,
+      total: 0,
+      achieved: 0,
+      pending: 0,
+      concern: 0,
+      progress: 0,
+      currentFocus: 0,
     },
     milestoneCategories: [{ key: 'all', label: '全部', color: '#C8956C' }, ...MILESTONE_CATEGORIES],
     activeCategory: 'all',
@@ -55,11 +66,20 @@ Page({
     // 懒加载
     _growthLoaded: true,
     _milestoneLoaded: false,
+
+    // 主题
+    pageStyle: '',
   },
 
   _unsubscribers: [] as (() => void)[],
+  _storeDisconnect: null as (() => void) | null,
 
   onLoad() {
+    // Store 自动推送 pageStyle
+    this._storeDisconnect = store.connect(this as any, {
+      pageStyle: true,
+    });
+
     this._unsubscribers.push(
       eventBus.on(Events.GROWTH_CHANGED, () => this.loadGrowthData()),
       eventBus.on(Events.MILESTONE_CHANGED, () => this.loadMilestoneData()),
@@ -76,8 +96,12 @@ Page({
   },
 
   onUnload() {
-    this._unsubscribers.forEach(fn => fn());
+    this._unsubscribers.forEach((fn) => fn());
     this._unsubscribers = [];
+    if (this._storeDisconnect) {
+      this._storeDisconnect();
+      this._storeDisconnect = null;
+    }
   },
 
   checkBaby() {
@@ -247,7 +271,9 @@ Page({
     const form = this.data.newRecord;
     const weight = form.weight ? parseFloat(form.weight) : undefined;
     const height = form.height ? parseFloat(form.height) : undefined;
-    const headCircumference = form.headCircumference ? parseFloat(form.headCircumference) : undefined;
+    const headCircumference = form.headCircumference
+      ? parseFloat(form.headCircumference)
+      : undefined;
 
     if (!weight && !height && !headCircumference) {
       wx.showToast({ title: '请至少填写一项测量数据', icon: 'none' });
@@ -258,7 +284,9 @@ Page({
 
     if (this.data.isEdit && this.data.editId) {
       growthService.updateRecord(this.data.editId, {
-        weight, height, headCircumference,
+        weight,
+        height,
+        headCircumference,
         date: form.date,
         note: form.note,
         ...ageInfo,
@@ -267,7 +295,9 @@ Page({
     } else {
       growthService.addRecord({
         babyId: babyService.getCurrentBabyId(),
-        weight, height, headCircumference,
+        weight,
+        height,
+        headCircumference,
         date: form.date,
         note: form.note,
         ...ageInfo,
@@ -286,7 +316,7 @@ Page({
     const ageMonths = baby?.birthDate ? getAgeInMonths(baby.birthDate) : 0;
 
     // Map service data to the shape expected by WXML template
-    const groups = rawGroups.map(g => ({
+    const groups = rawGroups.map((g) => ({
       month: g.month,
       label: g.monthLabel,
       items: g.milestones.map((m: any) => ({
@@ -317,11 +347,11 @@ Page({
 
   filterByCategory(groups: IAnyObject[], category: string): IAnyObject[] {
     return groups
-      .map(g => ({
+      .map((g) => ({
         ...g,
         items: g.items.filter((item: any) => item.category === category),
       }))
-      .filter(g => g.items.length > 0);
+      .filter((g) => g.items.length > 0);
   },
 
   onCategoryChange(e: WechatMiniprogram.TouchEvent) {

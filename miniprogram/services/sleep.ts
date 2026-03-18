@@ -6,8 +6,13 @@
 import { sleepStorage, generateId, nowISO } from './storage';
 import { validateSleepRecord } from '../utils/validator';
 import {
-  getToday, formatTime, getRelativeTime,
-  diffInMinutes, formatDuration, isDaytime, getNowISO,
+  getToday,
+  formatTime,
+  getRelativeTime,
+  diffInMinutes,
+  formatDuration,
+  isDaytime,
+  getNowISO,
 } from '../utils/date';
 import { babyService } from './baby';
 import eventBus, { Events } from '../utils/event-bus';
@@ -128,7 +133,9 @@ class SleepService {
       if (state && state.startTime) {
         return state as ActiveSleepState;
       }
-    } catch {}
+    } catch {
+      // 读取失败则返回 null，不影响业务
+    }
     return null;
   }
 
@@ -138,7 +145,9 @@ class SleepService {
   clearActiveSleepState(): void {
     try {
       wx.removeStorageSync(SLEEP_STATE_KEY);
-    } catch {}
+    } catch {
+      // 清除失败不影响业务
+    }
   }
 
   /**
@@ -219,7 +228,7 @@ class SleepService {
     if (updated) {
       eventBus.emit(Events.SLEEP_CHANGED, updated);
     }
-    return updated as SleepRecord || null;
+    return (updated as SleepRecord) || null;
   }
 
   /**
@@ -249,7 +258,7 @@ class SleepService {
       nightDuration: 0,
     };
 
-    records.forEach(r => {
+    records.forEach((r) => {
       const dur = r.duration || 0;
       summary.totalDuration += dur;
       if (r.type === 'nap') {
@@ -304,8 +313,10 @@ class SleepService {
   /**
    * 批量格式化记录列表
    */
-  formatRecordsForDisplay(records: SleepRecord[]): ReturnType<typeof this.formatRecordForDisplay>[] {
-    return records.map(r => this.formatRecordForDisplay(r));
+  formatRecordsForDisplay(
+    records: SleepRecord[],
+  ): ReturnType<typeof this.formatRecordForDisplay>[] {
+    return records.map((r) => this.formatRecordForDisplay(r));
   }
 }
 

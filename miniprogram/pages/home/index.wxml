@@ -1,6 +1,7 @@
 <!--pages/home/index.wxml-->
 <!--首页仪表盘 — Tender Bloom 主题-->
 
+<page-meta page-style="{{pageStyle}}" />
 <view class="page-home">
   <!-- 宝宝信息卡片 -->
   <view class="baby-card animate-fade-in" bindtap="goToBabyProfile">
@@ -36,7 +37,20 @@
   <!-- 今日数据摘要 -->
   <view class="section-header">
     <text class="section-title">今日概览</text>
-    <text class="section-date">{{todayText || ''}}</text>
+    <view class="section-right-actions">
+      <view class="trend-entry" bindtap="goToAiAdvisor" hover-class="trend-entry-hover">
+        <text class="trend-entry-text">AI助手</text>
+        <t-icon name="chevron-right" size="28rpx" color="#C8956C" />
+      </view>
+      <view class="trend-entry" bindtap="goToReport" hover-class="trend-entry-hover">
+        <text class="trend-entry-text">成长报告</text>
+        <t-icon name="chevron-right" size="28rpx" color="#C8956C" />
+      </view>
+      <view class="trend-entry" bindtap="goToStatistics" hover-class="trend-entry-hover">
+        <text class="trend-entry-text">趋势分析</text>
+        <t-icon name="chevron-right" size="28rpx" color="#C8956C" />
+      </view>
+    </view>
   </view>
 
   <view class="summary-grid">
@@ -57,53 +71,70 @@
         </view>
         <text class="summary-label">{{item.label}}</text>
       </view>
-      <view class="summary-detail-wrapper" style="background: {{item.detailBg || 'var(--td-bg-color-secondarycontainer)'}};">
-        <text class="summary-detail" style="color: {{item.detailColor || 'var(--td-brand-color)'}};">{{item.detail}}</text>
+      <view
+        class="summary-detail-wrapper"
+        style="background: {{item.detailBg || 'var(--td-bg-color-secondarycontainer)'}};"
+      >
+        <text class="summary-detail" style="color: {{item.detailColor || 'var(--td-brand-color)'}};"
+          >{{item.detail}}</text
+        >
       </view>
     </view>
   </view>
 
-  <!-- 快捷操作入口（6个） -->
+  <!-- ⚡ 闪电记录 -->
   <view class="section-header">
-    <text class="section-title">快捷记录</text>
+    <view class="flash-title-row">
+      <t-icon name="flash" size="32rpx" color="#F0B44A" />
+      <text class="section-title">闪电记录</text>
+    </view>
   </view>
 
-  <view class="quick-actions">
-    <view class="quick-btn" bindtap="goToFeeding" hover-class="quick-btn-hover">
-      <view class="quick-btn-icon" style="background: var(--module-feeding-bg);">
-        <image class="quick-btn-svg" src="/assets/icons/bottle.svg" mode="aspectFit" />
+  <!-- 分类筛选 -->
+  <view class="flash-tabs">
+    <view class="flash-tab {{flashCategory === 'all' ? 'active' : ''}}" bindtap="onFlashCategoryChange" data-value="all"
+      >全部</view
+    >
+    <view
+      class="flash-tab {{flashCategory === 'feeding' ? 'active' : ''}}"
+      bindtap="onFlashCategoryChange"
+      data-value="feeding"
+      >喂养</view
+    >
+    <view
+      class="flash-tab {{flashCategory === 'diaper' ? 'active' : ''}}"
+      bindtap="onFlashCategoryChange"
+      data-value="diaper"
+      >排便</view
+    >
+    <view
+      class="flash-tab {{flashCategory === 'sleep' ? 'active' : ''}}"
+      bindtap="onFlashCategoryChange"
+      data-value="sleep"
+      >睡眠</view
+    >
+    <view
+      class="flash-tab {{flashCategory === 'health' ? 'active' : ''}}"
+      bindtap="onFlashCategoryChange"
+      data-value="health"
+      >体温</view
+    >
+  </view>
+
+  <!-- 模板网格 4×N 紧凑布局 -->
+  <view class="flash-grid">
+    <view
+      class="flash-item"
+      wx:for="{{flashTemplates}}"
+      wx:key="id"
+      hover-class="flash-item-hover"
+      bindtap="onFlashRecord"
+      data-id="{{item.id}}"
+    >
+      <view class="flash-item-icon" style="background: {{item.iconBg}};">
+        <image class="flash-item-svg" src="{{item.icon}}" mode="aspectFit" />
       </view>
-      <text class="quick-btn-text">喂奶</text>
-    </view>
-    <view class="quick-btn" bindtap="goToSleep" hover-class="quick-btn-hover">
-      <view class="quick-btn-icon" style="background: var(--module-sleep-bg);">
-        <image class="quick-btn-svg" src="/assets/icons/sleep.svg" mode="aspectFit" />
-      </view>
-      <text class="quick-btn-text">睡眠</text>
-    </view>
-    <view class="quick-btn" bindtap="goToDiaper" hover-class="quick-btn-hover">
-      <view class="quick-btn-icon" style="background: var(--module-diaper-bg);">
-        <image class="quick-btn-svg" src="/assets/icons/diaper-pin.svg" mode="aspectFit" />
-      </view>
-      <text class="quick-btn-text">换尿布</text>
-    </view>
-    <view class="quick-btn" bindtap="goToHealth" hover-class="quick-btn-hover">
-      <view class="quick-btn-icon" style="background: var(--module-health-bg);">
-        <image class="quick-btn-svg" src="/assets/icons/thermometer.svg" mode="aspectFit" />
-      </view>
-      <text class="quick-btn-text">量体温</text>
-    </view>
-    <view class="quick-btn" bindtap="goToGrowth" hover-class="quick-btn-hover">
-      <view class="quick-btn-icon" style="background: var(--module-growth-bg);">
-        <image class="quick-btn-svg" src="/assets/icons/ruler.svg" mode="aspectFit" />
-      </view>
-      <text class="quick-btn-text">记生长</text>
-    </view>
-    <view class="quick-btn" bindtap="goToMilestone" hover-class="quick-btn-hover">
-      <view class="quick-btn-icon" style="background: var(--module-milestone-bg);">
-        <image class="quick-btn-svg" src="/assets/icons/star.svg" mode="aspectFit" />
-      </view>
-      <text class="quick-btn-text">里程碑</text>
+      <text class="flash-item-name">{{item.name}}</text>
     </view>
   </view>
 
@@ -132,4 +163,7 @@
 
   <!-- 底部安全区域 -->
   <view class="safe-bottom"></view>
+
+  <!-- 多宝宝切换悬浮球 -->
+  <baby-switcher />
 </view>

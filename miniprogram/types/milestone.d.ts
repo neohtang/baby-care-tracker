@@ -52,7 +52,9 @@ export interface MilestoneRecord {
 export type CreateMilestoneRecordInput = Omit<MilestoneRecord, 'id' | 'createdAt' | 'updatedAt'>;
 
 /** 更新里程碑记录的入参 */
-export type UpdateMilestoneRecordInput = Partial<Omit<MilestoneRecord, 'id' | 'babyId' | 'createdAt' | 'updatedAt'>>;
+export type UpdateMilestoneRecordInput = Partial<
+  Omit<MilestoneRecord, 'id' | 'babyId' | 'createdAt' | 'updatedAt'>
+>;
 
 /** 里程碑展示项（列表用） */
 export interface MilestonePlanItem {

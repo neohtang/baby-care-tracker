@@ -140,7 +140,18 @@ Page({
       return;
     }
 
-    const { feedingType, side, amount, duration, note, startTime, formulaBrand, solidFood, editMode, recordId } = this.data;
+    const {
+      feedingType,
+      side,
+      amount,
+      duration,
+      note,
+      startTime,
+      formulaBrand,
+      solidFood,
+      editMode,
+      recordId,
+    } = this.data;
 
     if (editMode) {
       const result = feedingService.updateRecord(recordId, {

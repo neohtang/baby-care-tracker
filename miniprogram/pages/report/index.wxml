@@ -1,0 +1,240 @@
+<!--pages/report/index.wxml-->
+<!--成长报告 — 周报/月报生成与分享 (Phase 3.4)-->
+
+<page-meta page-style="{{pageStyle}}" />
+<view class="page-report">
+  <!-- ======= 报告类型切换 ======= -->
+  <view class="type-switcher">
+    <view class="type-btn {{reportType === 'weekly' ? 'active' : ''}}" data-type="weekly" bindtap="onTypeChange">
+      <text>周报</text>
+    </view>
+    <view class="type-btn {{reportType === 'monthly' ? 'active' : ''}}" data-type="monthly" bindtap="onTypeChange">
+      <text>月报</text>
+    </view>
+  </view>
+
+  <!-- ======= 日期翻页 ======= -->
+  <view class="date-nav">
+    <view class="date-nav-btn" bindtap="onPrevPeriod" hover-class="nav-btn-hover">
+      <t-icon name="chevron-left" size="40rpx" color="var(--report-text-secondary, #8B7B6B)" />
+    </view>
+    <view class="date-nav-center">
+      <text class="date-nav-label">{{offsetLabel}}</text>
+      <text wx:if="{{report}}" class="date-nav-range">{{report.dateRange}}</text>
+    </view>
+    <view
+      class="date-nav-btn {{offset <= 0 ? 'disabled' : ''}}"
+      bindtap="onNextPeriod"
+      hover-class="{{offset > 0 ? 'nav-btn-hover' : ''}}"
+    >
+      <t-icon
+        name="chevron-right"
+        size="40rpx"
+        color="{{offset > 0 ? 'var(--report-text-secondary, #8B7B6B)' : 'var(--report-text-disabled, #D4CBC2)'}}"
+      />
+    </view>
+  </view>
+
+  <!-- ======= 无数据 ======= -->
+  <view wx:if="{{!hasReport}}" class="empty-state">
+    <view class="empty-icon-circle">
+      <t-icon name="chart-bar" size="80rpx" color="#D4A97A" />
+    </view>
+    <text class="empty-title">暂无数据</text>
+    <text class="empty-hint">该时段内没有记录数据，请先添加记录</text>
+  </view>
+
+  <!-- ======= 报告内容 ======= -->
+  <view wx:if="{{hasReport}}" class="report-content">
+    <!-- 报告头部 -->
+    <view class="report-header">
+      <text class="report-title">{{report.title}}</text>
+      <text class="report-meta">{{report.dateRange}} · {{report.babyAgeText}}</text>
+    </view>
+
+    <!-- 喂养卡片 -->
+    <view class="data-card">
+      <view class="card-header">
+        <view class="card-dot" style="background: #d4a97a"></view>
+        <text class="card-title">喂养</text>
+      </view>
+      <view class="card-body">
+        <view class="stat-row">
+          <text class="stat-label">总次数</text>
+          <text class="stat-value">{{report.feedingTotal}}次</text>
+        </view>
+        <view class="stat-row">
+          <text class="stat-label">日均</text>
+          <text class="stat-value">{{report.feedingAvgPerDay}}次</text>
+        </view>
+        <view class="stat-row">
+          <text class="stat-label">喂养构成</text>
+          <view class="stat-bar-group">
+            <view class="stat-bar-item">
+              <view class="stat-bar" style="width: {{report.feedingBreastPercent}}%; background: #D4A97A;"></view>
+              <text class="stat-bar-label">母乳 {{report.feedingBreastPercent}}%</text>
+            </view>
+            <view class="stat-bar-item">
+              <view class="stat-bar" style="width: {{report.feedingFormulaPercent}}%; background: #7CAFD4;"></view>
+              <text class="stat-bar-label">配方 {{report.feedingFormulaPercent}}%</text>
+            </view>
+            <view wx:if="{{report.feedingSolidPercent > 0}}" class="stat-bar-item">
+              <view class="stat-bar" style="width: {{report.feedingSolidPercent}}%; background: #6EE7B7;"></view>
+              <text class="stat-bar-label">辅食 {{report.feedingSolidPercent}}%</text>
+            </view>
+          </view>
+        </view>
+        <view wx:if="{{report.feedingFormulaPercent > 0}}" class="stat-row">
+          <text class="stat-label">配方奶均量</text>
+          <text class="stat-value">{{report.feedingFormulaAvgML}}ml/次</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 睡眠卡片 -->
+    <view class="data-card">
+      <view class="card-header">
+        <view class="card-dot" style="background: #7cafd4"></view>
+        <text class="card-title">睡眠</text>
+      </view>
+      <view class="card-body">
+        <view class="stat-row">
+          <text class="stat-label">总时长</text>
+          <text class="stat-value">{{report.sleepTotalHours}}小时</text>
+        </view>
+        <view class="stat-row">
+          <text class="stat-label">日均睡眠</text>
+          <text class="stat-value">{{report.sleepAvgHoursPerDay}}小时</text>
+        </view>
+        <view class="stat-row">
+          <text class="stat-label">日均小睡</text>
+          <text class="stat-value">{{report.sleepNapAvg}}次</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 排便卡片 -->
+    <view class="data-card">
+      <view class="card-header">
+        <view class="card-dot" style="background: #6ee7b7"></view>
+        <text class="card-title">排便</text>
+      </view>
+      <view class="card-body">
+        <view class="stat-row">
+          <text class="stat-label">总次数</text>
+          <text class="stat-value">{{report.diaperTotal}}次</text>
+        </view>
+        <view class="stat-row">
+          <text class="stat-label">日均</text>
+          <text class="stat-value">{{report.diaperAvgPerDay}}次</text>
+        </view>
+        <view class="stat-row">
+          <text class="stat-label">比例</text>
+          <text class="stat-value">小便{{report.diaperPeePercent}}% · 大便{{report.diaperPoopPercent}}%</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 生长发育卡片 -->
+    <view wx:if="{{report.latestWeight !== '--' || report.latestHeight !== '--'}}" class="data-card">
+      <view class="card-header">
+        <view class="card-dot" style="background: #f5a5b8"></view>
+        <text class="card-title">生长发育</text>
+      </view>
+      <view class="card-body">
+        <view class="growth-metrics">
+          <view class="growth-metric-item">
+            <text class="growth-metric-value">{{report.latestWeight}}</text>
+            <text class="growth-metric-unit">kg</text>
+            <text class="growth-metric-label">体重</text>
+          </view>
+          <view class="growth-metric-divider"></view>
+          <view class="growth-metric-item">
+            <text class="growth-metric-value">{{report.latestHeight}}</text>
+            <text class="growth-metric-unit">cm</text>
+            <text class="growth-metric-label">身长</text>
+          </view>
+          <view class="growth-metric-divider"></view>
+          <view class="growth-metric-item">
+            <text class="growth-metric-value">{{report.latestHeadCirc}}</text>
+            <text class="growth-metric-unit">cm</text>
+            <text class="growth-metric-label">头围</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 里程碑卡片 -->
+    <view wx:if="{{report.milestoneAchieved > 0}}" class="data-card">
+      <view class="card-header">
+        <view class="card-dot" style="background: #fbbf24"></view>
+        <text class="card-title">发育里程碑</text>
+      </view>
+      <view class="card-body">
+        <view class="milestone-progress-section">
+          <view class="milestone-progress-bar-track">
+            <view class="milestone-progress-bar-fill" style="width: {{report.milestoneProgress}}%;"></view>
+          </view>
+          <view class="milestone-progress-text">
+            <text class="milestone-progress-label"
+              >已达成 {{report.milestoneAchieved}} / {{report.milestoneTotal}}</text
+            >
+            <text class="milestone-progress-pct">{{report.milestoneProgress}}%</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 喂养趋势（每日柱状图） -->
+    <view wx:if="{{report.dailyData.length > 0}}" class="data-card">
+      <view class="card-header">
+        <view class="card-dot" style="background: #d4a97a"></view>
+        <text class="card-title">喂养趋势</text>
+      </view>
+      <view class="card-body">
+        <view class="mini-chart">
+          <view class="mini-chart-bar-wrap" wx:for="{{report.dailyData}}" wx:key="date">
+            <view
+              class="mini-chart-bar"
+              style="height: {{item.feedingCount > 0 ? (item.feedingCount / 15 * 100) : 2}}%;"
+            ></view>
+            <text class="mini-chart-count">{{item.feedingCount}}</text>
+            <text class="mini-chart-label">{{item.dateLabel}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- ======= Canvas 画布（隐藏） ======= -->
+  <view class="canvas-container">
+    <canvas
+      id="reportCanvas"
+      type="2d"
+      style="width: {{canvasWidth}}px; height: {{canvasHeight}}px;"
+      bindready="onCanvasReady"
+    ></canvas>
+  </view>
+
+  <!-- ======= 底部操作栏 ======= -->
+  <view wx:if="{{hasReport}}" class="action-bar">
+    <view class="action-btn generate-btn" bindtap="onGenerateImage" hover-class="action-btn-hover">
+      <t-icon name="image" size="36rpx" color="#FFFFFF" />
+      <text class="action-btn-text">{{isDrawing ? '生成中...' : '生成图片'}}</text>
+    </view>
+    <view class="action-btn save-btn" bindtap="onSaveImage" hover-class="action-btn-hover">
+      <t-icon name="download" size="36rpx" color="#C8956C" />
+      <text class="action-btn-text save-text">{{isExporting ? '保存中...' : '保存'}}</text>
+    </view>
+    <view class="action-btn share-btn" bindtap="onShareImage" hover-class="action-btn-hover">
+      <t-icon name="share" size="36rpx" color="#C8956C" />
+      <text class="action-btn-text share-text">预览</text>
+    </view>
+  </view>
+
+  <!-- 底部安全区 -->
+  <view class="safe-bottom"></view>
+
+  <!-- 多宝宝切换 -->
+  <baby-switcher />
+</view>

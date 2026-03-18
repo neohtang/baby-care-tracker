@@ -4,12 +4,7 @@
  */
 
 // 宝宝信息
-export type {
-  Gender,
-  BabyInfo,
-  CreateBabyInput,
-  UpdateBabyInput,
-} from './baby';
+export type { Gender, BabyInfo, CreateBabyInput, UpdateBabyInput } from './baby';
 
 // 喂养记录
 export type {
@@ -72,6 +67,28 @@ export type {
   UpdateVaccinationInput,
   VaccinePlanItem,
 } from './vaccine';
+
+// 提醒系统
+export type {
+  ReminderType,
+  ReminderSettings,
+  CreateReminderSettingsInput,
+  UpdateReminderSettingsInput,
+  FeedingReminderStatus,
+  VaccineReminderItem,
+  ReminderSummary,
+  FeedingIntervalOption,
+} from './reminder';
+
+// 数据统计与趋势
+export type {
+  FeedingTrendPoint,
+  SleepTrendPoint,
+  DiaperTrendPoint,
+  WeeklyTrendData,
+  TrendChartSeries,
+  TrendChartConfig,
+} from './statistics';
 
 // 发育里程碑
 export type {

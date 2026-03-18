@@ -1,0 +1,35 @@
+<!--components/trend-chart/index.wxml-->
+<!--通用趋势图组件：Canvas 2D 绘制柱状图/堆叠柱状图-->
+
+<view class="trend-chart-wrap">
+  <!-- 图表头部 -->
+  <view class="chart-header">
+    <view class="chart-title-row">
+      <text class="chart-title">{{title}}</text>
+      <text class="chart-subtitle">{{subtitle}}</text>
+    </view>
+    <view class="chart-legend" wx:if="{{legendItems.length > 0}}">
+      <view class="legend-item" wx:for="{{legendItems}}" wx:key="name">
+        <view class="legend-dot" style="background: {{item.color}};"></view>
+        <text class="legend-text">{{item.name}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- Canvas 画布 -->
+  <view class="chart-canvas-wrap" style="width: {{width}}rpx; height: {{height}}rpx;">
+    <canvas
+      id="{{canvasId}}"
+      canvas-id="{{canvasId}}"
+      type="2d"
+      class="chart-canvas"
+      style="width: 100%; height: 100%"
+    ></canvas>
+
+    <!-- 无数据遮罩 -->
+    <view wx:if="{{isEmpty}}" class="chart-empty-overlay">
+      <text class="chart-empty-text">暂无数据</text>
+      <text class="chart-empty-hint">记录数据后将在此显示趋势图</text>
+    </view>
+  </view>
+</view>

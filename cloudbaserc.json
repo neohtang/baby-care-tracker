@@ -1,0 +1,304 @@
+{
+  "version": "2.0",
+  "envId": "neo3-7gtg0bdtc9fcc672",
+  "region": "ap-shanghai",
+  "$schema": "https://framework-1258016615.tcloudbaseapp.com/schema/latest.json",
+  "functionRoot": "./cloudfunctions",
+  "functions": [
+    {
+      "name": "getOpenId",
+      "timeout": 5,
+      "runtime": "Nodejs16.13",
+      "memorySize": 256,
+      "installDependency": true
+    },
+    {
+      "name": "hunyuan-chat",
+      "timeout": 30,
+      "runtime": "Nodejs16.13",
+      "memorySize": 256,
+      "installDependency": true
+    }
+  ],
+  "framework": {
+    "name": "baby-care-tracker",
+    "plugins": {
+      "database": {
+        "use": "@cloudbase/framework-plugin-database",
+        "inputs": {
+          "collections": [
+            {
+              "collectionName": "baby_info",
+              "description": "宝宝基本信息",
+              "aclTag": "CUSTOM",
+              "aclRule": {
+                "read": "auth.uid != null",
+                "write": "auth.uid != null"
+              },
+              "createIndexes": [
+                {
+                  "name": "idx_localId",
+                  "unique": false,
+                  "keys": [{ "name": "localId", "direction": "1" }]
+                },
+                {
+                  "name": "idx_updatedAt",
+                  "unique": false,
+                  "keys": [{ "name": "updatedAt", "direction": "-1" }]
+                }
+              ]
+            },
+            {
+              "collectionName": "feeding_records",
+              "description": "喂养记录",
+              "aclTag": "CUSTOM",
+              "aclRule": {
+                "read": "auth.uid != null",
+                "write": "auth.uid != null"
+              },
+              "createIndexes": [
+                {
+                  "name": "idx_localId",
+                  "unique": false,
+                  "keys": [{ "name": "localId", "direction": "1" }]
+                },
+                {
+                  "name": "idx_updatedAt",
+                  "unique": false,
+                  "keys": [{ "name": "updatedAt", "direction": "-1" }]
+                }
+              ]
+            },
+            {
+              "collectionName": "sleep_records",
+              "description": "睡眠记录",
+              "aclTag": "CUSTOM",
+              "aclRule": {
+                "read": "auth.uid != null",
+                "write": "auth.uid != null"
+              },
+              "createIndexes": [
+                {
+                  "name": "idx_localId",
+                  "unique": false,
+                  "keys": [{ "name": "localId", "direction": "1" }]
+                },
+                {
+                  "name": "idx_updatedAt",
+                  "unique": false,
+                  "keys": [{ "name": "updatedAt", "direction": "-1" }]
+                }
+              ]
+            },
+            {
+              "collectionName": "diaper_records",
+              "description": "排便记录",
+              "aclTag": "CUSTOM",
+              "aclRule": {
+                "read": "auth.uid != null",
+                "write": "auth.uid != null"
+              },
+              "createIndexes": [
+                {
+                  "name": "idx_localId",
+                  "unique": false,
+                  "keys": [{ "name": "localId", "direction": "1" }]
+                },
+                {
+                  "name": "idx_updatedAt",
+                  "unique": false,
+                  "keys": [{ "name": "updatedAt", "direction": "-1" }]
+                }
+              ]
+            },
+            {
+              "collectionName": "health_records",
+              "description": "健康记录（体温等）",
+              "aclTag": "CUSTOM",
+              "aclRule": {
+                "read": "auth.uid != null",
+                "write": "auth.uid != null"
+              },
+              "createIndexes": [
+                {
+                  "name": "idx_localId",
+                  "unique": false,
+                  "keys": [{ "name": "localId", "direction": "1" }]
+                },
+                {
+                  "name": "idx_updatedAt",
+                  "unique": false,
+                  "keys": [{ "name": "updatedAt", "direction": "-1" }]
+                }
+              ]
+            },
+            {
+              "collectionName": "growth_records",
+              "description": "生长发育记录（身高体重头围）",
+              "aclTag": "CUSTOM",
+              "aclRule": {
+                "read": "auth.uid != null",
+                "write": "auth.uid != null"
+              },
+              "createIndexes": [
+                {
+                  "name": "idx_localId",
+                  "unique": false,
+                  "keys": [{ "name": "localId", "direction": "1" }]
+                },
+                {
+                  "name": "idx_updatedAt",
+                  "unique": false,
+                  "keys": [{ "name": "updatedAt", "direction": "-1" }]
+                }
+              ]
+            },
+            {
+              "collectionName": "vaccine_records",
+              "description": "疫苗接种记录",
+              "aclTag": "CUSTOM",
+              "aclRule": {
+                "read": "auth.uid != null",
+                "write": "auth.uid != null"
+              },
+              "createIndexes": [
+                {
+                  "name": "idx_localId",
+                  "unique": false,
+                  "keys": [{ "name": "localId", "direction": "1" }]
+                },
+                {
+                  "name": "idx_updatedAt",
+                  "unique": false,
+                  "keys": [{ "name": "updatedAt", "direction": "-1" }]
+                }
+              ]
+            },
+            {
+              "collectionName": "milestone_records",
+              "description": "成长里程碑记录",
+              "aclTag": "CUSTOM",
+              "aclRule": {
+                "read": "auth.uid != null",
+                "write": "auth.uid != null"
+              },
+              "createIndexes": [
+                {
+                  "name": "idx_localId",
+                  "unique": false,
+                  "keys": [{ "name": "localId", "direction": "1" }]
+                },
+                {
+                  "name": "idx_updatedAt",
+                  "unique": false,
+                  "keys": [{ "name": "updatedAt", "direction": "-1" }]
+                }
+              ]
+            },
+            {
+              "collectionName": "reminder_settings",
+              "description": "提醒设置",
+              "aclTag": "CUSTOM",
+              "aclRule": {
+                "read": "auth.uid != null",
+                "write": "auth.uid != null"
+              },
+              "createIndexes": [
+                {
+                  "name": "idx_localId",
+                  "unique": false,
+                  "keys": [{ "name": "localId", "direction": "1" }]
+                },
+                {
+                  "name": "idx_updatedAt",
+                  "unique": false,
+                  "keys": [{ "name": "updatedAt", "direction": "-1" }]
+                }
+              ]
+            },
+            {
+              "collectionName": "family_groups",
+              "description": "家庭组信息（含成员列表和邀请码）",
+              "aclTag": "CUSTOM",
+              "aclRule": {
+                "read": "auth.uid != null",
+                "write": "auth.uid != null"
+              },
+              "createIndexes": [
+                {
+                  "name": "idx_localId",
+                  "unique": false,
+                  "keys": [{ "name": "localId", "direction": "1" }]
+                },
+                {
+                  "name": "idx_inviteCode",
+                  "unique": false,
+                  "keys": [{ "name": "inviteCode", "direction": "1" }]
+                },
+                {
+                  "name": "idx_updatedAt",
+                  "unique": false,
+                  "keys": [{ "name": "updatedAt", "direction": "-1" }]
+                }
+              ]
+            },
+            {
+              "collectionName": "family_operations",
+              "description": "家庭操作记录日志",
+              "aclTag": "CUSTOM",
+              "aclRule": {
+                "read": "auth.uid != null",
+                "write": "auth.uid != null"
+              },
+              "createIndexes": [
+                {
+                  "name": "idx_familyId",
+                  "unique": false,
+                  "keys": [{ "name": "familyId", "direction": "1" }]
+                },
+                {
+                  "name": "idx_timestamp",
+                  "unique": false,
+                  "keys": [{ "name": "timestamp", "direction": "-1" }]
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "auth": {
+        "use": "@cloudbase/framework-plugin-auth",
+        "inputs": {
+          "configs": [
+            {
+              "platform": "ANONYMOUS",
+              "status": "ENABLE"
+            }
+          ]
+        }
+      },
+      "server": {
+        "use": "@cloudbase/framework-plugin-function",
+        "inputs": {
+          "functionRootPath": "cloudfunctions",
+          "functions": [
+            {
+              "name": "getOpenId",
+              "timeout": 5,
+              "runtime": "Nodejs16.13",
+              "memorySize": 256,
+              "installDependency": true
+            },
+            {
+              "name": "hunyuan-chat",
+              "timeout": 30,
+              "runtime": "Nodejs16.13",
+              "memorySize": 256,
+              "installDependency": true
+            }
+          ]
+        }
+      }
+    }
+  }
+}

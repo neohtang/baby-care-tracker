@@ -32,7 +32,9 @@ export interface GrowthRecord {
 export type CreateGrowthInput = Omit<GrowthRecord, 'id' | 'createdAt' | 'updatedAt'>;
 
 /** 更新生长记录的入参 */
-export type UpdateGrowthInput = Partial<Omit<GrowthRecord, 'id' | 'babyId' | 'createdAt' | 'updatedAt'>>;
+export type UpdateGrowthInput = Partial<
+  Omit<GrowthRecord, 'id' | 'babyId' | 'createdAt' | 'updatedAt'>
+>;
 
 /** WHO 生长标准百分位数据点 */
 export interface WHOPercentilePoint {

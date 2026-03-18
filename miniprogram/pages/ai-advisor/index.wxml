@@ -1,0 +1,199 @@
+<!--pages/ai-advisor/index.wxml-->
+<!--AI 育儿助手 — 大模型对话 + 智能分析-->
+
+<page-meta page-style="{{pageStyle}}" />
+<view class="page-ai">
+  <!-- ======= 无宝宝提示 ======= -->
+  <view wx:if="{{!hasBaby}}" class="empty-state">
+    <view class="empty-icon-circle">
+      <text class="empty-icon-emoji">🤖</text>
+    </view>
+    <text class="empty-title">AI 育儿助手</text>
+    <text class="empty-hint">请先添加宝宝信息，我才能为你提供个性化的育儿分析和建议</text>
+  </view>
+
+  <block wx:if="{{hasBaby}}">
+    <!-- ======= 今日综合评估 ======= -->
+    <view wx:if="{{assessment}}" class="assessment-card">
+      <view class="assessment-score-ring {{scoreClass}}">
+        <text class="assessment-score">{{assessment.score}}</text>
+        <text class="assessment-score-label">{{assessment.scoreLabel}}</text>
+      </view>
+      <view class="assessment-info">
+        <text class="assessment-title">今日综合评估</text>
+        <text class="assessment-summary">{{assessment.summary}}</text>
+      </view>
+    </view>
+
+    <!-- ======= 异常预警 ======= -->
+    <view wx:if="{{assessment.anomalies.length > 0}}" class="section">
+      <view class="section-header" bindtap="toggleAnomalies">
+        <view class="section-title-area">
+          <text class="section-icon">⚠️</text>
+          <text class="section-title">异常预警</text>
+          <view class="section-badge alert-badge">
+            <text>{{assessment.anomalies.length}}</text>
+          </view>
+        </view>
+        <t-icon
+          name="{{showAnomalies ? 'chevron-up' : 'chevron-down'}}"
+          size="36rpx"
+          color="var(--ai-text-secondary, #8B7B6B)"
+        />
+      </view>
+
+      <view wx:if="{{showAnomalies}}" class="advice-list">
+        <view class="advice-card {{item.level}}" wx:for="{{assessment.anomalies}}" wx:key="id">
+          <text class="advice-icon">{{item.icon}}</text>
+          <view class="advice-content">
+            <text class="advice-title">{{item.title}}</text>
+            <text class="advice-text">{{item.content}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- ======= 今日建议 ======= -->
+    <view wx:if="{{assessment.advices.length > 0}}" class="section">
+      <view class="section-header">
+        <view class="section-title-area">
+          <text class="section-icon">💡</text>
+          <text class="section-title">今日建议</text>
+        </view>
+      </view>
+
+      <view class="advice-list">
+        <view class="advice-card info" wx:for="{{assessment.advices}}" wx:key="id">
+          <text class="advice-icon">{{item.icon}}</text>
+          <view class="advice-content">
+            <text class="advice-title">{{item.title}}</text>
+            <text class="advice-text">{{item.content}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- ======= 个性化育儿建议 ======= -->
+    <view wx:if="{{personalAdvices.length > 0}}" class="section">
+      <view class="section-header" bindtap="toggleAdvices">
+        <view class="section-title-area">
+          <text class="section-icon">🌟</text>
+          <text class="section-title">月龄建议</text>
+        </view>
+        <t-icon
+          name="{{showAdvices ? 'chevron-up' : 'chevron-down'}}"
+          size="36rpx"
+          color="var(--ai-text-secondary, #8B7B6B)"
+        />
+      </view>
+
+      <view wx:if="{{showAdvices}}" class="advice-list">
+        <view class="advice-card info" wx:for="{{personalAdvices}}" wx:key="id">
+          <text class="advice-icon">{{item.icon}}</text>
+          <view class="advice-content">
+            <text class="advice-title">{{item.title}}</text>
+            <text class="advice-text">{{item.content}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- ======= AI 对话区域 ======= -->
+    <view class="section chat-section">
+      <view class="section-header">
+        <view class="section-title-area">
+          <text class="section-icon">💬</text>
+          <text class="section-title">AI 育儿问答</text>
+          <view class="ai-badge">
+            <text>混元大模型</text>
+          </view>
+        </view>
+        <view wx:if="{{chatList.length > 0}}" class="clear-btn" bindtap="onClearChat">
+          <t-icon name="delete" size="32rpx" color="var(--td-text-color-secondary, #8B7B6B)" />
+        </view>
+      </view>
+
+      <!-- 预设问题 -->
+      <view wx:if="{{chatList.length === 0}}" class="preset-questions">
+        <view class="preset-hint">试试问我这些问题：</view>
+        <view class="preset-grid">
+          <view
+            class="preset-card"
+            wx:for="{{presetQuestions}}"
+            wx:key="text"
+            data-question="{{item.text}}"
+            bindtap="onPresetQuestion"
+            hover-class="preset-card-hover"
+          >
+            <text class="preset-card-icon">{{item.icon}}</text>
+            <text class="preset-card-text">{{item.text}}</text>
+          </view>
+        </view>
+      </view>
+
+      <!-- 对话列表 -->
+      <scroll-view
+        wx:if="{{chatList.length > 0}}"
+        class="chat-list"
+        scroll-y
+        scroll-into-view="{{scrollIntoView}}"
+        scroll-with-animation
+      >
+        <view class="chat-item chat-item-{{item.role}}" wx:for="{{chatList}}" wx:key="id" id="chat-msg-{{item.id}}">
+          <!-- 用户消息 -->
+          <block wx:if="{{item.role === 'user'}}">
+            <view class="chat-bubble user-bubble">
+              <text class="chat-bubble-text">{{item.content}}</text>
+            </view>
+          </block>
+
+          <!-- AI 消息 -->
+          <block wx:else>
+            <view class="chat-ai-avatar">
+              <text class="chat-ai-emoji">🤖</text>
+            </view>
+            <view class="chat-bubble ai-bubble">
+              <view wx:if="{{item.isLocal}}" class="local-badge">
+                <text>📊 数据查询</text>
+              </view>
+              <text class="chat-bubble-text" user-select>{{item.content}}</text>
+              <view wx:if="{{item.streaming}}" class="typing-indicator">
+                <view class="typing-dot"></view>
+                <view class="typing-dot"></view>
+                <view class="typing-dot"></view>
+              </view>
+            </view>
+          </block>
+        </view>
+
+        <!-- 底部锚点 -->
+        <view id="chat-bottom-anchor" class="chat-bottom-anchor"></view>
+      </scroll-view>
+
+      <!-- 输入框（始终显示） -->
+      <view class="chat-input-area">
+        <input
+          class="chat-input"
+          placeholder="{{isQuerying ? 'AI 正在思考...' : '输入你的问题...'}}"
+          value="{{queryInput}}"
+          bindinput="onQueryInput"
+          bindconfirm="onQuerySubmit"
+          confirm-type="send"
+          disabled="{{isQuerying}}"
+        />
+        <view class="chat-send-btn {{queryInput && !isQuerying ? 'active' : ''}}" bindtap="onQuerySubmit">
+          <t-icon wx:if="{{!isQuerying}}" name="arrow-up" size="36rpx" color="{{queryInput ? '#FFFFFF' : '#B5A89C'}}" />
+          <view wx:else class="send-loading">
+            <view class="loading-dot"></view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </block>
+
+  <!-- 底部安全区 -->
+  <view class="safe-bottom"></view>
+
+  <!-- 多宝宝切换 -->
+  <baby-switcher />
+</view>

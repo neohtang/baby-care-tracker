@@ -1,8 +1,0 @@
-{
-  "navigationBarTitleText": "设置",
-  "enablePullDownRefresh": true,
-  "usingComponents": {
-    "baby-avatar": "/components/baby-avatar/index",
-    "t-button": "tdesign-miniprogram/button/button"
-  }
-}

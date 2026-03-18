@@ -16,19 +16,51 @@
     "preview": "node --localstorage-file=/tmp/miniprogram-ci-ls ci/preview.js",
     "build:npm": "node --localstorage-file=/tmp/miniprogram-ci-ls ci/pack-npm.js",
     "test": "jest",
-    "test:coverage": "jest --coverage"
+    "test:coverage": "jest --coverage",
+    "lint": "eslint 'miniprogram/**/*.ts' --fix",
+    "lint:check": "eslint 'miniprogram/**/*.ts'",
+    "format": "prettier --write 'miniprogram/**/*.{ts,json,wxml,wxss}'",
+    "format:check": "prettier --check 'miniprogram/**/*.{ts,json,wxml,wxss}'",
+    "prepare": "husky",
+    "deploy": "npx cloudbase framework deploy",
+    "deploy:db": "npx cloudbase framework deploy --plugin database",
+    "deploy:fn": "npx cloudbase framework deploy --plugin server",
+    "deploy:auth": "npx cloudbase framework deploy --plugin auth",
+    "tcb:login": "npx cloudbase login"
   },
   "dependencies": {
+    "@cloudbase/js-sdk": "^2.26.3",
     "dayjs": "^1.11.13",
     "tdesign-miniprogram": "^1.7.0"
   },
   "devDependencies": {
+    "@cloudbase/cli": "^2.12.7",
+    "@cloudbase/framework-plugin-auth": "^1.9.7",
+    "@cloudbase/framework-plugin-database": "^1.9.7",
+    "@cloudbase/framework-plugin-function": "^1.9.7",
     "@types/jest": "^30.0.0",
     "@types/node": "^25.4.0",
+    "@typescript-eslint/eslint-plugin": "^7.18.0",
+    "@typescript-eslint/parser": "^7.18.0",
+    "eslint": "^8.57.1",
+    "eslint-config-prettier": "^9.1.2",
+    "eslint-plugin-prettier": "^5.5.5",
+    "husky": "^9.1.7",
     "jest": "^30.3.0",
+    "lint-staged": "^16.4.0",
     "miniprogram-api-typings": "^3.12.0",
     "miniprogram-ci": "^2.1.31",
+    "prettier": "^3.8.1",
     "ts-jest": "^29.4.6",
     "typescript": "^5.4.0"
+  },
+  "lint-staged": {
+    "miniprogram/**/*.ts": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "miniprogram/**/*.{json,wxml,wxss}": [
+      "prettier --write"
+    ]
   }
 }

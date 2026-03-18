@@ -42,7 +42,9 @@ export interface FeedingRecord {
 export type CreateFeedingInput = Omit<FeedingRecord, 'id' | 'createdAt' | 'updatedAt'>;
 
 /** 更新喂养记录的入参 */
-export type UpdateFeedingInput = Partial<Omit<FeedingRecord, 'id' | 'babyId' | 'createdAt' | 'updatedAt'>>;
+export type UpdateFeedingInput = Partial<
+  Omit<FeedingRecord, 'id' | 'babyId' | 'createdAt' | 'updatedAt'>
+>;
 
 /** 喂养日统计 */
 export interface FeedingDailySummary {

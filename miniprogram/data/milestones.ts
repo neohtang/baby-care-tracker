@@ -1,11 +1,11 @@
 /**
  * 发育里程碑标准数据（0-12个月）
- * 
+ *
  * 数据参考：
  * - 世界卫生组织（WHO）婴幼儿发育里程碑
  * - 中国儿科学会儿童保健指南
  * - 美国儿科学会（AAP）发育里程碑参考
- * 
+ *
  * 注意：每个宝宝的发育节奏不同，此数据仅供参考，不作为诊断依据。
  */
 
@@ -17,37 +17,36 @@ export const MILESTONE_CATEGORIES: MilestoneCategoryInfo[] = [
     key: 'gross_motor',
     label: '大运动',
     icon: 'run',
-    color: '#FF6B6B'
+    color: '#FF6B6B',
   },
   {
     key: 'fine_motor',
     label: '精细运动',
     icon: 'gesture-applause',
-    color: '#4ECDC4'
+    color: '#4ECDC4',
   },
   {
     key: 'language',
     label: '语言',
     icon: 'chat',
-    color: '#45B7D1'
+    color: '#45B7D1',
   },
   {
     key: 'social',
     label: '社交/情感',
     icon: 'heart',
-    color: '#F7B731'
+    color: '#F7B731',
   },
   {
     key: 'cognitive',
     label: '认知',
     icon: 'browse',
-    color: '#A55EEA'
-  }
+    color: '#A55EEA',
+  },
 ];
 
 /** 发育里程碑完整清单（0-12个月） */
 export const MILESTONE_LIST: MilestoneItem[] = [
-
   // ===== 0-1 月龄 =====
   {
     id: 'gm_0_head_turn',
@@ -56,7 +55,7 @@ export const MILESTONE_LIST: MilestoneItem[] = [
     expectedMonthStart: 0,
     expectedMonthEnd: 1,
     description: '俯卧时宝宝能将头转向一侧',
-    concernTip: '如果宝宝始终无法移动头部，建议咨询医生'
+    concernTip: '如果宝宝始终无法移动头部，建议咨询医生',
   },
   {
     id: 'gm_0_limb_flex',
@@ -99,7 +98,7 @@ export const MILESTONE_LIST: MilestoneItem[] = [
     expectedMonthStart: 1,
     expectedMonthEnd: 2,
     description: '趴着时能短暂地抬起头部，持续数秒',
-    concernTip: '2月龄仍完全无法抬头的趋势需关注'
+    concernTip: '2月龄仍完全无法抬头的趋势需关注',
   },
   {
     id: 'fm_1_hand_open',
@@ -116,7 +115,7 @@ export const MILESTONE_LIST: MilestoneItem[] = [
     expectedMonthStart: 1,
     expectedMonthEnd: 3,
     description: '发出元音咕咕声，开始简单的声音交流',
-    concernTip: '3月龄仍无任何发声需关注'
+    concernTip: '3月龄仍无任何发声需关注',
   },
   {
     id: 'so_1_social_smile',
@@ -125,7 +124,7 @@ export const MILESTONE_LIST: MilestoneItem[] = [
     expectedMonthStart: 1,
     expectedMonthEnd: 3,
     description: '看到熟悉的人脸时会回以微笑',
-    concernTip: '3月龄仍无社交性微笑需咨询医生'
+    concernTip: '3月龄仍无社交性微笑需咨询医生',
   },
   {
     id: 'co_1_follow_object',
@@ -134,7 +133,7 @@ export const MILESTONE_LIST: MilestoneItem[] = [
     expectedMonthStart: 1,
     expectedMonthEnd: 3,
     description: '眼睛能跟随缓慢移动的物体或面孔转动',
-    concernTip: '2月龄仍无法跟随移动物体需关注视力'
+    concernTip: '2月龄仍无法跟随移动物体需关注视力',
   },
 
   // ===== 2-3 月龄 =====
@@ -187,7 +186,7 @@ export const MILESTONE_LIST: MilestoneItem[] = [
     expectedMonthStart: 3,
     expectedMonthEnd: 5,
     description: '竖直抱起时头部能保持稳定不晃',
-    concernTip: '4月龄竖抱时头仍严重后仰需咨询医生'
+    concernTip: '4月龄竖抱时头仍严重后仰需咨询医生',
   },
   {
     id: 'gm_3_push_up',
@@ -212,7 +211,7 @@ export const MILESTONE_LIST: MilestoneItem[] = [
     expectedMonthStart: 3,
     expectedMonthEnd: 5,
     description: '开始发出清晰的咯咯笑声',
-    concernTip: '5月龄仍未出声笑需关注'
+    concernTip: '5月龄仍未出声笑需关注',
   },
   {
     id: 'co_3_cause_effect',
@@ -231,7 +230,7 @@ export const MILESTONE_LIST: MilestoneItem[] = [
     expectedMonthStart: 4,
     expectedMonthEnd: 6,
     description: '能从趴着的姿势翻成仰面朝上',
-    concernTip: '6月龄仍无法完成任何方向翻身需关注'
+    concernTip: '6月龄仍无法完成任何方向翻身需关注',
   },
   {
     id: 'fm_4_grasp_voluntary',
@@ -256,7 +255,7 @@ export const MILESTONE_LIST: MilestoneItem[] = [
     expectedMonthStart: 4,
     expectedMonthEnd: 7,
     description: '发出辅音+元音的组合，如"ba""da""ma"等音节',
-    concernTip: '7月龄仍无咿呀学语需咨询医生'
+    concernTip: '7月龄仍无咿呀学语需咨询医生',
   },
   {
     id: 'so_4_mirror',
@@ -299,7 +298,7 @@ export const MILESTONE_LIST: MilestoneItem[] = [
     expectedMonthStart: 5,
     expectedMonthEnd: 8,
     description: '听到叫自己名字时会转头或注视',
-    concernTip: '9月龄仍对名字无反应需检查听力'
+    concernTip: '9月龄仍对名字无反应需检查听力',
   },
   {
     id: 'co_5_object_permanence',
@@ -318,7 +317,7 @@ export const MILESTONE_LIST: MilestoneItem[] = [
     expectedMonthStart: 6,
     expectedMonthEnd: 9,
     description: '不需要支撑就能稳定地坐着，双手可以自由玩耍',
-    concernTip: '9月龄仍无法独坐需咨询医生评估运动发育'
+    concernTip: '9月龄仍无法独坐需咨询医生评估运动发育',
   },
   {
     id: 'fm_6_rake_grasp',
@@ -403,7 +402,7 @@ export const MILESTONE_LIST: MilestoneItem[] = [
     expectedMonthStart: 8,
     expectedMonthEnd: 11,
     description: '用手和膝盖交替前进，能灵活爬行',
-    concernTip: '10月龄仍无法以任何方式移动身体需咨询医生'
+    concernTip: '10月龄仍无法以任何方式移动身体需咨询医生',
   },
   {
     id: 'gm_8_pull_stand',
@@ -420,7 +419,7 @@ export const MILESTONE_LIST: MilestoneItem[] = [
     expectedMonthStart: 8,
     expectedMonthEnd: 11,
     description: '用拇指和食指精确地捏取小物品（如小馒头粒）',
-    concernTip: '12月龄仍无法用手指捏取小物品需关注'
+    concernTip: '12月龄仍无法用手指捏取小物品需关注',
   },
   {
     id: 'la_8_understand_no',
@@ -455,7 +454,7 @@ export const MILESTONE_LIST: MilestoneItem[] = [
     expectedMonthStart: 9,
     expectedMonthEnd: 12,
     description: '伸出食指指向感兴趣的物品或方向',
-    concernTip: '12月龄仍不会用手指指向物品需关注'
+    concernTip: '12月龄仍不会用手指指向物品需关注',
   },
   {
     id: 'la_9_mama_dada',
@@ -464,7 +463,7 @@ export const MILESTONE_LIST: MilestoneItem[] = [
     expectedMonthStart: 9,
     expectedMonthEnd: 12,
     description: '开始有意识地用"妈妈""爸爸"指代特定的人',
-    concernTip: '12月龄仍无任何有意义的称呼需咨询医生'
+    concernTip: '12月龄仍无任何有意义的称呼需咨询医生',
   },
   {
     id: 'so_9_separation_anxiety',
@@ -499,7 +498,7 @@ export const MILESTONE_LIST: MilestoneItem[] = [
     expectedMonthStart: 11,
     expectedMonthEnd: 15,
     description: '独自迈出一到几步，开始学走路',
-    concernTip: '15月龄仍无法独立行走需进行运动发育评估'
+    concernTip: '15月龄仍无法独立行走需进行运动发育评估',
   },
   {
     id: 'fm_10_release',
@@ -532,14 +531,14 @@ export const MILESTONE_LIST: MilestoneItem[] = [
     expectedMonthStart: 10,
     expectedMonthEnd: 12,
     description: '喜欢把东西放进容器再倒出来，反复进行',
-  }
+  },
 ];
 
 /**
  * 根据 ID 快速查找里程碑信息
  */
 export function getMilestoneById(id: string): MilestoneItem | undefined {
-  return MILESTONE_LIST.find(m => m.id === id);
+  return MILESTONE_LIST.find((m) => m.id === id);
 }
 
 /**
@@ -548,7 +547,7 @@ export function getMilestoneById(id: string): MilestoneItem | undefined {
  */
 export function getMilestonesByAge(ageInMonths: number): MilestoneItem[] {
   return MILESTONE_LIST.filter(
-    m => ageInMonths >= m.expectedMonthStart && ageInMonths <= m.expectedMonthEnd
+    (m) => ageInMonths >= m.expectedMonthStart && ageInMonths <= m.expectedMonthEnd,
   );
 }
 
@@ -556,14 +555,14 @@ export function getMilestonesByAge(ageInMonths: number): MilestoneItem[] {
  * 按类别获取里程碑列表
  */
 export function getMilestonesByCategory(category: MilestoneCategory): MilestoneItem[] {
-  return MILESTONE_LIST.filter(m => m.category === category);
+  return MILESTONE_LIST.filter((m) => m.category === category);
 }
 
 /**
  * 获取里程碑类别的显示信息
  */
 export function getCategoryInfo(category: MilestoneCategory): MilestoneCategoryInfo | undefined {
-  return MILESTONE_CATEGORIES.find(c => c.key === category);
+  return MILESTONE_CATEGORIES.find((c) => c.key === category);
 }
 
 /**
@@ -571,6 +570,6 @@ export function getCategoryInfo(category: MilestoneCategory): MilestoneCategoryI
  */
 export function getMilestoneMonthGroups(): number[] {
   const months = new Set<number>();
-  MILESTONE_LIST.forEach(m => months.add(m.expectedMonthStart));
+  MILESTONE_LIST.forEach((m) => months.add(m.expectedMonthStart));
   return Array.from(months).sort((a, b) => a - b);
 }

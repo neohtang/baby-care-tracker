@@ -2,8 +2,6 @@
   "navigationBarTitleText": "成长发育",
   "enablePullDownRefresh": true,
   "usingComponents": {
-    "growth-chart": "/components/growth-chart/index",
-    "t-tabs": "tdesign-miniprogram/tabs/tabs",
-    "t-tab-panel": "tdesign-miniprogram/tab-panel/tab-panel"
+    "growth-chart": "/components/growth-chart/index"
   }
 }

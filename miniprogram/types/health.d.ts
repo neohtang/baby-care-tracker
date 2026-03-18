@@ -45,7 +45,9 @@ export interface HealthRecord {
 export type CreateHealthInput = Omit<HealthRecord, 'id' | 'createdAt' | 'updatedAt'>;
 
 /** 更新健康记录的入参 */
-export type UpdateHealthInput = Partial<Omit<HealthRecord, 'id' | 'babyId' | 'createdAt' | 'updatedAt'>>;
+export type UpdateHealthInput = Partial<
+  Omit<HealthRecord, 'id' | 'babyId' | 'createdAt' | 'updatedAt'>
+>;
 
 /**
  * 根据体温值判断体温等级
@@ -57,8 +59,8 @@ export type UpdateHealthInput = Partial<Omit<HealthRecord, 'id' | 'babyId' | 'cr
  * - > 39.0°C: 高烧
  */
 export interface TemperatureThresholds {
-  low: number;        // 36.0
+  low: number; // 36.0
   normalHigh: number; // 37.3
-  mildHigh: number;   // 38.0
+  mildHigh: number; // 38.0
   moderateHigh: number; // 39.0
 }

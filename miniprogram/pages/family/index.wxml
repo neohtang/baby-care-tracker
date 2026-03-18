@@ -1,0 +1,268 @@
+<!--pages/family/index.wxml-->
+<!--家庭协作 — 创建/加入家庭组，成员管理 (Phase 3.2)-->
+
+<page-meta page-style="{{pageStyle}}" />
+<view class="page-family">
+  <!-- ======= 无家庭组 ======= -->
+  <view wx:if="{{!hasFamily}}" class="onboarding">
+    <view class="onboarding-icon">
+      <text class="onboarding-emoji">👨‍👩‍👧‍👦</text>
+    </view>
+    <text class="onboarding-title">家庭协作</text>
+    <text class="onboarding-desc">创建家庭组或输入邀请码加入，多人协作记录宝宝的成长</text>
+
+    <view class="onboarding-actions">
+      <view class="onboarding-btn primary" bindtap="showCreateFamily" hover-class="btn-hover">
+        <t-icon name="add" size="36rpx" color="#FFFFFF" />
+        <text>创建家庭组</text>
+      </view>
+      <view class="onboarding-btn secondary" bindtap="showJoinFamily" hover-class="btn-hover">
+        <t-icon name="user-add" size="36rpx" color="#C8956C" />
+        <text>输入邀请码加入</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- ======= 家庭组详情 ======= -->
+  <block wx:if="{{hasFamily}}">
+    <!-- 家庭头部 -->
+    <view class="family-header">
+      <view class="family-header-bg">
+        <view class="family-orb family-orb-1"></view>
+        <view class="family-orb family-orb-2"></view>
+      </view>
+      <view class="family-header-content">
+        <text class="family-name">{{familyName}}</text>
+        <text class="family-meta">{{memberCount}} 位成员</text>
+      </view>
+    </view>
+
+    <!-- 成员列表 -->
+    <view class="section">
+      <view class="section-header">
+        <text class="section-title">家庭成员</text>
+        <view wx:if="{{isAdmin}}" class="invite-btn" bindtap="showInvite" hover-class="invite-btn-hover">
+          <t-icon name="add" size="28rpx" color="#C8956C" />
+          <text class="invite-btn-text">邀请</text>
+        </view>
+      </view>
+
+      <view class="member-list">
+        <view
+          class="member-card"
+          wx:for="{{members}}"
+          wx:key="id"
+          data-id="{{item.id}}"
+          bindtap="onMemberTap"
+          hover-class="{{isAdmin ? 'member-card-hover' : ''}}"
+        >
+          <view class="member-avatar-ring {{item.role}}">
+            <text class="member-avatar-text">{{item.nickname[0] || '?'}}</text>
+          </view>
+          <view class="member-info">
+            <view class="member-name-row">
+              <text class="member-name">{{item.nickname}}</text>
+              <view class="member-role-tag {{item.role}}">
+                <text>{{item.roleName}}</text>
+              </view>
+            </view>
+            <text class="member-relationship">{{item.relationship}}</text>
+          </view>
+          <view wx:if="{{isAdmin}}" class="member-arrow">
+            <t-icon name="chevron-right" size="32rpx" color="#B5A89C" />
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 最近操作 -->
+    <view wx:if="{{recentOps.length > 0}}" class="section">
+      <view class="section-header">
+        <text class="section-title">最近操作</text>
+      </view>
+
+      <view class="ops-list">
+        <view class="ops-item" wx:for="{{recentOps}}" wx:key="id">
+          <view class="ops-dot"></view>
+          <view class="ops-content">
+            <text class="ops-text">{{item.memberName}} · {{item.description}}</text>
+            <text class="ops-time">{{item.timestamp}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 危险操作 -->
+    <view wx:if="{{isAdmin}}" class="section">
+      <view class="danger-btn" bindtap="deleteFamily" hover-class="danger-btn-hover">
+        <text>解散家庭组</text>
+      </view>
+    </view>
+  </block>
+
+  <!-- 底部安全区 -->
+  <view class="safe-bottom"></view>
+
+  <!-- 多宝宝切换 -->
+  <baby-switcher />
+
+  <!-- ======= 创建家庭组弹窗 ======= -->
+  <t-popup visible="{{showCreatePopup}}" placement="bottom" bind:visible-change="closeCreatePopup">
+    <view class="popup-content">
+      <view class="popup-header">
+        <text class="popup-title">创建家庭组</text>
+        <view class="popup-close" bindtap="closeCreatePopup">
+          <t-icon name="close" size="44rpx" color="#8B7B6B" />
+        </view>
+      </view>
+
+      <view class="form-group">
+        <text class="form-label">家庭名称</text>
+        <input
+          class="form-input"
+          placeholder="例如：小明一家"
+          value="{{createFamilyName}}"
+          bindinput="onCreateNameInput"
+          maxlength="20"
+        />
+      </view>
+
+      <view class="form-group">
+        <text class="form-label">你的昵称</text>
+        <input
+          class="form-input"
+          placeholder="例如：妈妈"
+          value="{{createNickname}}"
+          bindinput="onCreateNicknameInput"
+          maxlength="10"
+        />
+      </view>
+
+      <view class="form-group">
+        <text class="form-label">与宝宝的关系</text>
+        <picker
+          mode="selector"
+          range="{{relationshipOptions}}"
+          value="{{relationshipIndex}}"
+          bindchange="onCreateRelationshipChange"
+        >
+          <view class="form-picker">
+            <text>{{createRelationship}}</text>
+            <t-icon name="chevron-down" size="36rpx" color="#B5A89C" />
+          </view>
+        </picker>
+      </view>
+
+      <view class="popup-footer">
+        <t-button
+          theme="primary"
+          block
+          bind:tap="createFamily"
+          style="--td-button-primary-bg-color: #c8956c; --td-button-primary-border-color: #c8956c; border-radius: 20rpx"
+        >
+          创建
+        </t-button>
+      </view>
+    </view>
+  </t-popup>
+
+  <!-- ======= 邀请弹窗 ======= -->
+  <t-popup visible="{{showInvitePopup}}" placement="bottom" bind:visible-change="closeInvitePopup">
+    <view class="popup-content invite-popup">
+      <view class="popup-header">
+        <text class="popup-title">邀请成员</text>
+        <view class="popup-close" bindtap="closeInvitePopup">
+          <t-icon name="close" size="44rpx" color="#8B7B6B" />
+        </view>
+      </view>
+
+      <view class="invite-code-display">
+        <text class="invite-code-label">邀请码</text>
+        <text class="invite-code-value">{{inviteCode}}</text>
+        <text class="invite-code-expiry">有效期至 {{inviteExpiry}}</text>
+      </view>
+
+      <view class="invite-actions">
+        <view class="invite-action-btn" bindtap="copyInviteCode" hover-class="btn-hover">
+          <t-icon name="file-copy" size="36rpx" color="#C8956C" />
+          <text>复制邀请码</text>
+        </view>
+        <view class="invite-action-btn" bindtap="refreshInviteCode" hover-class="btn-hover">
+          <t-icon name="refresh" size="36rpx" color="#C8956C" />
+          <text>刷新</text>
+        </view>
+      </view>
+
+      <view class="popup-footer">
+        <t-button
+          theme="primary"
+          block
+          open-type="share"
+          style="--td-button-primary-bg-color: #c8956c; --td-button-primary-border-color: #c8956c; border-radius: 20rpx"
+        >
+          分享给家人
+        </t-button>
+      </view>
+    </view>
+  </t-popup>
+
+  <!-- ======= 加入家庭弹窗 ======= -->
+  <t-popup visible="{{showJoinPopup}}" placement="bottom" bind:visible-change="closeJoinPopup">
+    <view class="popup-content">
+      <view class="popup-header">
+        <text class="popup-title">加入家庭组</text>
+        <view class="popup-close" bindtap="closeJoinPopup">
+          <t-icon name="close" size="44rpx" color="#8B7B6B" />
+        </view>
+      </view>
+
+      <view class="form-group">
+        <text class="form-label">邀请码</text>
+        <input
+          class="form-input invite-code-input"
+          placeholder="输入 6 位邀请码"
+          value="{{joinInviteCode}}"
+          bindinput="onJoinCodeInput"
+          maxlength="6"
+        />
+      </view>
+
+      <view class="form-group">
+        <text class="form-label">你的昵称</text>
+        <input
+          class="form-input"
+          placeholder="例如：爸爸"
+          value="{{joinNickname}}"
+          bindinput="onJoinNicknameInput"
+          maxlength="10"
+        />
+      </view>
+
+      <view class="form-group">
+        <text class="form-label">与宝宝的关系</text>
+        <picker
+          mode="selector"
+          range="{{relationshipOptions}}"
+          value="{{joinRelationshipIndex}}"
+          bindchange="onJoinRelationshipChange"
+        >
+          <view class="form-picker">
+            <text>{{joinRelationship}}</text>
+            <t-icon name="chevron-down" size="36rpx" color="#B5A89C" />
+          </view>
+        </picker>
+      </view>
+
+      <view class="popup-footer">
+        <t-button
+          theme="primary"
+          block
+          bind:tap="joinFamily"
+          style="--td-button-primary-bg-color: #c8956c; --td-button-primary-border-color: #c8956c; border-radius: 20rpx"
+        >
+          加入
+        </t-button>
+      </view>
+    </view>
+  </t-popup>
+</view>

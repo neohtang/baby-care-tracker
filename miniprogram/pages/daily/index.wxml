@@ -1,12 +1,39 @@
 <!--pages/daily/index.wxml-->
 <!--日常记录合并页 — 喂养/睡眠/排便 (Tender Bloom 主题)-->
 
+<page-meta page-style="{{pageStyle}}" />
 <view class="page-daily">
   <!-- 顶部 Tab 导航 -->
   <t-tabs defaultValue="{{0}}" bind:change="onMainTabChange" t-class="daily-tabs">
     <t-tab-panel label="喂养" value="{{0}}">
       <!-- ===== 喂养模块 ===== -->
       <view class="tab-content animate-fade-in">
+        <!-- 喂养提醒横幅 -->
+        <view
+          wx:if="{{showFeedingReminder && feedingReminder}}"
+          class="reminder-banner {{feedingReminder.isOverdue ? 'reminder-banner-overdue' : 'reminder-banner-normal'}}"
+          bindtap="onReminderTap"
+        >
+          <view class="reminder-banner-left">
+            <text class="reminder-banner-icon">🍼</text>
+            <view class="reminder-banner-info">
+              <text class="reminder-banner-text">{{feedingReminder.reminderText}}</text>
+              <text class="reminder-banner-sub" wx:if="{{feedingReminder.lastFeedingTypeName}}"
+                >上次：{{feedingReminder.lastFeedingTypeName}}</text
+              >
+            </view>
+          </view>
+          <view class="reminder-banner-right">
+            <view class="reminder-progress-bar">
+              <view
+                class="reminder-progress-fill {{feedingReminder.isOverdue ? 'overdue' : ''}}"
+                style="width: {{feedingReminder.progress > 100 ? 100 : feedingReminder.progress}}%"
+              ></view>
+            </view>
+            <text class="reminder-banner-action">去记录 ›</text>
+          </view>
+        </view>
+
         <!-- 今日统计卡片 -->
         <view class="stats-card">
           <view class="stats-header">
@@ -17,21 +44,21 @@
           </view>
           <view class="stats-grid stats-grid-3">
             <view class="stats-item">
-              <view class="stats-icon-wrap" style="background: var(--module-feeding-bg);">
+              <view class="stats-icon-wrap" style="background: var(--module-feeding-bg)">
                 <image class="stats-icon-img" src="/assets/icons/breastfeed.svg" mode="aspectFit" />
               </view>
               <text class="stats-item-value">{{feedingStats.breastCount}}</text>
               <text class="stats-item-label">母乳</text>
             </view>
             <view class="stats-item">
-              <view class="stats-icon-wrap" style="background: var(--color-sky-bg);">
+              <view class="stats-icon-wrap" style="background: var(--color-sky-bg)">
                 <image class="stats-icon-img" src="/assets/icons/bottle.svg" mode="aspectFit" />
               </view>
               <text class="stats-item-value">{{feedingStats.formulaCount}}</text>
               <text class="stats-item-label">配方奶</text>
             </view>
             <view class="stats-item">
-              <view class="stats-icon-wrap" style="background: var(--color-mint-bg);">
+              <view class="stats-icon-wrap" style="background: var(--color-mint-bg)">
                 <image class="stats-icon-img" src="/assets/icons/solid-food.svg" mode="aspectFit" />
               </view>
               <text class="stats-item-value">{{feedingStats.solidCount}}</text>
@@ -130,7 +157,9 @@
             </view>
           </view>
           <text class="sleep-action-text">{{isSleeping ? '点击结束睡眠' : '点击开始睡眠'}}</text>
-          <text wx:if="{{isSleeping && sleepDurationText}}" class="sleep-duration-text">已睡 {{sleepDurationText}}</text>
+          <text wx:if="{{isSleeping && sleepDurationText}}" class="sleep-duration-text"
+            >已睡 {{sleepDurationText}}</text
+          >
         </view>
 
         <!-- 记录列表 -->
@@ -251,4 +280,7 @@
       </view>
     </t-tab-panel>
   </t-tabs>
+
+  <!-- 多宝宝切换悬浮球 -->
+  <baby-switcher />
 </view>

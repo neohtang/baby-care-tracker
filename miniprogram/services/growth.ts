@@ -8,7 +8,12 @@ import { validateGrowthRecord } from '../utils/validator';
 import { getToday, formatDate, getAgeInMonths, getAgeInDays, calculateAge } from '../utils/date';
 import { babyService } from './baby';
 import eventBus, { Events } from '../utils/event-bus';
-import { getPercentileData, getPercentileRange, METRIC_LABELS, METRIC_UNITS } from '../data/who-standards';
+import {
+  getPercentileData,
+  getPercentileRange,
+  METRIC_LABELS,
+  METRIC_UNITS,
+} from '../data/who-standards';
 import type {
   GrowthRecord,
   CreateGrowthInput,
@@ -21,10 +26,18 @@ import type {
 type GrowthMetric = 'weight' | 'height' | 'headCircumference';
 
 /** 指标配置 */
-const METRIC_CONFIG: Record<GrowthMetric, { label: string; unit: string; icon: string; color: string }> = {
+const METRIC_CONFIG: Record<
+  GrowthMetric,
+  { label: string; unit: string; icon: string; color: string }
+> = {
   weight: { label: '体重', unit: 'kg', icon: '/assets/icons/scale.svg', color: '#C8956C' },
   height: { label: '身长', unit: 'cm', icon: '/assets/icons/ruler.svg', color: '#D4A97A' },
-  headCircumference: { label: '头围', unit: 'cm', icon: '/assets/icons/brain.svg', color: '#F5A5B8' },
+  headCircumference: {
+    label: '头围',
+    unit: 'cm',
+    icon: '/assets/icons/brain.svg',
+    color: '#F5A5B8',
+  },
 };
 
 class GrowthService {
@@ -34,7 +47,8 @@ class GrowthService {
   getAllRecords(): GrowthRecord[] {
     const babyId = babyService.getCurrentBabyId();
     if (!babyId) return [];
-    return growthStorage.query((r: GrowthRecord) => r.babyId === babyId)
+    return growthStorage
+      .query((r: GrowthRecord) => r.babyId === babyId)
       .sort((a, b) => b.date.localeCompare(a.date));
   }
 
@@ -108,7 +122,7 @@ class GrowthService {
     if (updated) {
       eventBus.emit(Events.GROWTH_CHANGED, updated);
     }
-    return updated as GrowthRecord || null;
+    return (updated as GrowthRecord) || null;
   }
 
   /**
@@ -173,19 +187,23 @@ class GrowthService {
     return {
       weight: latest.weight !== undefined ? latest.weight.toFixed(1) : '--',
       height: latest.height !== undefined ? latest.height.toFixed(1) : '--',
-      headCircumference: latest.headCircumference !== undefined ? latest.headCircumference.toFixed(1) : '--',
+      headCircumference:
+        latest.headCircumference !== undefined ? latest.headCircumference.toFixed(1) : '--',
       date: latest.date,
       dateText: formatDate(latest.date, 'MM月DD日') + '测量',
       hasData: true,
-      weightPercentile: latest.weight !== undefined
-        ? getPercentileRange(gender, 'weight', ageMonths, latest.weight)
-        : '',
-      heightPercentile: latest.height !== undefined
-        ? getPercentileRange(gender, 'height', ageMonths, latest.height)
-        : '',
-      headPercentile: latest.headCircumference !== undefined
-        ? getPercentileRange(gender, 'headCircumference', ageMonths, latest.headCircumference)
-        : '',
+      weightPercentile:
+        latest.weight !== undefined
+          ? getPercentileRange(gender, 'weight', ageMonths, latest.weight)
+          : '',
+      heightPercentile:
+        latest.height !== undefined
+          ? getPercentileRange(gender, 'height', ageMonths, latest.height)
+          : '',
+      headPercentile:
+        latest.headCircumference !== undefined
+          ? getPercentileRange(gender, 'headCircumference', ageMonths, latest.headCircumference)
+          : '',
     };
   }
 
@@ -204,8 +222,8 @@ class GrowthService {
 
     const field = fieldMap[metric];
     return records
-      .filter(r => r[field] !== undefined && r[field] !== null)
-      .map(r => ({
+      .filter((r) => r[field] !== undefined && r[field] !== null)
+      .map((r) => ({
         ageInMonths: r.ageInMonths,
         value: r[field] as number,
         date: r.date,
@@ -243,7 +261,8 @@ class GrowthService {
       date: record.date,
       weight: record.weight !== undefined ? record.weight.toFixed(1) : '--',
       height: record.height !== undefined ? record.height.toFixed(1) : '--',
-      headCircumference: record.headCircumference !== undefined ? record.headCircumference.toFixed(1) : '--',
+      headCircumference:
+        record.headCircumference !== undefined ? record.headCircumference.toFixed(1) : '--',
       ageText: `${record.ageInMonths}个月`,
       hasWeight: record.weight !== undefined,
       hasHeight: record.height !== undefined,
@@ -255,8 +274,10 @@ class GrowthService {
   /**
    * 批量格式化
    */
-  formatRecordsForDisplay(records: GrowthRecord[]): ReturnType<typeof this.formatRecordForDisplay>[] {
-    return records.map(r => this.formatRecordForDisplay(r));
+  formatRecordsForDisplay(
+    records: GrowthRecord[],
+  ): ReturnType<typeof this.formatRecordForDisplay>[] {
+    return records.map((r) => this.formatRecordForDisplay(r));
   }
 
   /**

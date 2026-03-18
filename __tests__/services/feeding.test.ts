@@ -161,7 +161,7 @@ describe('FeedingService', () => {
       });
       const display = feedingService.formatRecordForDisplay(record!);
       expect(display.typeName).toBe('母乳');
-      expect(display.icon).toBe('🤱');
+      expect(display.icon).toBe('/assets/icons/breastfeed.svg');
       expect(display.tags.some(t => t.text === '左侧')).toBe(true);
     });
 

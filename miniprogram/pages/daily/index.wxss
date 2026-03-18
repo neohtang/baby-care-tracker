@@ -3,15 +3,15 @@
 
 .page-daily {
   min-height: 100vh;
-  background: var(--td-bg-color-page, #FDF8F3);
+  background: var(--td-bg-color-page, #fdf8f3);
   padding-bottom: env(safe-area-inset-bottom);
 }
 
 /* ======= TDesign Tabs 覆盖 ======= */
 .daily-tabs {
-  --td-tab-item-color: var(--td-text-color-secondary, #8B7B6B);
-  --td-tab-item-active-color: var(--td-brand-color, #C8956C);
-  --td-tab-track-color: var(--td-brand-color, #C8956C);
+  --td-tab-item-color: var(--td-text-color-secondary, #8b7b6b);
+  --td-tab-item-active-color: var(--td-brand-color, #c8956c);
+  --td-tab-track-color: var(--td-brand-color, #c8956c);
   --td-tab-track-thickness: 6rpx;
   --td-tab-track-width: 48rpx;
   --td-tab-item-font-size: 30rpx;
@@ -22,9 +22,117 @@
   min-height: calc(100vh - 100rpx);
 }
 
+/* ======= 喂养提醒横幅 ======= */
+.reminder-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0 24rpx 20rpx;
+  padding: 20rpx 28rpx;
+  border-radius: 20rpx;
+  animation: slideDown 0.3s ease-out;
+}
+
+.reminder-banner-normal {
+  background: linear-gradient(135deg, #fff8f0 0%, #fff2e5 100%);
+  border: 2rpx solid rgba(200, 149, 108, 0.2);
+}
+
+.reminder-banner-overdue {
+  background: linear-gradient(135deg, #fff0ee 0%, #fdeceb 100%);
+  border: 2rpx solid rgba(232, 115, 108, 0.2);
+}
+
+.reminder-banner-left {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+  flex: 1;
+  min-width: 0;
+}
+
+.reminder-banner-icon {
+  font-size: 36rpx;
+  flex-shrink: 0;
+}
+
+.reminder-banner-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4rpx;
+  min-width: 0;
+}
+
+.reminder-banner-text {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: var(--td-text-color-primary, #3d2e22);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.reminder-banner-overdue .reminder-banner-text {
+  color: var(--color-coral, #e8736c);
+}
+
+.reminder-banner-sub {
+  font-size: 22rpx;
+  color: var(--td-text-color-secondary, #8b7b6b);
+}
+
+.reminder-banner-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8rpx;
+  flex-shrink: 0;
+  margin-left: 20rpx;
+}
+
+.reminder-progress-bar {
+  width: 100rpx;
+  height: 8rpx;
+  border-radius: 4rpx;
+  background: rgba(200, 149, 108, 0.15);
+  overflow: hidden;
+}
+
+.reminder-progress-fill {
+  height: 100%;
+  border-radius: 4rpx;
+  background: var(--td-brand-color, #c8956c);
+  transition: width 0.5s ease;
+}
+
+.reminder-progress-fill.overdue {
+  background: var(--color-coral, #e8736c);
+}
+
+.reminder-banner-action {
+  font-size: 22rpx;
+  font-weight: 500;
+  color: var(--td-brand-color, #c8956c);
+}
+
+.reminder-banner-overdue .reminder-banner-action {
+  color: var(--color-coral, #e8736c);
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-16rpx);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 /* ======= 统计卡片 ======= */
 .stats-card {
-  background: #FFFFFF;
+  background: #ffffff;
   border-radius: 24rpx;
   padding: 28rpx 32rpx;
   margin: 0 24rpx 20rpx;
@@ -41,11 +149,11 @@
 .stats-title {
   font-size: 30rpx;
   font-weight: 600;
-  color: var(--td-text-color-primary, #3D2E22);
+  color: var(--td-text-color-primary, #3d2e22);
 }
 
 .stats-badge {
-  background: var(--module-feeding-bg, #FFF5ED);
+  background: var(--module-feeding-bg, #fff5ed);
   padding: 6rpx 20rpx;
   border-radius: 999rpx;
 }
@@ -53,28 +161,28 @@
 .stats-badge-text {
   font-size: 24rpx;
   font-weight: 600;
-  color: var(--module-feeding, #C8956C);
+  color: var(--module-feeding, #c8956c);
 }
 
 .stats-badge-sky {
-  background: var(--module-sleep-bg, #F0F7FC);
+  background: var(--module-sleep-bg, #f0f7fc);
 }
 .stats-badge-sky .stats-badge-text {
-  color: var(--module-sleep, #7CAFD4);
+  color: var(--module-sleep, #7cafd4);
 }
 
 .stats-badge-mint {
-  background: var(--module-diaper-bg, #F0F9F5);
+  background: var(--module-diaper-bg, #f0f9f5);
 }
 .stats-badge-mint .stats-badge-text {
-  color: var(--module-diaper, #7EBEA5);
+  color: var(--module-diaper, #7ebea5);
 }
 
 .stats-badge-alert {
-  background: var(--color-coral-light, #FDECEB);
+  background: var(--color-coral-light, #fdeceb);
 }
 .stats-badge-alert .stats-badge-text {
-  color: var(--color-coral, #E8736C);
+  color: var(--color-coral, #e8736c);
 }
 
 .stats-grid {
@@ -113,17 +221,17 @@
 .stats-item-value {
   font-size: 36rpx;
   font-weight: 700;
-  color: var(--td-text-color-primary, #3D2E22);
+  color: var(--td-text-color-primary, #3d2e22);
   line-height: 1.2;
 }
 
 .stats-value-sky {
-  color: var(--module-sleep, #7CAFD4);
+  color: var(--module-sleep, #7cafd4);
 }
 
 .stats-item-label {
   font-size: 22rpx;
-  color: var(--td-text-color-secondary, #8B7B6B);
+  color: var(--td-text-color-secondary, #8b7b6b);
 }
 
 /* 圆形统计（排便模块） */
@@ -131,7 +239,7 @@
   width: 80rpx;
   height: 80rpx;
   border-radius: 50%;
-  background: var(--module-diaper-bg, #F0F9F5);
+  background: var(--module-diaper-bg, #f0f9f5);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -141,21 +249,21 @@
 .stats-circle-num {
   font-size: 32rpx;
   font-weight: 700;
-  color: var(--module-diaper, #7EBEA5);
+  color: var(--module-diaper, #7ebea5);
 }
 
 .stats-circle-sky {
-  background: var(--module-sleep-bg, #F0F7FC);
+  background: var(--module-sleep-bg, #f0f7fc);
 }
 .stats-circle-sky .stats-circle-num {
-  color: var(--module-sleep, #7CAFD4);
+  color: var(--module-sleep, #7cafd4);
 }
 
 .stats-circle-amber {
-  background: var(--color-amber-bg, #FFFBF0);
+  background: var(--color-amber-bg, #fffbf0);
 }
 .stats-circle-amber .stats-circle-num {
-  color: var(--color-amber, #F0B44A);
+  color: var(--color-amber, #f0b44a);
 }
 
 /* ======= 筛选 Tab ======= */
@@ -171,16 +279,16 @@
   border-radius: 999rpx;
   font-size: 26rpx;
   font-weight: 500;
-  color: var(--td-text-color-secondary, #8B7B6B);
-  background: #FFFFFF;
-  border: 2rpx solid #F0E8DF;
+  color: var(--td-text-color-secondary, #8b7b6b);
+  background: #ffffff;
+  border: 2rpx solid #f0e8df;
   transition: all 0.2s ease;
 }
 
 .filter-tab.active {
-  background: var(--td-brand-color, #C8956C);
-  color: #FFFFFF;
-  border-color: var(--td-brand-color, #C8956C);
+  background: var(--td-brand-color, #c8956c);
+  color: #ffffff;
+  border-color: var(--td-brand-color, #c8956c);
 }
 
 /* ======= 记录列表 ======= */
@@ -196,7 +304,7 @@
 .section-divider-title {
   font-size: 28rpx;
   font-weight: 600;
-  color: var(--td-text-color-primary, #3D2E22);
+  color: var(--td-text-color-primary, #3d2e22);
 }
 
 /* ======= 睡眠控制器 ======= */
@@ -216,7 +324,7 @@
   width: 160rpx;
   height: 160rpx;
   border-radius: 50%;
-  background: var(--module-sleep-bg, #F0F7FC);
+  background: var(--module-sleep-bg, #f0f7fc);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -225,13 +333,16 @@
 }
 
 .sleep-circle.sleeping {
-  background: linear-gradient(135deg, #2C3E6B 0%, #3B5998 100%);
+  background: linear-gradient(135deg, #2c3e6b 0%, #3b5998 100%);
   box-shadow: 0 8rpx 32rpx rgba(44, 62, 107, 0.3);
 }
 
 .sleep-ring {
   position: absolute;
-  top: -10rpx; left: -10rpx; right: -10rpx; bottom: -10rpx;
+  top: -10rpx;
+  left: -10rpx;
+  right: -10rpx;
+  bottom: -10rpx;
   border-radius: 50%;
   border: 4rpx solid rgba(124, 175, 212, 0.4);
   animation: pulse 2s ease-in-out infinite;
@@ -245,19 +356,26 @@
 .sleep-action-text {
   font-size: 28rpx;
   font-weight: 500;
-  color: var(--td-text-color-secondary, #8B7B6B);
+  color: var(--td-text-color-secondary, #8b7b6b);
 }
 
 .sleep-duration-text {
   font-size: 32rpx;
   font-weight: 600;
-  color: var(--module-sleep, #7CAFD4);
+  color: var(--module-sleep, #7cafd4);
   margin-top: 8rpx;
 }
 
 @keyframes pulse {
-  0%, 100% { transform: scale(1); opacity: 0.6; }
-  50% { transform: scale(1.12); opacity: 0; }
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.6;
+  }
+  50% {
+    transform: scale(1.12);
+    opacity: 0;
+  }
 }
 
 /* ======= 排便快捷操作 ======= */
@@ -275,13 +393,13 @@
   justify-content: center;
   gap: 12rpx;
   height: 88rpx;
-  background: var(--module-diaper-bg, #F0F9F5);
+  background: var(--module-diaper-bg, #f0f9f5);
   border-radius: 20rpx;
   transition: transform 0.15s ease;
 }
 
 .diaper-quick-btn-alt {
-  background: var(--color-amber-bg, #FFFBF0);
+  background: var(--color-amber-bg, #fffbf0);
 }
 
 .diaper-quick-icon {
@@ -292,7 +410,7 @@
 .diaper-quick-text {
   font-size: 28rpx;
   font-weight: 500;
-  color: var(--td-text-color-primary, #3D2E22);
+  color: var(--td-text-color-primary, #3d2e22);
 }
 
 /* ======= 空状态 ======= */
@@ -313,13 +431,13 @@
 
 .empty-text {
   font-size: 30rpx;
-  color: var(--td-text-color-secondary, #8B7B6B);
+  color: var(--td-text-color-secondary, #8b7b6b);
   font-weight: 500;
 }
 
 .empty-hint {
   font-size: 24rpx;
-  color: var(--td-text-color-placeholder, #B5A89C);
+  color: var(--td-text-color-placeholder, #b5a89c);
   margin-top: 12rpx;
 }
 
@@ -363,6 +481,102 @@
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10rpx); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(10rpx);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ========== 深色模式适配 ========== */
+@media (prefers-color-scheme: dark) {
+  .page-daily {
+    background: var(--td-bg-color-page, #1a1614);
+  }
+
+  .daily-tabs {
+    --td-tab-nav-bg-color: var(--td-bg-color-page, #1a1614);
+  }
+
+  .reminder-banner-normal {
+    background: linear-gradient(135deg, #2d2418 0%, #362e20 100%);
+    border-color: rgba(212, 169, 122, 0.2);
+  }
+
+  .reminder-banner-overdue {
+    background: linear-gradient(135deg, #2d1c1a 0%, #362420 100%);
+    border-color: rgba(240, 144, 136, 0.2);
+  }
+
+  .reminder-banner-text {
+    color: var(--td-text-color-primary, #ede5dc);
+  }
+
+  .reminder-banner-sub {
+    color: var(--td-text-color-secondary, #a89a8c);
+  }
+
+  .stats-card {
+    background: var(--td-bg-color-container, #2a2420);
+    box-shadow: var(--shadow-card);
+  }
+
+  .stats-title {
+    color: var(--td-text-color-primary, #ede5dc);
+  }
+
+  .stats-item-value {
+    color: var(--td-text-color-primary, #ede5dc);
+  }
+
+  .stats-item-label {
+    color: var(--td-text-color-secondary, #a89a8c);
+  }
+
+  .filter-tab {
+    background: var(--td-bg-color-container, #2a2420);
+    border-color: #3d342c;
+    color: var(--td-text-color-secondary, #a89a8c);
+  }
+
+  .filter-tab.active {
+    background: var(--td-brand-color, #d4a97a);
+    color: #ffffff;
+    border-color: var(--td-brand-color, #d4a97a);
+  }
+
+  .section-divider-title {
+    color: var(--td-text-color-primary, #ede5dc);
+  }
+
+  .sleep-circle {
+    box-shadow: 0 4rpx 24rpx rgba(0, 0, 0, 0.2);
+  }
+
+  .sleep-action-text {
+    color: var(--td-text-color-secondary, #a89a8c);
+  }
+
+  .diaper-quick-btn {
+    box-shadow: none;
+  }
+
+  .diaper-quick-text {
+    color: var(--td-text-color-primary, #ede5dc);
+  }
+
+  .empty-text {
+    color: var(--td-text-color-secondary, #a89a8c);
+  }
+
+  .empty-hint {
+    color: var(--td-text-color-placeholder, #78695c);
+  }
+
+  .fab-btn {
+    box-shadow: 0 8rpx 32rpx rgba(0, 0, 0, 0.3);
+  }
 }

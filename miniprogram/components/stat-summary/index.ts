@@ -35,7 +35,7 @@ Component({
   },
 
   observers: {
-    'columns': function(columns: number) {
+    columns: function (columns: number) {
       this.setData({
         gridStyle: `grid-template-columns: repeat(${columns}, 1fr);`,
       });

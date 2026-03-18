@@ -42,7 +42,9 @@ export interface DiaperRecord {
 export type CreateDiaperInput = Omit<DiaperRecord, 'id' | 'createdAt' | 'updatedAt'>;
 
 /** 更新排便记录的入参 */
-export type UpdateDiaperInput = Partial<Omit<DiaperRecord, 'id' | 'babyId' | 'createdAt' | 'updatedAt'>>;
+export type UpdateDiaperInput = Partial<
+  Omit<DiaperRecord, 'id' | 'babyId' | 'createdAt' | 'updatedAt'>
+>;
 
 /** 排便日统计 */
 export interface DiaperDailySummary {

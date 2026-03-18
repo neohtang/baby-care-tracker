@@ -93,9 +93,8 @@ Component({
     start() {
       if (this.data.isRunning) return;
 
-      const startTimestamp = this.data.seconds > 0
-        ? Date.now() - this.data.seconds * 1000
-        : Date.now();
+      const startTimestamp =
+        this.data.seconds > 0 ? Date.now() - this.data.seconds * 1000 : Date.now();
 
       this.setData({
         isRunning: true,
@@ -140,7 +139,7 @@ Component({
       this.setData({ isRunning: false });
       this.triggerEvent('stop', {
         seconds: finalSeconds,
-        minutes: Math.round(finalSeconds / 60 * 10) / 10,
+        minutes: Math.round((finalSeconds / 60) * 10) / 10,
         formatted: this._formatResult(finalSeconds),
       });
     },
@@ -184,7 +183,7 @@ Component({
      * 获取当前分钟数（供外部调用）
      */
     getMinutes(): number {
-      return Math.round(this.data.seconds / 60 * 10) / 10;
+      return Math.round((this.data.seconds / 60) * 10) / 10;
     },
 
     // ===== 内部方法 =====
@@ -201,7 +200,7 @@ Component({
       const displaySeconds = String(secs).padStart(2, '0');
 
       // 进度环：每60秒转一圈
-      const progressDeg = (s % 60) / 60 * 360;
+      const progressDeg = ((s % 60) / 60) * 360;
 
       this.setData({
         displayHours,

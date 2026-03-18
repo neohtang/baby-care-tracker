@@ -45,11 +45,12 @@ const LEVEL_COLOR: Record<TemperatureLevel, string> = {
 };
 
 /** 记录类型配置 */
-const RECORD_TYPE_CONFIG: Record<HealthRecordType, { name: string; icon: string; iconBg: string }> = {
-  temperature: { name: '体温', icon: '/assets/icons/thermometer.svg', iconBg: '#D1FAE5' },
-  medication: { name: '用药', icon: '/assets/icons/medicine.svg', iconBg: '#DBEAFE' },
-  symptom: { name: '症状', icon: '/assets/icons/bandage.svg', iconBg: '#FEE2E2' },
-};
+const RECORD_TYPE_CONFIG: Record<HealthRecordType, { name: string; icon: string; iconBg: string }> =
+  {
+    temperature: { name: '体温', icon: '/assets/icons/thermometer.svg', iconBg: '#D1FAE5' },
+    medication: { name: '用药', icon: '/assets/icons/medicine.svg', iconBg: '#DBEAFE' },
+    symptom: { name: '症状', icon: '/assets/icons/bandage.svg', iconBg: '#FEE2E2' },
+  };
 
 class HealthService {
   /**
@@ -167,7 +168,7 @@ class HealthService {
     if (updated) {
       eventBus.emit(Events.HEALTH_CHANGED, updated);
     }
-    return updated as HealthRecord || null;
+    return (updated as HealthRecord) || null;
   }
 
   /**
@@ -211,12 +212,15 @@ class HealthService {
       return r.babyId === babyId && r.recordType === 'temperature' && r.temperature !== undefined;
     });
 
-    return records.slice(0, count).map(r => ({
-      temperature: r.temperature!,
-      time: r.time,
-      level: r.temperatureLevel || this.getTemperatureLevel(r.temperature!),
-      timeText: formatTime(r.time),
-    })).reverse(); // 按时间正序
+    return records
+      .slice(0, count)
+      .map((r) => ({
+        temperature: r.temperature!,
+        time: r.time,
+        level: r.temperatureLevel || this.getTemperatureLevel(r.temperature!),
+        timeText: formatTime(r.time),
+      }))
+      .reverse(); // 按时间正序
   }
 
   /**
@@ -256,7 +260,9 @@ class HealthService {
 
     switch (record.recordType) {
       case 'temperature': {
-        const level = record.temperatureLevel || (record.temperature ? this.getTemperatureLevel(record.temperature) : 'normal');
+        const level =
+          record.temperatureLevel ||
+          (record.temperature ? this.getTemperatureLevel(record.temperature) : 'normal');
         levelText = LEVEL_TEXT[level];
         levelColor = LEVEL_COLOR[level];
         isAbnormal = level !== 'normal' && level !== 'low';
@@ -310,8 +316,10 @@ class HealthService {
   /**
    * 批量格式化记录列表
    */
-  formatRecordsForDisplay(records: HealthRecord[]): ReturnType<typeof this.formatRecordForDisplay>[] {
-    return records.map(r => this.formatRecordForDisplay(r));
+  formatRecordsForDisplay(
+    records: HealthRecord[],
+  ): ReturnType<typeof this.formatRecordForDisplay>[] {
+    return records.map((r) => this.formatRecordForDisplay(r));
   }
 
   /**

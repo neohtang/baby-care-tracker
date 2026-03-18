@@ -226,8 +226,17 @@ class DataExportService {
     if (data.appName !== APP_NAME) return false;
     if (!data.modules || typeof data.modules !== 'object') return false;
 
-    const requiredModules = ['baby', 'feeding', 'sleep', 'diaper', 'health', 'growth', 'vaccine', 'milestone'];
-    return requiredModules.every(mod => data.modules[mod] !== undefined);
+    const requiredModules = [
+      'baby',
+      'feeding',
+      'sleep',
+      'diaper',
+      'health',
+      'growth',
+      'vaccine',
+      'milestone',
+    ];
+    return requiredModules.every((mod) => data.modules[mod] !== undefined);
   }
 
   /**
@@ -273,7 +282,7 @@ class DataExportService {
     const info = await getStorageInfo();
     const currentKB = info.currentSize || 0;
     const limitKB = info.limitSize || 10240;
-    const percentage = Math.round(currentKB / limitKB * 100);
+    const percentage = Math.round((currentKB / limitKB) * 100);
 
     let sizeText: string;
     if (currentKB < 1024) {

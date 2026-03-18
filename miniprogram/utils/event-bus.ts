@@ -53,7 +53,7 @@ class EventBus {
       return;
     }
 
-    this.events[eventName] = this.events[eventName].filter(h => h !== handler);
+    this.events[eventName] = this.events[eventName].filter((h) => h !== handler);
 
     if (this.events[eventName].length === 0) {
       delete this.events[eventName];
@@ -68,7 +68,7 @@ class EventBus {
     if (!handlers || handlers.length === 0) return;
 
     // 使用副本遍历，避免在 handler 中修改订阅列表导致问题
-    [...handlers].forEach(handler => {
+    [...handlers].forEach((handler) => {
       try {
         handler(...args);
       } catch (e) {
@@ -116,6 +116,10 @@ export const Events = {
   BABY_SWITCHED: 'baby:switched',
   /** 数据导入/恢复完成 */
   DATA_RESTORED: 'data:restored',
+  /** 提醒设置变更 */
+  REMINDER_SETTINGS_CHANGED: 'reminder:settings_changed',
+  /** 主题模式变更 */
+  THEME_CHANGED: 'theme:changed',
 } as const;
 
 // 导出全局唯一实例

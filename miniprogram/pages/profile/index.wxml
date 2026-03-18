@@ -1,8 +1,8 @@
 <!--pages/profile/index.wxml-->
 <!--我的页面 — 宝宝信息管理、数据概览、数据导出与恢复 (Tender Bloom 主题)-->
 
+<page-meta page-style="{{pageStyle}}" />
 <view class="page-profile">
-
   <!-- ======= 宝宝信息大卡片 ======= -->
   <view class="baby-profile-card" bindtap="editBabyInfo" hover-class="card-hover">
     <!-- 渐变背景 + 装饰光斑 -->
@@ -44,7 +44,7 @@
   </view>
 
   <!-- ======= 数据概览 ======= -->
-  <view wx:if="{{totalRecords > 0}}" class="stats-card animate-fadein" style="animation-delay: 0.1s;">
+  <view wx:if="{{totalRecords > 0}}" class="stats-card animate-fadein" style="animation-delay: 0.1s">
     <view class="stats-header">
       <text class="stats-title">数据概览</text>
       <view class="stats-total-badge">
@@ -88,12 +88,181 @@
     </view>
   </view>
 
+  <!-- ======= 外观设置 ======= -->
+  <view class="section-label animate-fadein" style="animation-delay: 0.11s">外观设置</view>
+  <view class="menu-card animate-fadein" style="animation-delay: 0.12s">
+    <view class="menu-item">
+      <view class="menu-item-icon" style="background: linear-gradient(135deg, #f0f0f0 0%, #d8d8d8 100%)">
+        <text class="menu-icon-emoji">🎨</text>
+      </view>
+      <view class="menu-item-content">
+        <text class="menu-item-title">深色模式</text>
+        <text class="menu-item-desc">调整界面显示风格</text>
+      </view>
+      <picker
+        mode="selector"
+        range="{{themeModeOptions}}"
+        range-key="label"
+        value="{{themeModeIndex}}"
+        bindchange="onThemeModeChange"
+      >
+        <view class="setting-picker-value">
+          <text>{{themeModeText}}</text>
+          <t-icon name="chevron-right" size="36rpx" color="#B5A89C" />
+        </view>
+      </picker>
+    </view>
+  </view>
+
+  <!-- ======= 提醒设置 ======= -->
+  <view wx:if="{{hasBaby}}" class="section-label animate-fadein" style="animation-delay: 0.13s">提醒设置</view>
+  <view wx:if="{{hasBaby}}" class="menu-card reminder-settings-card animate-fadein" style="animation-delay: 0.14s">
+    <!-- 喂养提醒 -->
+    <view class="menu-item">
+      <view class="menu-item-icon" style="background: linear-gradient(135deg, #fff5ed 0%, #ffe8d5 100%)">
+        <text class="menu-icon-emoji">🍼</text>
+      </view>
+      <view class="menu-item-content">
+        <text class="menu-item-title">喂养提醒</text>
+        <text class="menu-item-desc">到时间提醒喂养</text>
+      </view>
+      <switch checked="{{feedingReminderEnabled}}" bindchange="onFeedingReminderToggle" color="#C8956C" />
+    </view>
+
+    <view wx:if="{{feedingReminderEnabled}}" class="menu-divider"></view>
+
+    <!-- 喂养间隔 -->
+    <view wx:if="{{feedingReminderEnabled}}" class="menu-item">
+      <view class="menu-item-content" style="margin-left: 88rpx">
+        <text class="menu-item-title">喂养间隔</text>
+      </view>
+      <picker
+        mode="selector"
+        range="{{feedingIntervalOptions}}"
+        range-key="label"
+        value="{{feedingIntervalIndex}}"
+        bindchange="onFeedingIntervalChange"
+      >
+        <view class="setting-picker-value">
+          <text>{{feedingIntervalText}}</text>
+          <t-icon name="chevron-right" size="36rpx" color="#B5A89C" />
+        </view>
+      </picker>
+    </view>
+
+    <view class="menu-divider"></view>
+
+    <!-- 疫苗提醒 -->
+    <view class="menu-item">
+      <view class="menu-item-icon" style="background: linear-gradient(135deg, #f3f0fc 0%, #e5dffa 100%)">
+        <text class="menu-icon-emoji">💉</text>
+      </view>
+      <view class="menu-item-content">
+        <text class="menu-item-title">疫苗提醒</text>
+        <text class="menu-item-desc">接种日期前提醒</text>
+      </view>
+      <switch checked="{{vaccineReminderEnabled}}" bindchange="onVaccineReminderToggle" color="#C8956C" />
+    </view>
+
+    <view wx:if="{{vaccineReminderEnabled}}" class="menu-divider"></view>
+
+    <!-- 提前天数 -->
+    <view wx:if="{{vaccineReminderEnabled}}" class="menu-item">
+      <view class="menu-item-content" style="margin-left: 88rpx">
+        <text class="menu-item-title">提前提醒</text>
+      </view>
+      <picker
+        mode="selector"
+        range="{{vaccineAdvanceOptions}}"
+        range-key="label"
+        value="{{vaccineAdvanceIndex}}"
+        bindchange="onVaccineAdvanceChange"
+      >
+        <view class="setting-picker-value">
+          <text>{{vaccineAdvanceOptions[vaccineAdvanceIndex].label}}</text>
+          <t-icon name="chevron-right" size="36rpx" color="#B5A89C" />
+        </view>
+      </picker>
+    </view>
+  </view>
+
+  <!-- ======= 成长报告 & AI 助手 ======= -->
+  <view wx:if="{{hasBaby}}" class="section-label animate-fadein" style="animation-delay: 0.145s">智能功能</view>
+  <view wx:if="{{hasBaby}}" class="menu-card animate-fadein" style="animation-delay: 0.15s">
+    <view class="menu-item" bindtap="goToReport" hover-class="menu-item-hover">
+      <view class="menu-item-icon" style="background: linear-gradient(135deg, #fff5ed 0%, #ffe8d5 100%)">
+        <text class="menu-icon-emoji">📊</text>
+      </view>
+      <view class="menu-item-content">
+        <text class="menu-item-title">成长报告</text>
+        <text class="menu-item-desc">查看周报/月报，生成分享图片</text>
+      </view>
+      <t-icon name="chevron-right" size="40rpx" color="#B5A89C" />
+    </view>
+
+    <view class="menu-divider"></view>
+
+    <view class="menu-item" bindtap="goToAiAdvisor" hover-class="menu-item-hover">
+      <view class="menu-item-icon" style="background: linear-gradient(135deg, #f0f7fc 0%, #dbeafe 100%)">
+        <text class="menu-icon-emoji">🤖</text>
+      </view>
+      <view class="menu-item-content">
+        <text class="menu-item-title">AI 育儿助手</text>
+        <text class="menu-item-desc">智能分析、异常预警、育儿建议</text>
+      </view>
+      <t-icon name="chevron-right" size="40rpx" color="#B5A89C" />
+    </view>
+
+    <view class="menu-divider"></view>
+
+    <view class="menu-item" bindtap="goToFamily" hover-class="menu-item-hover">
+      <view class="menu-item-icon" style="background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%)">
+        <text class="menu-icon-emoji">👨‍👩‍👧‍👦</text>
+      </view>
+      <view class="menu-item-content">
+        <text class="menu-item-title">家庭协作</text>
+        <text class="menu-item-desc">邀请家人一起记录宝宝成长</text>
+      </view>
+      <t-icon name="chevron-right" size="40rpx" color="#B5A89C" />
+    </view>
+  </view>
+
+  <!-- ======= 云同步设置 ======= -->
+  <view class="section-label animate-fadein" style="animation-delay: 0.155s">云同步</view>
+  <view class="menu-card animate-fadein" style="animation-delay: 0.158s">
+    <!-- 同步开关 -->
+    <view class="menu-item">
+      <view class="menu-item-icon" style="background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%)">
+        <text class="menu-icon-emoji">☁️</text>
+      </view>
+      <view class="menu-item-content">
+        <text class="menu-item-title">云端同步</text>
+        <text class="menu-item-desc">{{cloudSyncEnabled ? '已开启' : '数据仅存储在本地'}}</text>
+      </view>
+      <switch checked="{{cloudSyncEnabled}}" bindchange="onCloudSyncToggle" color="#C8956C" />
+    </view>
+
+    <view wx:if="{{cloudSyncEnabled}}" class="menu-divider"></view>
+
+    <!-- 手动同步 -->
+    <view wx:if="{{cloudSyncEnabled}}" class="menu-item" bindtap="onManualSync" hover-class="menu-item-hover">
+      <view class="menu-item-content" style="margin-left: 88rpx">
+        <text class="menu-item-title">立即同步</text>
+        <view class="sync-status-row">
+          <view wx:if="{{realtimeWatchEnabled}}" class="realtime-dot"></view>
+          <text class="menu-item-desc">{{syncStatusText}}</text>
+        </view>
+      </view>
+      <text class="menu-item-note">{{pendingSyncCount > 0 ? pendingSyncCount + '条待同步' : ''}}</text>
+    </view>
+  </view>
+
   <!-- ======= 数据管理菜单 ======= -->
-  <view class="section-label animate-fadein" style="animation-delay: 0.15s;">数据管理</view>
-  <view class="menu-card animate-fadein" style="animation-delay: 0.2s;">
+  <view class="section-label animate-fadein" style="animation-delay: 0.16s">数据管理</view>
+  <view class="menu-card animate-fadein" style="animation-delay: 0.2s">
     <!-- 导出数据 -->
     <view class="menu-item" bindtap="exportData" hover-class="menu-item-hover">
-      <view class="menu-item-icon" style="background: linear-gradient(135deg, #F5EDE4 0%, #E8DACE 100%);">
+      <view class="menu-item-icon" style="background: linear-gradient(135deg, #f5ede4 0%, #e8dace 100%)">
         <image class="menu-icon-img" src="/assets/icons/export.svg" mode="aspectFit" />
       </view>
       <view class="menu-item-content">
@@ -107,7 +276,7 @@
 
     <!-- 恢复数据 -->
     <view class="menu-item" bindtap="importData" hover-class="menu-item-hover">
-      <view class="menu-item-icon" style="background: linear-gradient(135deg, #E8F4EE 0%, #D1EBDE 100%);">
+      <view class="menu-item-icon" style="background: linear-gradient(135deg, #e8f4ee 0%, #d1ebde 100%)">
         <image class="menu-icon-img" src="/assets/icons/import.svg" mode="aspectFit" />
       </view>
       <view class="menu-item-content">
@@ -121,7 +290,7 @@
 
     <!-- 清除数据 -->
     <view class="menu-item" bindtap="clearAllData" hover-class="menu-item-hover">
-      <view class="menu-item-icon" style="background: linear-gradient(135deg, #FCEAE8 0%, #F9D4D0 100%);">
+      <view class="menu-item-icon" style="background: linear-gradient(135deg, #fceae8 0%, #f9d4d0 100%)">
         <image class="menu-icon-img" src="/assets/icons/trash.svg" mode="aspectFit" />
       </view>
       <view class="menu-item-content">
@@ -133,10 +302,10 @@
   </view>
 
   <!-- ======= 关于 ======= -->
-  <view class="section-label animate-fadein" style="animation-delay: 0.25s;">关于</view>
-  <view class="menu-card animate-fadein" style="animation-delay: 0.3s;">
+  <view class="section-label animate-fadein" style="animation-delay: 0.25s">关于</view>
+  <view class="menu-card animate-fadein" style="animation-delay: 0.3s">
     <view class="menu-item">
-      <view class="menu-item-icon" style="background: linear-gradient(135deg, #F5EDE4 0%, #EDE1D4 100%);">
+      <view class="menu-item-icon" style="background: linear-gradient(135deg, #f5ede4 0%, #ede1d4 100%)">
         <image class="menu-icon-img" src="/assets/icons/phone.svg" mode="aspectFit" />
       </view>
       <view class="menu-item-content">
@@ -148,7 +317,7 @@
     <view class="menu-divider"></view>
 
     <view class="menu-item" bindtap="showDisclaimer" hover-class="menu-item-hover">
-      <view class="menu-item-icon" style="background: linear-gradient(135deg, #FEF3E0 0%, #FCE7C3 100%);">
+      <view class="menu-item-icon" style="background: linear-gradient(135deg, #fef3e0 0%, #fce7c3 100%)">
         <image class="menu-icon-img" src="/assets/icons/warning.svg" mode="aspectFit" />
       </view>
       <view class="menu-item-content">
@@ -159,12 +328,15 @@
   </view>
 
   <!-- ======= 底部声明 ======= -->
-  <view class="footer-text animate-fadein" style="animation-delay: 0.35s;">
+  <view class="footer-text animate-fadein" style="animation-delay: 0.35s">
     <text>本小程序仅供日常养护记录参考\n所有数据存储在您的设备本地</text>
   </view>
 
   <!-- 底部安全区 -->
   <view class="safe-bottom"></view>
+
+  <!-- 多宝宝切换悬浮球 -->
+  <baby-switcher />
 </view>
 
 <!-- ======= 宝宝信息编辑弹窗 ======= -->
@@ -208,7 +380,13 @@
       <!-- 性别 -->
       <view class="form-group">
         <text class="form-label">性别 <text class="required">*</text></text>
-        <picker mode="selector" range="{{genderOptions}}" range-key="label" value="{{genderIndex}}" bindchange="onGenderChange">
+        <picker
+          mode="selector"
+          range="{{genderOptions}}"
+          range-key="label"
+          value="{{genderIndex}}"
+          bindchange="onGenderChange"
+        >
           <view class="form-picker">
             <text>{{genderOptions[genderIndex].label}}</text>
             <t-icon name="chevron-down" size="36rpx" color="#B5A89C" />
@@ -267,8 +445,18 @@
 
     <!-- 保存按钮 -->
     <view class="edit-popup-footer">
-      <t-button theme="primary" block bind:tap="saveBabyInfo"
-        style="--td-button-primary-bg-color: #C8956C; --td-button-primary-border-color: #C8956C; --td-button-primary-active-bg-color: #B5845F; --td-button-primary-active-border-color: #B5845F; border-radius: 20rpx;">
+      <t-button
+        theme="primary"
+        block
+        bind:tap="saveBabyInfo"
+        style="
+          --td-button-primary-bg-color: #c8956c;
+          --td-button-primary-border-color: #c8956c;
+          --td-button-primary-active-bg-color: #b5845f;
+          --td-button-primary-active-border-color: #b5845f;
+          border-radius: 20rpx;
+        "
+      >
         保存
       </t-button>
     </view>

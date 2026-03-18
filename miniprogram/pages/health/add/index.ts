@@ -14,7 +14,18 @@ const SITE_OPTIONS: { value: TemperatureSite; label: string }[] = [
   { value: 'rectal', label: '肛温' },
 ];
 
-const COMMON_SYMPTOMS = ['发热', '咳嗽', '流鼻涕', '鼻塞', '腹泻', '呕吐', '皮疹', '哭闹不安', '食欲下降', '精神不佳'];
+const COMMON_SYMPTOMS = [
+  '发热',
+  '咳嗽',
+  '流鼻涕',
+  '鼻塞',
+  '腹泻',
+  '呕吐',
+  '皮疹',
+  '哭闹不安',
+  '食欲下降',
+  '精神不佳',
+];
 
 Page({
   data: {
@@ -145,9 +156,16 @@ Page({
     }
 
     const {
-      recordType, temperature, temperatureSite,
-      medicationName, medicationDosage, selectedSymptoms,
-      note, time, editMode, recordId,
+      recordType,
+      temperature,
+      temperatureSite,
+      medicationName,
+      medicationDosage,
+      selectedSymptoms,
+      note,
+      time,
+      editMode,
+      recordId,
     } = this.data;
 
     const baseData: any = {

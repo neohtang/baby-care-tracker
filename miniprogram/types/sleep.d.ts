@@ -33,7 +33,9 @@ export interface SleepRecord {
 export type CreateSleepInput = Omit<SleepRecord, 'id' | 'createdAt' | 'updatedAt'>;
 
 /** 更新睡眠记录的入参 */
-export type UpdateSleepInput = Partial<Omit<SleepRecord, 'id' | 'babyId' | 'createdAt' | 'updatedAt'>>;
+export type UpdateSleepInput = Partial<
+  Omit<SleepRecord, 'id' | 'babyId' | 'createdAt' | 'updatedAt'>
+>;
 
 /** 睡眠日统计 */
 export interface SleepDailySummary {

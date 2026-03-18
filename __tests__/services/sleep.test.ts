@@ -166,7 +166,7 @@ describe('SleepService', () => {
       });
       const display = sleepService.formatRecordForDisplay(record!);
       expect(display.typeName).toBe('日间小睡');
-      expect(display.icon).toBe('☀️');
+      expect(display.icon).toBe('/assets/icons/sun.svg');
     });
 
     it('夜间睡眠显示正确信息', () => {
@@ -177,7 +177,7 @@ describe('SleepService', () => {
       });
       const display = sleepService.formatRecordForDisplay(record!);
       expect(display.typeName).toBe('夜间睡眠');
-      expect(display.icon).toBe('🌙');
+      expect(display.icon).toBe('/assets/icons/moon.svg');
       expect(display.endTimeText).toBe('进行中');
     });
   });

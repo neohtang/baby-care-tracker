@@ -1,0 +1,7 @@
+node_modules/
+miniprogram_npm/
+typings/
+dist/
+*.js
+*.wxs
+*.d.ts

@@ -124,7 +124,7 @@ class BabyService {
     if (updated) {
       eventBus.emit(Events.BABY_CHANGED, updated);
     }
-    return updated as BabyInfo || null;
+    return (updated as BabyInfo) || null;
   }
 
   /**
@@ -141,7 +141,9 @@ class BabyService {
         } else {
           try {
             wx.removeStorageSync(CURRENT_BABY_KEY);
-          } catch {}
+          } catch {
+            // 清除失败不影响业务
+          }
         }
       }
       eventBus.emit(Events.BABY_CHANGED);
